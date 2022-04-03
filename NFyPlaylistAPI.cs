@@ -30,6 +30,18 @@ public class NFyPlaylist {
         }
     }
 
+    public int Current_SongIndex() {
+        return it;
+    }
+
+    public void SetIndex(int f) {
+        it = f;
+    }
+
+    public int Playlist_Length() {
+        return songslist.Length;
+    }
+
     public string Next_Song() {
         it += 1;
 
