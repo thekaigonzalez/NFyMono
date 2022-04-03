@@ -103,6 +103,7 @@ public class NFy : Control
             foreach (string item in listDir("songs")) {
                 if (!item.EndsWith(".import")) { // godot generated 
                     string item_parsed = ParseSongEntry(item);
+                    Console.WriteLine(item_parsed);
                     getNFySongList().AddItem(item_parsed);
                 }
             }
@@ -112,6 +113,7 @@ public class NFy : Control
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
+        SetupAPI.SetupNFy();
         SongPreload();
     }
     
