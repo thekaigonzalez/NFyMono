@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 public class NFy : Control
 {
     // Declare member variables here. Examples:
@@ -180,8 +181,22 @@ public class NFy : Control
             }
         }
     }
+    public void PlaylistPreload() {
 
-   
+        if (DirExists("playlists")) { // Song preload
+            foreach (string item in listDir("playlists")) {
+                if (item.EndsWith(".json")) { // possibly fix non-audio files showing up
+                    string item_parsed = ParseSongEntry(item);
+                    Console.WriteLine(item_parsed);
+                    GetNode<OptionButton>("NFYSCREEN/Playlists").AddItem(item_parsed);
+                }
+            }
+        }
+    }
+
+    public string getPlaylistName() {
+        return GetNode<OptionButton>("NFYSCREEN/Playlists").GetItemText(GetNode<OptionButton>("NFYSCREEN/Playlists").GetSelectedId());
+    }
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
@@ -196,9 +211,33 @@ public class NFy : Control
         PrintToConsole("Setting up the Discord presence from GDScript API");
         ChangeActivity("No Song Loaded", "On NFy MONO");
         
-        
+        PlaylistPreload();
+        m = new NFyRotation();
+    }
+
+    public void _on_UP_toggled(bool t) {
+
+        if (t) {
+            string[] pl = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, string[]>>(System.IO.File.ReadAllText(CTEXT("playlists/" + getPlaylistName() + ".json")))["songs"];
+                
+            m = new NFyRotation(pl);
+
+            PLAYING_ARRAY = true;
+
+            OpenCorrect(m.getCurrentSong());
+        } else {
+            PLAYING_ARRAY = false;
+
+        }
     }
     
+    
+    public override void _Input(InputEvent inputEvent) {
+        if (Input.IsKeyPressed(((int)KeyList.L))) {
+            getNFyStream().Seek(getNFyStream().GetPlaybackPosition() + 10);
+        }
+    }
+
     public void _on_EnableConsole_pressed() {
         GetNode<TextEdit>("CON").Visible = true;
     }
@@ -227,10 +266,12 @@ public class NFy : Control
     }
     // Contains code for a custom loop feature
     public void LoopHandler() {
+        Console.WriteLine("-> " + m.nextExists());
         if (getNFyStream().GetPlaybackPosition() >= SongLength && m.nextExists()) { // if it's done
             m.moveIndex();
             OpenCorrect(m.getCurrentSong()); // replay (resets every variable)
-        } else if (getNFyStream().GetPlaybackPosition() >= SongLength && !m.nextExists()) {
+        } 
+        else if (getNFyStream().GetPlaybackPosition() >= SongLength && !m.nextExists()) {
             Console.WriteLine("END OF PLAYLIST!");
             getNFyBar().Value = 0;
             
@@ -253,6 +294,7 @@ public class NFy : Control
         
         
         LoopHandler();
+        getNFyBar().MaxValue = SongLength;
         if (getNFyStream().Playing) {
             getNFyBar().Value = getNFyStream().GetPlaybackPosition();
             ChangeActivity(GetCurrentSongIfAny(), GetTimeSignature());

@@ -73,6 +73,20 @@ margin_bottom = 523.0
 text = "Loop?"
 align = 1
 
+[node name="Playlists" type="OptionButton" parent="NFYSCREEN"]
+margin_left = 430.0
+margin_top = 275.0
+margin_right = 504.0
+margin_bottom = 292.0
+text = "Playlists"
+
+[node name="UP" type="CheckButton" parent="NFYSCREEN"]
+margin_left = 317.0
+margin_top = 329.0
+margin_right = 467.0
+margin_bottom = 361.0
+text = "use playlist"
+
 [node name="NfyStream" type="AudioStreamPlayer" parent="."]
 
 [node name="CON" type="TextEdit" parent="."]
@@ -89,3 +103,4 @@ smooth_scrolling = true
 [connection signal="item_selected" from="NFYSCREEN/CurrentSongNF" to="." method="_song_change"]
 [connection signal="pressed" from="NFYSCREEN/EnableConsole" to="." method="_on_EnableConsole_pressed"]
 [connection signal="pressed" from="NFYSCREEN/ChangeTheme" to="." method="_on_ChangeTheme_pressed"]
+[connection signal="toggled" from="NFYSCREEN/UP" to="." method="_on_UP_toggled"]

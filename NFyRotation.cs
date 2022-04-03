@@ -9,7 +9,12 @@ public class NFyRotation {
         array_value = str;
     } 
 
+    public NFyRotation() {
+
+    } 
+
     public string getCurrentSong() {
+        
         return array_value[current_index];
     }
 
