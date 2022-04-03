@@ -44,6 +44,7 @@ margin_bottom = 198.0
 text = "Songs list"
 
 [node name="EnableConsole" type="Button" parent="NFYSCREEN"]
+visible = false
 margin_left = 18.0
 margin_top = 604.0
 margin_right = 80.0
@@ -64,3 +65,4 @@ smooth_scrolling = true
 [connection signal="pressed" from="NFYSCREEN/Play" to="." method="_on_Button_pressed"]
 [connection signal="pressed" from="NFYSCREEN/Stop" to="." method="_onStopRequested"]
 [connection signal="item_selected" from="NFYSCREEN/CurrentSongNF" to="." method="_song_change"]
+[connection signal="pressed" from="NFYSCREEN/EnableConsole" to="." method="_on_EnableConsole_pressed"]
