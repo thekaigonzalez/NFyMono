@@ -126,6 +126,10 @@ public class NFy : Control
         
     }
 
+    public void _onSongChange() {
+        OpenCorrect(GetCurrentSongIfAny()); // you should just override this right?
+    }
+
     public void _onStopRequested() {
         if (getNFyStream().Stream != null && getNFyStream().Playing) {
             // try to save position
