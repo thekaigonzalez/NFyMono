@@ -33,7 +33,7 @@ public class NFy : Control
         return false; // probably not
     }
     public void PrintToConsole(string text) {
-            GetNode<TextEdit>("CON").Text += text;
+            GetNode<TextEdit>("CON").Text += text + "\n";
     }
 
     public string GetCurrentSongIfAny() {
