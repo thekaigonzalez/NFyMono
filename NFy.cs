@@ -164,7 +164,7 @@ public class NFy : Control
 
         if (DirExists("songs")) { // Song preload
             foreach (string item in listDir("songs")) {
-                if (!item.EndsWith(".import")) { // godot generated 
+                if (!item.EndsWith(".import") && CheckEach(item, GetSpec())) { // possibly fix non-audio files showing up
                     string item_parsed = ParseSongEntry(item);
                     Console.WriteLine(item_parsed);
                     getNFySongList().AddItem(item_parsed);
