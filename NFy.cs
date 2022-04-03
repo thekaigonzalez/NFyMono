@@ -27,7 +27,10 @@ public class NFy : Control
     }
 
     public bool SpecialsEnabled() {
-        if (OS.GetCmdlineArgs()[1] == "--specials") { return true; } else { return false; }
+        if (OS.GetCmdlineArgs().Length >= 1) {
+            if (OS.GetCmdlineArgs()[0] == "--specials") { return true; } else { return false; }
+        }
+        return false; // probably not
     }
     public void PrintToConsole(string text) {
             GetNode<TextEdit>("CON").Text += text;
@@ -113,10 +116,18 @@ public class NFy : Control
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
+        PrintToConsole("Checking for specials");
+        if (SpecialsEnabled()) GetNode<Button>("NFYSCREEN/EnableConsole").Visible = true;
+        PrintToConsole("Loading setup daemon");
         SetupAPI.SetupNFy();
+        PrintToConsole("Preloading songs into list");
         SongPreload();
     }
     
+    public void _on_EnableConsole_pressed() {
+        GetNode<TextEdit>("CON").Visible = true;
+    }
+
     public void _on_Button_pressed() {
         if (getNFyStream().Stream == null)
         {
