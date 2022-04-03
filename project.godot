@@ -120,10 +120,18 @@ config/name="NFyMono"
 run/main_scene="res://NFy.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+Discord="*res://addons/discord_game_sdk/discord.gd"
+
 [display]
 
 window/size/width=1280
 window/size/height=720
+
+[editor_plugins]
+
+enabled=PoolStringArray( "res://addons/discord_game_sdk/plugin.cfg" )
 
 [gdnative]
 

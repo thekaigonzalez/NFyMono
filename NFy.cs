@@ -12,7 +12,18 @@ public class NFy : Control
     /*
     Official Naming convention for nodes
     */
-    
+
+    /// Discord GDScript API
+    public void ChangeActivity(string state, string desc) {
+        Script gdclass = ResourceLoader.Load("res://Extensions/discordapi.gd") as Script;
+        gdclass.Call("change_activity", state, desc);
+    }
+
+    public string GetTimeFormat(float sec) {
+        Script gdclass = ResourceLoader.Load("res://Extensions/discordapi.gd") as Script;
+        return (string) gdclass.Call("parse_timer", sec);
+    }
+
     public Panel getNFyScreen() {
         return GetNode<Panel>("NFYSCREEN");    
     }
@@ -80,6 +91,7 @@ public class NFy : Control
         if (ed == false) {
             getNFyScreen().Theme = GD.Load<Theme>("res://Themes/NFyDarker/DarkerNFy.tres");
             ed = true;
+            
         } else {
             getNFyScreen().Theme = GD.Load<Theme>("res://Themes/res://Themes/ClassicNFy/NFyClassic.tres");
             ed = false;
@@ -132,6 +144,8 @@ public class NFy : Control
         SetupAPI.SetupNFy();
         PrintToConsole("Preloading songs into list");
         SongPreload();
+        PrintToConsole("Setting up the Discord presence from GDScript API");
+        ChangeActivity("No Song Loaded", "On NFy MONO");
     }
     
     public void _on_EnableConsole_pressed() {
@@ -167,6 +181,7 @@ public class NFy : Control
     {
         if (getNFyStream().Playing) {
             getNFyBar().Value = getNFyStream().GetPlaybackPosition();
+            ChangeActivity(GetCurrentSongIfAny(),GetTimeFormat(getNFyStream().GetPlaybackPosition()) + " - " + GetTimeFormat(sl));
         }
     }
 }
