@@ -23,7 +23,7 @@ margin_left = 855.0
 margin_top = 654.0
 margin_right = 952.0
 margin_bottom = 674.0
-text = "Play Selected"
+text = "Stop Selected"
 
 [node name="LIZENZ" type="Label" parent="NFYSCREEN"]
 margin_right = 40.0
