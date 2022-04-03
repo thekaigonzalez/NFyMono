@@ -118,6 +118,9 @@ public class NFy : Control
 
         audSound.Play();
     }
+    public string CurrentSongPath() {
+        return CTEXT(wCheck("songs/" + GetCurrentSongIfAny(), GetSpec()));
+    }
     public void _on_ChangeTheme_pressed() {
         if (ed == false) {
             getNFyScreen().Theme = GD.Load<Theme>("res://Themes/NFyDarker/DarkerNFy.tres");
@@ -133,9 +136,8 @@ public class NFy : Control
         return spec;
     }
     public void OpenCorrect(string name) {
-        Console.WriteLine(CTEXT(wCheck("songs/" + name, GetSpec())));
         
-        OpenSong(CTEXT(wCheck("songs/" + name, GetSpec()))); // TODO Implement multiple feature
+        OpenSong(CTEXT(wCheck("songs/" + name, GetSpec())));
     }
 
     /// Returns the absolute path
@@ -215,7 +217,7 @@ public class NFy : Control
         // borrow value instead of saving to a variable (saves lines and performance)
         if (GetNode<CheckButton>("NFYSCREEN/Loop").Pressed) {
             if (getNFyStream().GetPlaybackPosition() >= SongLength) { // if it's done
-                OpenCorrect(CTEXT("songs/" + GetCurrentSongIfAny() + ".ogg")); // replay (resets every variable)
+                OpenCorrect(CurrentSongPath()); // replay (resets every variable)
             }
         }
     }
