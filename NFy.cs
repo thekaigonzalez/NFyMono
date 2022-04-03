@@ -9,6 +9,12 @@ public class NFy : Control
     public float SongLength = 0;
 
     public bool ed = false;
+
+    public bool PLAYING_ARRAY = false;
+    public string[] songarray = {"KING OF THIS KILLIN SHIT", "Eminem - Not Alike"};
+
+    NFyRotation m;
+    
     /*
     Official Naming convention for nodes
     */
@@ -175,9 +181,12 @@ public class NFy : Control
         }
     }
 
+   
+
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
+        
         PrintToConsole("Checking for specials");
         if (SpecialsEnabled()) GetNode<Button>("NFYSCREEN/EnableConsole").Visible = true;
         PrintToConsole("Loading setup daemon");
@@ -186,6 +195,8 @@ public class NFy : Control
         SongPreload();
         PrintToConsole("Setting up the Discord presence from GDScript API");
         ChangeActivity("No Song Loaded", "On NFy MONO");
+        
+        
     }
     
     public void _on_EnableConsole_pressed() {
@@ -216,8 +227,16 @@ public class NFy : Control
     }
     // Contains code for a custom loop feature
     public void LoopHandler() {
+        if (getNFyStream().GetPlaybackPosition() >= SongLength && m.nextExists()) { // if it's done
+            m.moveIndex();
+            OpenCorrect(m.getCurrentSong()); // replay (resets every variable)
+        } else if (getNFyStream().GetPlaybackPosition() >= SongLength && !m.nextExists()) {
+            Console.WriteLine("END OF PLAYLIST!");
+            getNFyBar().Value = 0;
+            
+        }
         // borrow value instead of saving to a variable (saves lines and performance)
-        if (GetNode<CheckButton>("NFYSCREEN/Loop").Pressed) {
+        else if (GetNode<CheckButton>("NFYSCREEN/Loop").Pressed) {
             if (getNFyStream().GetPlaybackPosition() >= SongLength) { // if it's done
                 OpenCorrect(CurrentSongPath()); // replay (resets every variable)
             }
@@ -231,6 +250,8 @@ public class NFy : Control
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(float delta)
     {
+        
+        
         LoopHandler();
         if (getNFyStream().Playing) {
             getNFyBar().Value = getNFyStream().GetPlaybackPosition();
