@@ -24,6 +24,25 @@ public class NFy : Control
         return (string) gdclass.Call("parse_timer", sec);
     }
 
+    /// CheckEach() returns true if the path is found with the extensions in spec,
+    /// it returns the first instance, therefore all other members of "spec" are discarded.
+    public bool CheckEach(string p, string[] spec) {
+        foreach (string s in spec) {
+            if (p.Extension() == s) return true;
+            else continue;
+        }
+        return false;
+    }
+
+    /// CheckEachS() returns the extension that was found on the give path.
+    public string CheckEachS(string p, string[] spec) {
+        foreach (string s in spec) {
+            if (p.Extension() == s) return s;
+            else continue;
+        }
+        return "";
+    }
+
     public Panel getNFyScreen() {
         return GetNode<Panel>("NFYSCREEN");    
     }
@@ -54,6 +73,18 @@ public class NFy : Control
         string song = "";
         song = sf.GetItemText(sf.GetSelectedId());
         return song;
+    }
+
+    public string Attach(string s1, string s2) {
+        return s1 + s2;
+    }
+    /// @desc Check the spec
+    public string wCheck(string s, string[] sp) {
+        foreach(string str in sp) {
+            if (DirExists(s + "." + str)) return s + "." + str;
+            if (System.IO.File.Exists(s + "." + str)) return s + "." + str;
+        }
+        return "";
     }
 
     public void OpenSong(string path)
@@ -97,9 +128,14 @@ public class NFy : Control
             ed = false;
         }
     }
+    public string[] GetSpec() {
+        string[] spec = {"wav", "ogg"};
+        return spec;
+    }
     public void OpenCorrect(string name) {
-        Console.WriteLine(CTEXT("songs/" + name + "."));
-        OpenSong(CTEXT("songs/" + name + ".ogg")); // TODO Implement multiple feature
+        Console.WriteLine(CTEXT(wCheck("songs/" + name, GetSpec())));
+        
+        OpenSong(CTEXT(wCheck("songs/" + name, GetSpec()))); // TODO Implement multiple feature
     }
 
     /// Returns the absolute path
@@ -178,7 +214,7 @@ public class NFy : Control
     public void LoopHandler() {
         // borrow value instead of saving to a variable (saves lines and performance)
         if (GetNode<CheckButton>("NFYSCREEN/Loop").Pressed) {
-            if (getNFyStream().GetPlaybackPosition() == SongLength) { // if it's done
+            if (getNFyStream().GetPlaybackPosition() >= SongLength) { // if it's done
                 OpenCorrect(CTEXT("songs/" + GetCurrentSongIfAny() + ".ogg")); // replay (resets every variable)
             }
         }
