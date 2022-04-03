@@ -128,7 +128,7 @@ public class NFy : Control
         
     }
 
-    public void _onSongChange() {
+    public void _song_change(int index) {
         OpenCorrect(GetCurrentSongIfAny()); // you should just override this right?
     }
 
