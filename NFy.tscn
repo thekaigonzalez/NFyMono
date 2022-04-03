@@ -47,6 +47,7 @@ margin_top = 128.0
 margin_right = 783.0
 margin_bottom = 198.0
 text = "Songs list"
+clip_text = true
 align = 1
 
 [node name="EnableConsole" type="Button" parent="NFYSCREEN"]
