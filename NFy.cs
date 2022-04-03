@@ -6,7 +6,7 @@ public class NFy : Control
     // private int a = 2;
     // private string b = "text";
     public float sp = 0;
-    public float sl = 0;
+    public float SongLength = 0;
 
     public bool ed = false;
     /*
@@ -72,7 +72,7 @@ public class NFy : Control
             a.Format = AudioStreamSample.FormatEnum.Format16Bits;
             a.Stereo = true;
             a.Data = b;
-            sl = a.GetLength();
+            SongLength = a.GetLength();
             audSound.Stream = a;   
 
         }
@@ -81,7 +81,7 @@ public class NFy : Control
         {
             AudioStreamOGGVorbis d = new AudioStreamOGGVorbis();
             d.Data = b;
-            sl = d.GetLength();
+            SongLength = d.GetLength();
             audSound.Stream = d;   
         }
 
@@ -156,7 +156,7 @@ public class NFy : Control
         if (getNFyStream().Stream == null)
         {
             OpenCorrect(GetCurrentSongIfAny());
-            getNFyBar().MaxValue = sl;
+            getNFyBar().MaxValue = SongLength;
         } else {
             getNFyStream().Play(sp);
         }
@@ -174,12 +174,27 @@ public class NFy : Control
             getNFyStream().Stop();
         }
     }
+    // Contains code for a custom loop feature
+    public void LoopHandler() {
+        // borrow value instead of saving to a variable (saves lines and performance)
+        if (GetNode<CheckButton>("NFYSCREEN/Loop").Pressed) {
+            if (getNFyStream().GetPlaybackPosition() == SongLength) { // if it's done
+                OpenCorrect(CTEXT("songs/" + GetCurrentSongIfAny() + ".ogg")); // replay (resets every variable)
+            }
+        }
+    }
+
+    public string GetTimeSignature() {
+        return GetTimeFormat(getNFyStream().GetPlaybackPosition()) + " - " + GetTimeFormat(SongLength);
+    }
+
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(float delta)
     {
+        LoopHandler();
         if (getNFyStream().Playing) {
             getNFyBar().Value = getNFyStream().GetPlaybackPosition();
-            ChangeActivity(GetCurrentSongIfAny(),GetTimeFormat(getNFyStream().GetPlaybackPosition()) + " - " + GetTimeFormat(sl));
+            ChangeActivity(GetCurrentSongIfAny(), GetTimeSignature());
         }
     }
 }
