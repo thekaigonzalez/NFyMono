@@ -19,7 +19,6 @@ public class NFyPlaylist {
         s.Open(file, File.ModeFlags.Read);
 
         var res = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, string[]>>(s.GetAsText());
-        Console.WriteLine("Good!");
         songslist = res["songs"];
     }
 
