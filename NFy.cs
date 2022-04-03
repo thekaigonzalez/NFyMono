@@ -7,6 +7,8 @@ public class NFy : Control
     // private string b = "text";
     public float sp = 0;
     public float sl = 0;
+
+    public bool ed = false;
     /*
     Official Naming convention for nodes
     */
@@ -74,7 +76,15 @@ public class NFy : Control
 
         audSound.Play();
     }
-
+    public void _on_ChangeTheme_pressed() {
+        if (ed == false) {
+            getNFyScreen().Theme = GD.Load<Theme>("res://Themes/NFyDarker/DarkerNFy.tres");
+            ed = true;
+        } else {
+            getNFyScreen().Theme = GD.Load<Theme>("res://Themes/res://Themes/ClassicNFy/NFyClassic.tres");
+            ed = false;
+        }
+    }
     public void OpenCorrect(string name) {
         Console.WriteLine(CTEXT("songs/" + name + "."));
         OpenSong(CTEXT("songs/" + name + ".ogg")); // TODO Implement multiple feature
