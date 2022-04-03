@@ -121,6 +121,8 @@ public class NFy : Control
     public string CurrentSongPath() {
         return CTEXT(wCheck("songs/" + GetCurrentSongIfAny(), GetSpec()));
     }
+
+    
     public void _on_ChangeTheme_pressed() {
         if (ed == false) {
             getNFyScreen().Theme = GD.Load<Theme>("res://Themes/NFyDarker/DarkerNFy.tres");
@@ -176,6 +178,13 @@ public class NFy : Control
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
+        NFyPlaylist i = new NFyPlaylist();
+
+        i.Open(CTEXT("test.json"));
+        i.Parse();
+
+        Console.WriteLine(i.Current_Song());
+        Console.WriteLine(i.Next_Song());
         PrintToConsole("Checking for specials");
         if (SpecialsEnabled()) GetNode<Button>("NFYSCREEN/EnableConsole").Visible = true;
         PrintToConsole("Loading setup daemon");
@@ -198,7 +207,7 @@ public class NFy : Control
         } else {
             getNFyStream().Play(sp);
         }
-        
+
     }
 
     public void _song_change(int index) {
