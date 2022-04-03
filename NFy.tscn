@@ -43,6 +43,13 @@ margin_right = 760.0
 margin_bottom = 198.0
 text = "Songs list"
 
+[node name="CurrentSongNF2" type="OptionButton" parent="NFYSCREEN"]
+margin_left = 479.0
+margin_top = 128.0
+margin_right = 760.0
+margin_bottom = 198.0
+text = "Song list"
+
 [node name="EnableConsole" type="Button" parent="NFYSCREEN"]
 margin_left = 18.0
 margin_top = 604.0
@@ -63,3 +70,5 @@ smooth_scrolling = true
 
 [connection signal="pressed" from="NFYSCREEN/Play" to="." method="_on_Button_pressed"]
 [connection signal="pressed" from="NFYSCREEN/Stop" to="." method="_onStopRequested"]
+[connection signal="item_selected" from="NFYSCREEN/CurrentSongNF" to="." method="_onSongChange"]
+[connection signal="item_selected" from="NFYSCREEN/CurrentSongNF2" to="." method="_onSongChange"]
