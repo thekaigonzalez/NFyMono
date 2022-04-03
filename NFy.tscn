@@ -65,6 +65,14 @@ margin_right = 262.0
 margin_bottom = 75.0
 text = "Mono Aesthetic Theme "
 
+[node name="Loop" type="CheckButton" parent="NFYSCREEN"]
+margin_left = 18.0
+margin_top = 475.0
+margin_right = 178.0
+margin_bottom = 523.0
+text = "Loop?"
+align = 1
+
 [node name="NfyStream" type="AudioStreamPlayer" parent="."]
 
 [node name="CON" type="TextEdit" parent="."]
