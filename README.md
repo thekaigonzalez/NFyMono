@@ -6,4 +6,4 @@ The NFyMono project provides the LOWEST-LEVEL abstraction to listen to your musi
 
 And it doubles-up the original NFy with **.wav** support!
 
-Written in GDScript and C#! 
+Written in C#! 
