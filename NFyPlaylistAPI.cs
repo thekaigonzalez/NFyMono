@@ -23,8 +23,11 @@ public class NFyPlaylist {
     }
 
     public string Current_Song() {
-        Console.WriteLine(songslist);
-        return songslist[it];
+        if (songslist.Length >= it) {
+            return songslist[it];
+        } else {
+            return "N";
+        }
     }
 
     public string Next_Song() {
