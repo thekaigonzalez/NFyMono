@@ -7,3 +7,8 @@ The NFyMono project provides the LOWEST-LEVEL abstraction to listen to your musi
 And it doubles-up the original NFy with **.wav** support!
 
 Written in C#! 
+
+## Differences
+
+Instead of gaining it's information from constantly updating global variables, it mitigates the spaghetti code & memory usage by
+borrowing information and discarding it as such.
