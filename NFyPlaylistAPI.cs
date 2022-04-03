@@ -34,6 +34,10 @@ public class NFyPlaylist {
         return it;
     }
 
+    public string[] Songs() {
+        return songslist;
+    }
+
     public void SetIndex(int f) {
         it = f;
     }
