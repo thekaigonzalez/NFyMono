@@ -63,4 +63,4 @@ smooth_scrolling = true
 
 [connection signal="pressed" from="NFYSCREEN/Play" to="." method="_on_Button_pressed"]
 [connection signal="pressed" from="NFYSCREEN/Stop" to="." method="_onStopRequested"]
-[connection signal="item_selected" from="NFYSCREEN/CurrentSongNF" to="." method="_onSongChange"]
+[connection signal="item_selected" from="NFYSCREEN/CurrentSongNF" to="." method="_song_change"]
