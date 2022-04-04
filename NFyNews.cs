@@ -16,15 +16,14 @@ public class NFyNews : Panel
         GetNode("HTTPRequest").Connect("request_completed", this, "OnRequestCompleted");
 
         HTTPRequest httpRequest = GetNode<HTTPRequest>("HTTPRequest");
-        Console.WriteLine("Requesting: " + "https://thekaigonzalez.github.com/thekaigonzalez/NFy/news/" + DateTime.Now.Month + "-" +  DateTime.Now.Day + "-" + DateTime.Now.Year + ".json");
-        httpRequest.Request("https://thekaigonzalez.github.com/thekaigonzalez/NFy/news/" + DateTime.Now.Month + "-" +  DateTime.Now.Day + "-" + DateTime.Now.Year + ".json");
-        if (TryForNFyMono == true) {
-            httpRequest.Request("https://thekaigonzalez.github.com/thekaigonzalez/NFyMono/news/" + DateTime.Now.Month + "-" +  DateTime.Now.Day + "-" + DateTime.Now.Year + ".json");
-        }
+        Console.WriteLine("Requesting: " + "https://thekaigonzalez.github.com/thekaigonzalez/NFyMono/news/" + DateTime.Now.Month + "-" +  DateTime.Now.Day + "-" + DateTime.Now.Year + ".json");
+        httpRequest.Request("https://thekaigonzalez.github.com/thekaigonzalez/NFyMono/news/" + DateTime.Now.Month + "-" +  DateTime.Now.Day + "-" + DateTime.Now.Year + ".json");
+        
     }
     
     public void OnRequestCompleted(int result, int response_code, string[] headers, byte[] body)
     {
+
         if (response_code == 200) {
             string s = Encoding.UTF8.GetString(body);
             var msn = ConverNewsText(s);
@@ -32,7 +31,7 @@ public class NFyNews : Panel
             GetNode<Label>("author").Text = msn["author"].Trim();
             
         } else {
-            if (!TryForNFyMono) TryForNFyMono = true;
+
         }
     }
 }
