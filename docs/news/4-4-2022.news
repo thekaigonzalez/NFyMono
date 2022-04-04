@@ -1,0 +1,12 @@
+(New NFyMono News API!/Kai gonzalez)
+
+Official NFy Mono news!
+
+It's nice to have news available to you, every day,
+after long thought, the NFy NewsScript system (a product of RCBash, a Programming language toolchain) is now available for private use.
+
+It builds files that are written in `news` - This language!
+
+Into JSON and HTML.
+
+The current edit by me allows Markdown instead of HTML. Make the website nicer all around.
