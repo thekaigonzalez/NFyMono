@@ -182,9 +182,9 @@ public class NFy : Control
     }
     public void PlaylistPreload() {
 
-        if (DirExists("playlists")) { // Song preload
+        if (DirExists("playlists")) {
             foreach (string item in listDir("playlists")) {
-                if (item.EndsWith(".json")) { // possibly fix non-audio files showing up
+                if (item.EndsWith(".json")) { 
                     string item_parsed = ParseSongEntry(item);
                     Console.WriteLine(item_parsed);
                     GetNode<OptionButton>("NFYSCREEN/Playlists").AddItem(item_parsed);
