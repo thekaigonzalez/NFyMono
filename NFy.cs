@@ -311,9 +311,12 @@ public class NFy : Control
         
         LoopHandler();
         getNFyBar().MaxValue = SongLength;
-        if (getNFyStream().Playing) {
+        if (getNFyStream().Playing && !PLAYING_ARRAY) {
             getNFyBar().Value = getNFyStream().GetPlaybackPosition();
             ChangeActivity(GetCurrentSongIfAny(), GetTimeSignature());
+        } else {
+            ChangeActivity("In Rotation - " + m.getCurrentSong(), GetTimeSignature());
+            getNFyBar().Value = getNFyStream().GetPlaybackPosition();
         }
     }
 }
