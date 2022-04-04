@@ -1,1 +1,1 @@
-{"author": "Nobody", "body": "Official NFy Mono news!", "title": "None"}
+{"author": "Kai gonzalez", "body": "Official NFy Mono news!\n\nIt's nice to have news available to you, every day,\nafter long thought, the NFy NewsScript system (a product of RCBash, a Programming language toolchain) is now available for private use.\n\nIt builds files that are written in `news` - This language!\n\nInto JSON and HTML.\n\nThe current edit by me allows Markdown instead of HTML. Make the website nicer all around.", "title": "New NFyMono News API!"}
