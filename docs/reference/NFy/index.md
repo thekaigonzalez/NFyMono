@@ -2,6 +2,8 @@
 
 ## Sub-APIs
 
+[NewsAPI](./NewsAPI/index.md)
+
 [SetupAPI](./SetupAPI/index.md)
 
 [RotationAPI](./RotationAPI/index.md)
