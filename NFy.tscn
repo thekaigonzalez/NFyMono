@@ -146,10 +146,12 @@ margin_top = 109.0
 margin_right = 307.0
 margin_bottom = 542.0
 theme = ExtResource( 3 )
-text = "News will show up here..."
+text = "News will show up here.."
 readonly = true
 draw_tabs = true
 fold_gutter = true
+smooth_scrolling = true
+wrap_enabled = true
 
 [node name="HTTPRequest" type="HTTPRequest" parent="NFYSCREEN/NewsPanel"]
 
