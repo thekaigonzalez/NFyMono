@@ -11,6 +11,8 @@ NFy Mono is an implementation of NFy containing:
 
 NFy Mono is also beginner friendly, and less error-prone.
 
+For Developers: [Click Here!](./reference/)
+
 ## Implementation difference
 
 With the difference, it doesn't remove support for the NFy songs, if you want to use this modification, you can copy your songs folder to the `njmono` directory.
