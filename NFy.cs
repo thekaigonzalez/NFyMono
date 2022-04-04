@@ -267,7 +267,8 @@ public class NFy : Control
     // Contains code for a custom loop feature
     public void LoopHandler() {
         if (getNFyStream().GetPlaybackPosition() >= SongLength && GetNode<CheckButton>("NFYSCREEN/Loop").Pressed && m.Dull()) {
-            OpenCorrect(CurrentSongPath()); // replay (resets every variable)
+            Console.WriteLine("play");
+            OpenCorrect(GetCurrentSongIfAny()); // replay (resets every variable)
             
         }
         else if (getNFyStream().GetPlaybackPosition() >= SongLength && m.nextExists() && !m.Dull()) { // if it's done
