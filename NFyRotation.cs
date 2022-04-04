@@ -18,8 +18,6 @@ public class NFyRotation {
     }
 
     public string getCurrentSong() {
-        Console.WriteLine("Song");
-
         if (current_index < array_value.Length) {
             return array_value[current_index];
         } else {
@@ -40,7 +38,6 @@ public class NFyRotation {
     }
 
     public bool nextExists() {
-        Console.WriteLine("Hi");
         if (current_index < array_value.Length) {
             return true;
         }

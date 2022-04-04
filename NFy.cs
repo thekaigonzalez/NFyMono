@@ -12,7 +12,6 @@ public class NFy : Control
     public bool ed = false;
 
     public bool PLAYING_ARRAY = false;
-    public string[] songarray = {"KING OF THIS KILLIN SHIT", "Eminem - Not Alike"};
 
     NFyRotation m;
     
