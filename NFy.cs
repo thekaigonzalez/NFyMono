@@ -227,6 +227,7 @@ public class NFy : Control
             OpenCorrect(m.getCurrentSong());
         } else {
             PLAYING_ARRAY = false;
+            m = new NFyRotation();
 
         }
     }
@@ -266,29 +267,33 @@ public class NFy : Control
     }
     // Contains code for a custom loop feature
     public void LoopHandler() {
-        Console.WriteLine("-> " + m.nextExists());
-        if (getNFyStream().GetPlaybackPosition() >= SongLength && m.nextExists()) { // if it's done
+        if (getNFyStream().GetPlaybackPosition() >= SongLength && GetNode<CheckButton>("NFYSCREEN/Loop").Pressed && m.Dull()) {
+            OpenCorrect(CurrentSongPath()); // replay (resets every variable)
+            
+        }
+        else if (getNFyStream().GetPlaybackPosition() >= SongLength && m.nextExists() && !m.Dull()) { // if it's done
+            Console.WriteLine("Init next");
             m.moveIndex();
             OpenCorrect(m.getCurrentSong()); // replay (resets every variable)
         } 
-        else if (getNFyStream().GetPlaybackPosition() >= SongLength && !m.nextExists()) {
-            Console.WriteLine("END OF PLAYLIST!");
+        else if (getNFyStream().GetPlaybackPosition() >= SongLength && !m.nextExists() && !m.Dull() && GetNode<CheckButton>("NFYSCREEN/LoopPL").Pressed) {
+            Console.WriteLine("END OF PLAYLIST RELOOP!!");
             getNFyBar().Value = 0;
-            
+            m.resetIndex();
+            OpenCorrect(m.getCurrentSong());
         }
-        // borrow value instead of saving to a variable (saves lines and performance)
-        else if (GetNode<CheckButton>("NFYSCREEN/Loop").Pressed) {
-            if (getNFyStream().GetPlaybackPosition() >= SongLength) { // if it's done
-                OpenCorrect(CurrentSongPath()); // replay (resets every variable)
-            }
+        else if (getNFyStream().GetPlaybackPosition() >= SongLength && !m.nextExists() && !m.Dull() && !GetNode<CheckButton>("NFYSCREEN/LoopPL").Pressed) {
+            Console.WriteLine("END OF PLAYLIST STOPPING!");
+            getNFyBar().Value = 0;
+            OpenCorrect(GetCurrentSongIfAny());
         }
+        
     }
 
     public string GetTimeSignature() {
         return GetTimeFormat(getNFyStream().GetPlaybackPosition()) + " - " + GetTimeFormat(SongLength);
     }
 
-    // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(float delta)
     {
         

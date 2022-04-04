@@ -1,6 +1,6 @@
 // NFY ROTATION
 // multiple songs played in sequencial order
-
+using System;
 public class NFyRotation {  
     private string[] array_value = {};
     private int current_index = 0;
@@ -13,13 +13,26 @@ public class NFyRotation {
 
     } 
 
+    public void resetIndex() {
+        current_index = 0;
+    }
+
     public string getCurrentSong() {
-        
-        return array_value[current_index];
+        Console.WriteLine("Song");
+
+        if (current_index < array_value.Length) {
+            return array_value[current_index];
+        } else {
+            return "N";
+        }
     }
 
     public string peekNext() {
         return array_value[current_index++];
+    }
+
+    public bool Dull() {
+        return array_value.Length == 0;
     }
 
     public void moveIndex() {
@@ -27,6 +40,7 @@ public class NFyRotation {
     }
 
     public bool nextExists() {
+        Console.WriteLine("Hi");
         if (current_index < array_value.Length) {
             return true;
         }

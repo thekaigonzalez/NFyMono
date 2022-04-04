@@ -73,6 +73,14 @@ margin_bottom = 523.0
 text = "Loop?"
 align = 1
 
+[node name="LoopPL" type="CheckButton" parent="NFYSCREEN"]
+margin_left = 18.0
+margin_top = 536.0
+margin_right = 178.0
+margin_bottom = 584.0
+text = "Loop Playlist?"
+align = 1
+
 [node name="Playlists" type="OptionButton" parent="NFYSCREEN"]
 margin_left = 430.0
 margin_top = 275.0
