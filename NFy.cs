@@ -41,6 +41,7 @@ public class NFy : Control
     }
 
     /// CheckEachS() returns the extension that was found on the give path.
+    [Obsolete("CheckEachS() has been deprecated for CheckEach() and GetCurrentSongIfAny(). Please use those methods instead.")]
     public string CheckEachS(string p, string[] spec) {
         foreach (string s in spec) {
             if (p.Extension() == s) return s;
@@ -81,6 +82,7 @@ public class NFy : Control
         return song;
     }
 
+    [Obsolete("Soon to be removed in NFyMono 4, this API function is no longer in support.")]
     public string Attach(string s1, string s2) {
         return s1 + s2;
     }
