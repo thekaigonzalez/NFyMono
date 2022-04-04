@@ -37,6 +37,14 @@ public class NFyRotation {
         current_index += 1;
     }
 
+    public int getSize() {
+        return array_value.Length;
+    }
+
+
+    public int currentIndex() {
+        return current_index;
+    }
     public bool nextExists() {
         if (current_index < array_value.Length) {
             return true;

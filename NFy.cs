@@ -296,7 +296,12 @@ public class NFy : Control
 
     public override void _Process(float delta)
     {
-        
+        if (!m.Dull()) {
+            GetNode<Label>("NFYSCREEN/PLabel").Visible = true;
+            GetNode<Label>("NFYSCREEN/PLabel").Text = "Currently in rotation;\n" + m.currentIndex() + " of " + m.getSize();
+        } else {
+            GetNode<Label>("NFYSCREEN/PLabel").Visible = false;
+        }
         
         LoopHandler();
         getNFyBar().MaxValue = SongLength;
