@@ -1,5 +1,13 @@
 # NFy API documentation
 
+## Sub-APIs
+
+[SetupAPI](./SetupAPI/index.md)
+
+[RotationAPI](./RotationAPI/index.md)
+
+## Methods
+
 [Arguments](./Arguments.md)
 
 [Attach](./Attach.md)
