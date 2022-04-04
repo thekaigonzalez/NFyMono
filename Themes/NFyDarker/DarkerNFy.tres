@@ -30,6 +30,8 @@ corner_radius_bottom_right = 50
 corner_radius_bottom_left = 50
 
 [sub_resource type="DynamicFont" id=10]
+size = 15
+use_filter = true
 font_data = ExtResource( 1 )
 
 [sub_resource type="StyleBoxFlat" id=11]
@@ -37,6 +39,7 @@ font_data = ExtResource( 1 )
 [sub_resource type="StyleBoxFlat" id=12]
 
 [sub_resource type="StyleBoxFlat" id=13]
+bg_color = Color( 0.243137, 0.188235, 0.188235, 1 )
 
 [sub_resource type="StyleBoxFlat" id=9]
 bg_color = Color( 0.243137, 0.188235, 0.188235, 1 )
