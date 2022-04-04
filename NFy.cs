@@ -232,6 +232,10 @@ public class NFy : Control
 
         }
     }
+
+    public void _on_PFUK_pressed() {
+        OS.ShellOpen("https://www.stchadshandforth.org.uk/pdf/Prayers%20for%20Ukraine.pdf");
+    }
     
     
     public override void _Input(InputEvent inputEvent) {

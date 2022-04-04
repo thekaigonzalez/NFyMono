@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://NFy.cs" type="Script" id=1]
 [ext_resource path="res://Themes/ClassicNFy/NFyClassic.tres" type="Theme" id=2]
 [ext_resource path="res://Themes/NFyDarker/DarkerNFy.tres" type="Theme" id=3]
 [ext_resource path="res://NFyNews.cs" type="Script" id=4]
+[ext_resource path="res://NfyMonoLogoUK.png" type="Texture" id=5]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.243137, 0.188235, 0.188235, 1 )
@@ -11,6 +12,7 @@ corner_radius_top_left = 20
 corner_radius_top_right = 20
 corner_radius_bottom_right = 20
 corner_radius_bottom_left = 20
+shadow_size = 6
 
 [node name="NFy" type="Control"]
 anchor_right = 1.0
@@ -166,9 +168,22 @@ margin_bottom = 591.0
 readonly = true
 smooth_scrolling = true
 
+[node name="NfyMonoLogoUk" type="Sprite" parent="."]
+position = Vector2( 1251, 692 )
+scale = Vector2( 0.111814, 0.111814 )
+texture = ExtResource( 5 )
+
+[node name="PFUK" type="Button" parent="."]
+show_behind_parent = true
+margin_left = 1231.0
+margin_top = 674.0
+margin_right = 1269.0
+margin_bottom = 711.0
+
 [connection signal="pressed" from="NFYSCREEN/Play" to="." method="_on_Button_pressed"]
 [connection signal="pressed" from="NFYSCREEN/Stop" to="." method="_onStopRequested"]
 [connection signal="item_selected" from="NFYSCREEN/CurrentSongNF" to="." method="_song_change"]
 [connection signal="pressed" from="NFYSCREEN/EnableConsole" to="." method="_on_EnableConsole_pressed"]
 [connection signal="pressed" from="NFYSCREEN/ChangeTheme" to="." method="_on_ChangeTheme_pressed"]
 [connection signal="toggled" from="NFYSCREEN/UP" to="." method="_on_UP_toggled"]
+[connection signal="pressed" from="PFUK" to="." method="_on_PFUK_pressed"]
