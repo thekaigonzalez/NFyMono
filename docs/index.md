@@ -11,6 +11,8 @@ NFy Mono is an implementation of NFy containing:
 
 NFy Mono is also beginner friendly, and less error-prone.
 
+If you're new, check [this article out.](./getting-started/index.md)
+
 For Developers: [Click Here!](./reference/)
 
 ## Implementation difference
