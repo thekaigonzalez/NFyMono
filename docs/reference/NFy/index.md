@@ -16,11 +16,15 @@
 
 [getPlaylistName](./getPlaylistName.md)
 
+[GetTimeSignature](./GetTimeSignature.md)
+
 [listDir](./listDir.md)
 
 [OpenCorrect](./OpenCorrect.md)
 
 [OpenSong](./OpenSong.md)
+
+[ParseSongEntry](./ParseSongEntry.md)
 
 [PlaylistPreload](./PlaylistPreload.md)
 
