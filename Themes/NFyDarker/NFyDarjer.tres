@@ -1,11 +1,11 @@
 [gd_resource type="Theme" load_steps=17 format=2]
 
-[ext_resource path="res://FiraCode-Regular.ttf" type="DynamicFontData" id=1]
-[ext_resource path="res://Themes/NFyDarker/CircularStd-Medium.otf" type="DynamicFontData" id=2]
-[ext_resource path="res://Themes/NFyDarker/ButtonForNFD.tres" type="StyleBox" id=3]
+[ext_resource path="res://Themes/NFyDarker/CircularStd-Medium.otf" type="DynamicFontData" id=1]
+[ext_resource path="res://Themes/NFyCorded/ButtonForNFD.tres" type="StyleBox" id=2]
+[ext_resource path="res://whitneymedium.otf" type="DynamicFontData" id=3]
 
 [sub_resource type="DynamicFont" id=1]
-font_data = ExtResource( 1 )
+font_data = ExtResource( 3 )
 
 [sub_resource type="AnimatedTexture" id=7]
 
@@ -13,7 +13,8 @@ font_data = ExtResource( 1 )
 bg_color = Color( 0.0862745, 0.0156863, 0.0156863, 1 )
 
 [sub_resource type="DynamicFont" id=4]
-font_data = ExtResource( 1 )
+size = 14
+font_data = ExtResource( 3 )
 
 [sub_resource type="StyleBoxFlat" id=2]
 bg_color = Color( 0.294118, 0.294118, 0.294118, 1 )
@@ -32,7 +33,7 @@ corner_radius_bottom_left = 50
 [sub_resource type="DynamicFont" id=10]
 size = 15
 use_filter = true
-font_data = ExtResource( 1 )
+font_data = ExtResource( 3 )
 
 [sub_resource type="StyleBoxFlat" id=11]
 
@@ -45,7 +46,7 @@ bg_color = Color( 0.243137, 0.188235, 0.188235, 1 )
 bg_color = Color( 0.243137, 0.188235, 0.188235, 1 )
 
 [sub_resource type="DynamicFont" id=5]
-font_data = ExtResource( 2 )
+font_data = ExtResource( 1 )
 
 [sub_resource type="StyleBoxFlat" id=6]
 bg_color = Color( 0.407843, 0.67451, 0.764706, 1 )
@@ -64,11 +65,11 @@ Button/colors/font_color_hover = Color( 0.94, 0.94, 0.94, 1 )
 Button/colors/font_color_pressed = Color( 1, 1, 1, 1 )
 Button/constants/hseparation = 2
 Button/fonts/font = SubResource( 1 )
-Button/styles/disabled = ExtResource( 3 )
-Button/styles/focus = ExtResource( 3 )
-Button/styles/hover = ExtResource( 3 )
-Button/styles/normal = ExtResource( 3 )
-Button/styles/pressed = ExtResource( 3 )
+Button/styles/disabled = ExtResource( 2 )
+Button/styles/focus = ExtResource( 2 )
+Button/styles/hover = ExtResource( 2 )
+Button/styles/normal = ExtResource( 2 )
+Button/styles/pressed = ExtResource( 2 )
 CheckButton/colors/font_color = Color( 0.88, 0.88, 0.88, 1 )
 CheckButton/colors/font_color_disabled = Color( 0.9, 0.9, 0.9, 0.2 )
 CheckButton/colors/font_color_focus = Color( 0.94, 0.94, 0.94, 1 )

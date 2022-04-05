@@ -229,7 +229,7 @@ public class NFy : Control
         } else {
             PLAYING_ARRAY = false;
             m = new NFyRotation();
-
+            OpenCorrect(GetCurrentSongIfAny());
         }
     }
 
@@ -272,10 +272,18 @@ public class NFy : Control
     }
     // Contains code for a custom loop feature
     public void LoopHandler() {
+    
         if (getNFyStream().GetPlaybackPosition() >= SongLength && GetNode<CheckButton>("NFYSCREEN/Loop").Pressed && m.Dull()) {
             Console.WriteLine("play");
             OpenCorrect(GetCurrentSongIfAny()); // replay (resets every variable)
-            
+        }
+        else if (getNFyStream().GetPlaybackPosition() >= SongLength && !m.nextExists() && !m.Dull() && !GetNode<CheckButton>("NFYSCREEN/LoopPL").Pressed) {
+            Console.WriteLine("END OF PLAYLIST STOPPING!");
+            getNFyBar().Value = 0;
+            m = new NFyRotation();
+
+            OpenCorrect(GetCurrentSongIfAny());
+            PLAYING_ARRAY = false;
         }
         else if (getNFyStream().GetPlaybackPosition() >= SongLength && m.nextExists() && !m.Dull()) { // if it's done
             Console.WriteLine("Init next");
@@ -288,11 +296,7 @@ public class NFy : Control
             m.resetIndex();
             OpenCorrect(m.getCurrentSong());
         }
-        else if (getNFyStream().GetPlaybackPosition() >= SongLength && !m.nextExists() && !m.Dull() && !GetNode<CheckButton>("NFYSCREEN/LoopPL").Pressed) {
-            Console.WriteLine("END OF PLAYLIST STOPPING!");
-            getNFyBar().Value = 0;
-            OpenCorrect(GetCurrentSongIfAny());
-        }
+        
         
     }
 
@@ -302,15 +306,37 @@ public class NFy : Control
 
     public override void _Process(float delta)
     {
+        getNFyStream().VolumeDb = ((float)GetNode<VSlider>("NFYSCREEN/Volume").Value);
+        if (m.currentIndex() > m.getSize()) {
+            Console.WriteLine("!!!!! ABOVE");
+            PLAYING_ARRAY = false;
+            m = new NFyRotation();
+            OpenCorrect(GetCurrentSongIfAny());
+        }
+        
         if (!m.Dull()) {
             GetNode<Label>("NFYSCREEN/PLabel").Visible = true;
-            GetNode<Label>("NFYSCREEN/PLabel").Text = "Currently in rotation;\n" + m.currentIndex()+1 + " of " + m.getSize();
+            GetNode<Label>("NFYSCREEN/PLabel").Text = "Currently in rotation;\n" + (m.currentIndex()+1).ToString() + " of " + m.getSize();
+            GetNode<Label>("NFYSCREEN/CS").Visible = true;
+            GetNode<Label>("NFYSCREEN/CS").Text = "Rotation - " + m.getCurrentSong();
         } else {
             GetNode<Label>("NFYSCREEN/PLabel").Visible = false;
+            GetNode<Label>("NFYSCREEN/CS").Visible = false;
+        }
+
+        if (GetCurrentSongIfAny() != "" && m.Dull()) {
+            GetNode<Label>("NFYSCREEN/CS").Visible = true;
+            GetNode<Label>("NFYSCREEN/CS").Text = GetCurrentSongIfAny();
+        } else {
+            if (m.Dull()) {
+                GetNode<Label>("NFYSCREEN/CS").Visible = false;
+            }
         }
         
         LoopHandler();
+
         getNFyBar().MaxValue = SongLength;
+
         if (getNFyStream().Playing && !PLAYING_ARRAY) {
             getNFyBar().Value = getNFyStream().GetPlaybackPosition();
             ChangeActivity(GetCurrentSongIfAny(), GetTimeSignature());
