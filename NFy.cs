@@ -304,7 +304,7 @@ public class NFy : Control
     {
         if (!m.Dull()) {
             GetNode<Label>("NFYSCREEN/PLabel").Visible = true;
-            GetNode<Label>("NFYSCREEN/PLabel").Text = "Currently in rotation;\n" + m.currentIndex() + " of " + m.getSize();
+            GetNode<Label>("NFYSCREEN/PLabel").Text = "Currently in rotation;\n" + m.currentIndex()+1 + " of " + m.getSize();
         } else {
             GetNode<Label>("NFYSCREEN/PLabel").Visible = false;
         }
@@ -315,8 +315,16 @@ public class NFy : Control
             getNFyBar().Value = getNFyStream().GetPlaybackPosition();
             ChangeActivity(GetCurrentSongIfAny(), GetTimeSignature());
         } else {
-            ChangeActivity("In Rotation - " + m.getCurrentSong(), GetTimeSignature());
-            getNFyBar().Value = getNFyStream().GetPlaybackPosition();
+            if (!getNFyStream().Playing) {
+                if (!m.Dull()) 
+                    ChangeActivity("Paused In Rotation", m.currentIndex().ToString() + " out of " + m.getSize().ToString());
+                else
+                    ChangeActivity("Paused", "On song " + GetCurrentSongIfAny());
+
+            } else {
+                ChangeActivity("In Rotation - " + m.getCurrentSong(), GetTimeSignature());
+                getNFyBar().Value = getNFyStream().GetPlaybackPosition();
+            }
         }
     }
 }
