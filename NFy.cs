@@ -242,6 +242,21 @@ public class NFy : Control
         if (Input.IsKeyPressed(((int)KeyList.L))) {
             getNFyStream().Seek(getNFyStream().GetPlaybackPosition() + 10);
         }
+        else if (Input.IsKeyPressed(((int)KeyList.J))) {
+            float newpos = getNFyStream().GetPlaybackPosition() - 10;
+            if (newpos <= 0) {
+                newpos = 0;
+            }
+            getNFyStream().Seek(newpos);
+        }
+
+        else if (Input.IsKeyPressed(((int)KeyList.K))) {
+            if (getNFyStream().Playing) {
+                getNFyStream().Stop();
+            } else {
+                getNFyStream().Play();
+            }
+        }
     }
 
     public void _on_EnableConsole_pressed() {
