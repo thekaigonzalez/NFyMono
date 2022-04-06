@@ -264,12 +264,24 @@ public class NFy : Control
     }
 
     public void _on_Button_pressed() {
+        
+        
         if (getNFyStream().Stream == null)
         {
-            OpenCorrect(GetCurrentSongIfAny());
-            getNFyBar().MaxValue = SongLength;
+            if (!getNFyStream().Playing) {
+                OpenCorrect(GetCurrentSongIfAny());
+                getNFyBar().MaxValue = SongLength;
+            } else {
+                getNFyStream().Stop();
+            }
+            
+        
         } else {
+            if (!getNFyStream().Playing) 
             getNFyStream().Play(sp);
+            else {
+            getNFyStream().Stop();
+            }
         }
 
     }
@@ -321,6 +333,17 @@ public class NFy : Control
 
     public override void _Process(float delta)
     {
+        if (getNFyStream().Playing) {
+            sp = getNFyStream().GetPlaybackPosition();
+        }
+
+        if (!getNFyStream().Playing) {
+            GetNode<Button>("NFYSCREEN/Play").Text = "Play";
+        } else {
+            GetNode<Button>("NFYSCREEN/Play").Text = "Stop";
+            
+
+        }
         getNFyStream().VolumeDb = ((float)GetNode<VSlider>("NFYSCREEN/Volume").Value);
         if (m.currentIndex() > m.getSize()) {
             Console.WriteLine("!!!!! ABOVE");
