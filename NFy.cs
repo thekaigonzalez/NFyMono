@@ -202,7 +202,6 @@ public class NFy : Control
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
-        
         PrintToConsole("Checking for specials");
         if (SpecialsEnabled()) GetNode<Button>("NFYSCREEN/EnableConsole").Visible = true;
         PrintToConsole("Loading setup daemon");
