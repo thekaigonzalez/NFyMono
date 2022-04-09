@@ -1,4 +1,4 @@
-![Mono NFy](./nfymonoofficial.png.png)
+![Mono NFy](./nfymonoofficial.png)
 
 # The NFyMono/NJmono7 Project
 
