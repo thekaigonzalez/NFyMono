@@ -376,7 +376,7 @@ public class NFy : Control
 
         if (getNFyStream().Playing && !PLAYING_ARRAY) {
             getNFyBar().Value = getNFyStream().GetPlaybackPosition();
-            ChangeActivity(GetCurrentSongIfAny(), GetTimeSignature());
+            ChangeActivity(GetTimeSignature(), GetCurrentSongIfAny ());
         } else {
             if (!getNFyStream().Playing) {
                 if (!m.Dull()) 
