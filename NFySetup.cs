@@ -12,6 +12,11 @@ static class SetupAPI {
             clean = false;
         }
 
+        if (!Directory.Exists("playlists")) {
+            Console.WriteLine("Creating directory `playlists' to fix any undefined behaviour.");
+            clean = false;
+        }
+
         if (clean) {
             Console.WriteLine("Setup completed with no errors");
         }
