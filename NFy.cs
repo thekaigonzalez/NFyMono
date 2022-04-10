@@ -226,13 +226,17 @@ public class NFy : Control
     public void _on_UP_toggled(bool t) {
 
         if (t) {
-            string[] pl = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, string[]>>(System.IO.File.ReadAllText(CTEXT("playlists/" + getPlaylistName() + ".json")))["songs"];
+            if (System.IO.File.Exists("playlists/" + getPlaylistName())) {
+                string[] pl = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, string[]>>(System.IO.File.ReadAllText(CTEXT("playlists/" + getPlaylistName() + ".json")))["songs"];
                 
-            m = new NFyRotation(pl);
+                m = new NFyRotation(pl);
 
-            PLAYING_ARRAY = true;
+                PLAYING_ARRAY = true;
 
-            OpenCorrect(m.getCurrentSong());
+                OpenCorrect(m.getCurrentSong());
+            } else {
+                Console.WriteLine("No play found."); // error message
+            }
         } else {
             PLAYING_ARRAY = false;
             m = new NFyRotation();
