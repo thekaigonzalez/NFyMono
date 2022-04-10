@@ -22,9 +22,13 @@
 
 [GDAPI](./GDAPI.md)
 
+
+
 [GetCurrentSongIfAny](./GetCurrentSongIfAny.md)
 
 [getPlaylistName](./getPlaylistName.md)
+
+[GetSpec](./GetSpec.md)
 
 [GetTimeSignature](./GetTimeSignature.md)
 
