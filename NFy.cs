@@ -124,6 +124,14 @@ public class NFy : Control
             audSound.Stream = d;   
         }
 
+        else if (path.Extension () == "mp3")
+        {
+            AudioStreamMP3 d = new AudioStreamMP3();
+            d.Data= b;
+            SongLength= d.GetLength();
+            audSound.Stream= d;
+        }
+
         audSound.Play();
     }
     public string CurrentSongPath() {
@@ -142,7 +150,7 @@ public class NFy : Control
         }
     }
     public string[] GetSpec() {
-        string[] spec = {"wav", "ogg"};
+        string[] spec = {"wav", "ogg", "mp3"};
         return spec;
     }
     public void OpenCorrect(string name) {
