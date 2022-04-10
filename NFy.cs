@@ -264,6 +264,7 @@ public class NFy : Control
         else if (Input.IsKeyPressed(((int)KeyList.K))) {
             if (getNFyStream().Playing) {
                 getNFyStream().Stop();
+
             } else {
                 getNFyStream().Play();
             }
@@ -347,6 +348,7 @@ public class NFy : Control
         if (getNFyStream().Playing) {
             sp = getNFyStream().GetPlaybackPosition();
         }
+        sp = getNFyStream().GetPlaybackPosition();
 
         if (!getNFyStream().Playing) {
             GetNode<Button>("NFYSCREEN/Play").Text = "Play";
