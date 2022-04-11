@@ -4,11 +4,20 @@
 
 The NFyMono project provides the LOWEST-LEVEL abstraction to listen to your music as clear as possible.
 
-And it doubles-up the original NFy with **.wav** support!
-
 Written in C#! 
 
 ## Differences
 
-Instead of gaining it's information from constantly updating global variables, it mitigates the spaghetti code & memory usage by
-borrowing information and discarding it as such.
+| Features           | NFy          | NFy Mono            | NFy.js            | LibNFy | NFyCli      | NFy.DJS                              |
+|--------------------|--------------|---------------------|-------------------|--------|-------------|--------------------------------------|
+| OGG                | Yes          | Yes                 | Yes               | No     | Yes         | Yes                                  |
+| WAV                | No           | Yes                 | Yes               | No     | Yes         | Yes                                  |
+| MP3                | No           | Yes                 | Yes               | No     | Yes         | Yes                                  |
+| Playlists          | Yes          | Yes (since Mono 3)  | No (program-wide) | No     | No          | No                                   |
+| Standardization    | 85%          | 100%                | 96%               | 5%     | 40%         | 6%                                   |
+| Framework/Library  | Godot Engine | Godot Engine (Mono) | Electron.js       | C++    | Rust        | Electron/D (D Language X JavaScript) |
+| Version Management | No           | Yes (Since Mono 7)  | No                | No     | No          | No                                   |
+| Song Looping       | Yes          | Yes                 | Yes               | No     | No          | No                                   |
+| Playlist Looping   | Yes (Buggy)  | Yes                 | No                | No     | No          | No                                   |
+| Automatic Setup    | No           | Yes (Since Mono 7)  | Yes               | No     | No          | No                                   |
+| Themes             | Yes          | Yes                 | No                | No     | No (No GUI) | No                                   |
