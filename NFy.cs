@@ -248,7 +248,7 @@ public class NFy : Control
         //https://api.github.com/repos/thekaigonzalez/NFyMono/releases/latest
         GetNode("MonoHTTPV").Connect("request_completed", this, "OnVersionRequestCompleted");
         HTTPRequest httpRequest = GetNode<HTTPRequest>("MonoHTTPV");
-
+        
         httpRequest.Request("https://api.github.com/repos/thekaigonzalez/NFyMono/releases/latest");
         Console.WriteLine();
         PrintToConsole("Checking for specials");
