@@ -209,7 +209,7 @@ public class NFy : Control
         return GetNode<OptionButton>("NFYSCREEN/Playlists").GetItemText(GetNode<OptionButton>("NFYSCREEN/Playlists").GetSelectedId());
     }
 
-    public void OnRequestCompleted(int result, int response_code, string[] headers, byte[] body)
+    public void OnVersionRequestCompleted(int result, int response_code, string[] headers, byte[] body)
     {
         string s = System.Text.Encoding.UTF8.GetString(body);
         if (response_code == 200) {
@@ -246,7 +246,7 @@ public class NFy : Control
     public override void _Ready()
     {
         //https://api.github.com/repos/thekaigonzalez/NFyMono/releases/latest
-        GetNode("MonoHTTPV").Connect("request_completed", this, "OnRequestCompleted");
+        GetNode("MonoHTTPV").Connect("request_completed", this, "OnVersionRequestCompleted");
         HTTPRequest httpRequest = GetNode<HTTPRequest>("MonoHTTPV");
 
         httpRequest.Request("https://api.github.com/repos/thekaigonzalez/NFyMono/releases/latest");
