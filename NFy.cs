@@ -209,9 +209,48 @@ public class NFy : Control
         return GetNode<OptionButton>("NFYSCREEN/Playlists").GetItemText(GetNode<OptionButton>("NFYSCREEN/Playlists").GetSelectedId());
     }
 
+    public void OnRequestCompleted(int result, int response_code, string[] headers, byte[] body)
+    {
+        string s = System.Text.Encoding.UTF8.GetString(body);
+        if (response_code == 200) {
+            var js1 =  JSON.Parse(s).Result;
+            var js =  (Godot.Collections.Dictionary) js1;
+
+            string v = js["tag_name"] as string;
+
+            if (System.IO.File.Exists(".vsign")) {
+                Console.WriteLine("Loading VSign");
+                PrintToConsole("Loading Version sign - Mono 7");
+                string ver = System.IO.File.ReadAllText(".vsign");
+
+                if (ver != v) {
+                    string ver1 = ver.Substring(ver.IndexOf(".")+1);
+                    string ver2 = v.Substring(v.IndexOf(".")+1);
+
+                    if (ver1.ToInt() < ver2.ToInt()) {
+                    System.IO.File.WriteAllText("BAD_VERSION.txt", "Wait!\nYou are not up to date!\n\nGo to https://github.com/thekaigonzalez/NFyMono.git and update!\nIf there's an available setup for the specified versions, choose it!\nIf you are seeing this message and you've modified the .vsign file, ignore it!\nHappy listening :)");
+                    OS.ShellOpen("BAD_VERSION.txt");
+                    // System.IO.File.Delete("BAD_VERSION.txt");
+
+                    } else {
+                        System.IO.File.WriteAllText("ABOVE_VERSION.txt", "Wait! you currently are above the recommended stable version.\nPlease report any bugs to https://github.com/thekaigonzalez/NFyMono/issues!");
+                    OS.ShellOpen("ABOVE_VERSION.txt");
+                    // System.IO.File.Delete("ABOVE_VERSION.txt");
+                    }
+                }
+            }
+        }
+    }
+
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
+        //https://api.github.com/repos/thekaigonzalez/NFyMono/releases/latest
+        GetNode("MonoHTTPV").Connect("request_completed", this, "OnRequestCompleted");
+        HTTPRequest httpRequest = GetNode<HTTPRequest>("MonoHTTPV");
+
+        httpRequest.Request("https://api.github.com/repos/thekaigonzalez/NFyMono/releases/latest");
+        Console.WriteLine();
         PrintToConsole("Checking for specials");
         if (SpecialsEnabled()) GetNode<Button>("NFYSCREEN/EnableConsole").Visible = true;
         PrintToConsole("Loading setup daemon");

@@ -209,6 +209,8 @@ margin_top = 674.0
 margin_right = 1269.0
 margin_bottom = 711.0
 
+[node name="MonoHTTPV" type="HTTPRequest" parent="."]
+
 [connection signal="pressed" from="NFYSCREEN/Stop" to="." method="_onStopRequested"]
 [connection signal="item_selected" from="NFYSCREEN/CurrentSongNF" to="." method="_song_change"]
 [connection signal="pressed" from="NFYSCREEN/EnableConsole" to="." method="_on_EnableConsole_pressed"]
