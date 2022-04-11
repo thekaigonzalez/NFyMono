@@ -82,7 +82,7 @@ public class NFy : Control
         return song;
     }
 
-    [Obsolete("Soon to be removed in NFyMono 4, this API function is no longer in support.")]
+    [Obsolete("Soon to be removed in NFyMono 8, this API function is no longer in support.")]
     public string Attach(string s1, string s2) {
         return s1 + s2;
     }
@@ -94,6 +94,8 @@ public class NFy : Control
         }
         return "";
     }
+
+
 
     public void OpenSong(string path)
     {        
