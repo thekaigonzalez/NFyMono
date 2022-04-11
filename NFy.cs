@@ -40,16 +40,6 @@ public class NFy : Control
         return false;
     }
 
-    /// CheckEachS() returns the extension that was found on the give path.
-    [Obsolete("CheckEachS() has been deprecated for CheckEach() and GetCurrentSongIfAny(). Please use those methods instead.")]
-    public string CheckEachS(string p, string[] spec) {
-        foreach (string s in spec) {
-            if (p.Extension() == s) return s;
-            else continue;
-        }
-        return "";
-    }
-
     public Panel getNFyScreen() {
         return GetNode<Panel>("NFYSCREEN");    
     }
@@ -82,10 +72,6 @@ public class NFy : Control
         return song;
     }
 
-    [Obsolete("Soon to be removed in NFyMono 8, this API function is no longer in support.")]
-    public string Attach(string s1, string s2) {
-        return s1 + s2;
-    }
     /// @desc Check the spec
     public string wCheck(string s, string[] sp) {
         foreach(string str in sp) {
