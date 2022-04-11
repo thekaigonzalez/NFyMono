@@ -56,9 +56,10 @@ public class NFy : Control
     }
 
     public bool SpecialsEnabled() {
-        if (OS.GetCmdlineArgs().Length >= 1) {
-            if (OS.GetCmdlineArgs()[0] == "--specials") { return true; } else { return false; }
+        foreach (string arg in OS.GetCmdlineArgs()) {
+            if (arg == "--specials") { return true; } else { return false; }
         }
+
         return false; // probably not
     }
     public void PrintToConsole(string text) {
