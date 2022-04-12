@@ -1,6 +1,7 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://NFy.cs" type="Script" id=1]
+[ext_resource path="res://NfyConIo.cs" type="Script" id=2]
 [ext_resource path="res://Themes/NFyCorded/NFyCord.tres" type="Theme" id=3]
 [ext_resource path="res://NfyMonoLogoUK.png" type="Texture" id=5]
 [ext_resource path="res://Themes/ClassicNFy/CircularStd-Medium.otf" type="DynamicFontData" id=6]
@@ -124,7 +125,9 @@ margin_top = 68.0
 margin_right = 398.0
 margin_bottom = 591.0
 readonly = true
+syntax_highlighting = true
 smooth_scrolling = true
+script = ExtResource( 2 )
 
 [node name="NfyMonoLogoUk" type="Sprite" parent="."]
 position = Vector2( 1251, 692 )
