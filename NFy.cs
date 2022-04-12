@@ -318,9 +318,9 @@ public class NFy : Control
 		
 		} else {
 			if (!getNFyStream().Playing) 
-			getNFyStream().Play(sp);
+				getNFyStream().Play(sp);
 			else {
-			getNFyStream().Stop();
+				getNFyStream().Stop();
 			}
 		}
 
