@@ -23,3 +23,17 @@ Written in C#!
 | Themes             | Yes          | Yes                  | No                | No       | No (No GUI) | No                                   |
 | Song Method        | List         | List                 | Stack             | Singular | Singular    | Stack                                |
 | Software           | Yes          | Yes (NFy's Software) | No                | No       | No          | No                                   |
+
+## Building
+
+### Using Bumble/Godot Compat
+
+To build using Godot, you need -
+
+* Visual Studio 2019/2022
+* Godot 3.4 MONO (Only Mono versions are supported)
+* .NET Core
+
+Open Godot, and import the project.
+
+After loading the project, go to Project > **Export...** and export your platform.
