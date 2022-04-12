@@ -192,10 +192,23 @@ public class NFy : Control
 		}
 	}
 
+	public void print(string text) {
+		Console.WriteLine(text);
+		PrintToConsole(text);
+	}
+
 	public string getPlaylistName() {
 		return GetNode<OptionButton>("NFYSCREEN/Playlists").GetItemText(GetNode<OptionButton>("NFYSCREEN/Playlists").GetSelectedId());
 	}
+	/**
+	
+	GET VERSION
 
+	This gets the latest release and compares it to the current version sign.
+
+	For developers: Versions in this are formatted version.NUMBER, and should be used as such,
+	to change the format, update the ver1 & ver2 variables found at lines 222 and 223.
+	*/
 	public void OnVersionRequestCompleted(int result, int response_code, string[] headers, byte[] body)
 	{
 		string s = System.Text.Encoding.UTF8.GetString(body);
@@ -203,48 +216,47 @@ public class NFy : Control
 			var js1 =  JSON.Parse(s).Result;
 			var js =  (Godot.Collections.Dictionary) js1;
 
-			string v = js["tag_name"] as string;
+			string v = js["tag_name"] as string; // get the latest tag name from JSON
 
+			/* if version sign is found, use version */
 			if (System.IO.File.Exists(".vsign")) {
+				
 				Console.WriteLine("Loading VSign");
-				PrintToConsole("Loading Version sign - Mono 7");
+				print("Loading Version sign - Mono 7");
 				string ver = System.IO.File.ReadAllText(".vsign");
 
 				if (ver != v) {
-					string ver1 = ver.Substring(ver.IndexOf(".")+1);
-					string ver2 = v.Substring(v.IndexOf(".")+1);
-
-					if (ver1.ToInt() < ver2.ToInt()) {
-					System.IO.File.WriteAllText("BAD_VERSION.txt", "Wait!\nYou are not up to date!\n\nGo to https://github.com/thekaigonzalez/NFyMono.git and update!\nIf there's an available setup for the specified versions, choose it!\nIf you are seeing this message and you've modified the .vsign file, ignore it!\nHappy listening :)");
-					OS.ShellOpen("BAD_VERSION.txt");
-					// System.IO.File.Delete("BAD_VERSION.txt");
-
+					string ver1 = ver.Substring(ver.IndexOf(".")+1); // (version.)NUMBER
+					string ver2 = v.Substring(v.IndexOf(".")+1); // (version.)NUMBER
+					/* compare integer version numbers (one greater or less) */
+					if (ver1.ToInt() < ver2.ToInt()) { 
+						System.IO.File.WriteAllText("BAD_VERSION.txt", "Wait!\nYou are not up to date!\n\nGo to https://github.com/thekaigonzalez/NFyMono.git and update!\nIf there's an available setup for the specified versions, choose it!\nIf you are seeing this message and you've modified the .vsign file, ignore it!\nHappy listening :)");
+						OS.ShellOpen("BAD_VERSION.txt");
 					} else {
 						System.IO.File.WriteAllText("ABOVE_VERSION.txt", "Wait! you currently are above the recommended stable version.\nPlease report any bugs to https://github.com/thekaigonzalez/NFyMono/issues!");
-					OS.ShellOpen("ABOVE_VERSION.txt");
-					// System.IO.File.Delete("ABOVE_VERSION.txt");
+						OS.ShellOpen("ABOVE_VERSION.txt");
 					}
 				}
 			}
 		}
 	}
 
-	// Called when the node enters the scene tree for the first time.
+	/// [------------------ THE INITIAL FUNCTION ------------------]
 	public override void _Ready()
 	{
-		//https://api.github.com/repos/thekaigonzalez/NFyMono/releases/latest
+		// Setup HTTP
 		GetNode("MonoHTTPV").Connect("request_completed", this, "OnVersionRequestCompleted");
 		HTTPRequest httpRequest = GetNode<HTTPRequest>("MonoHTTPV");
-		
-		httpRequest.Request("https://api.github.com/repos/thekaigonzalez/NFyMono/releases/latest");
+		httpRequest.Request("https://api.github.com/repos/thekaigonzalez/NFyMono/releases/latest"); // request latest release
+
 		Console.WriteLine();
-		PrintToConsole("Checking for specials");
+		print("Checking for specials");
 		if (SpecialsEnabled()) GetNode<Button>("NFYSCREEN/EnableConsole").Visible = true;
-		PrintToConsole("Loading setup daemon");
+		print("Loading setup daemon");
 		SetupAPI.SetupNFy();
-		PrintToConsole("Preloading songs into list");
+		print("Preloading songs into list");
 		SongPreload();
-		PrintToConsole("Setting up the Discord presence from GDScript API");
+		print("Setting up the Discord presence from GDScript API");
 		ChangeActivity("No Song Loaded", "On NFy MONO");
 		
 		PlaylistPreload();
