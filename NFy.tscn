@@ -116,20 +116,6 @@ margin_right = 704.0
 margin_bottom = 611.0
 text = "Play"
 
-[node name="Close" type="Button" parent="NFYSCREEN"]
-margin_left = 1247.0
-margin_top = 4.0
-margin_right = 1277.0
-margin_bottom = 33.0
-text = "X"
-
-[node name="Mini" type="Button" parent="NFYSCREEN"]
-margin_left = 1212.0
-margin_top = 4.0
-margin_right = 1242.0
-margin_bottom = 33.0
-text = "-"
-
 [node name="NfyStream" type="AudioStreamPlayer" parent="."]
 
 [node name="CON" type="TextEdit" parent="."]
@@ -161,6 +147,4 @@ margin_bottom = 711.0
 [connection signal="pressed" from="NFYSCREEN/EnableConsole" to="." method="_on_EnableConsole_pressed"]
 [connection signal="toggled" from="NFYSCREEN/UP" to="." method="_on_UP_toggled"]
 [connection signal="pressed" from="NFYSCREEN/Play" to="." method="_on_Button_pressed"]
-[connection signal="pressed" from="NFYSCREEN/Close" to="." method="_on_Close_pressed"]
-[connection signal="pressed" from="NFYSCREEN/Mini" to="." method="_on_Mini_pressed"]
 [connection signal="pressed" from="PFUK" to="." method="_on_PFUK_pressed"]

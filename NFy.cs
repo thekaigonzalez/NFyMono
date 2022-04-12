@@ -293,15 +293,7 @@ public class NFy : Control
 	
 	public override void _Input(InputEvent inputEvent) {
 
-		if (inputEvent is InputEventMouseButton mnb) {
-			//https://github.com/coppolaemilio/godot-nightly/blob/master/TitleBar.gd
-
-			if (mnb.ButtonIndex == 1) {
-				Following = !Following;
-				DraggingStartPosition = GetLocalMousePosition();
-			}
-
-		}
+		
 		if (Input.IsKeyPressed(((int)KeyList.L))) {
 			getNFyStream().Seek(getNFyStream().GetPlaybackPosition() + 10);
 		}
@@ -399,22 +391,11 @@ public class NFy : Control
 		return GetTimeFormat(getNFyStream().GetPlaybackPosition()) + " - " + GetTimeFormat(SongLength);
 	}
 	
-	// BEGIN WINDOW CODE
-	public void _on_Mini_pressed() {
-		OS.WindowMinimized = true;
-	}
-	
-	public void _on_Close_pressed() {
-		GetTree().Quit();
-	}
-	// END WINDOW CODE
 
 	public override void _Process(float delta)
 	{
 
-		if (Following) {
-			OS.WindowPosition = (OS.WindowPosition + GetGlobalMousePosition() - DraggingStartPosition);
-		}
+		
 		if (getNFyStream().Playing) {
 			sp = getNFyStream().GetPlaybackPosition();
 		}
