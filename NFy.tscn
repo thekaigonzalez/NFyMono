@@ -85,6 +85,7 @@ margin_left = 1060.0
 margin_top = 136.0
 margin_right = 1205.0
 margin_bottom = 202.0
+custom_colors/font_color = Color( 1, 0.494118, 0, 1 )
 text = "Current in Rotation;
 1 out of 1"
 align = 1
