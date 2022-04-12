@@ -33,9 +33,9 @@ percent_visible = false
 
 [node name="CurrentSongNF" type="OptionButton" parent="NFYSCREEN"]
 margin_left = 1019.0
-margin_top = 23.0
+margin_top = 237.0
 margin_right = 1254.0
-margin_bottom = 75.0
+margin_bottom = 289.0
 text = "Songs list"
 clip_text = true
 align = 1
@@ -66,9 +66,9 @@ align = 1
 
 [node name="Playlists" type="OptionButton" parent="NFYSCREEN"]
 margin_left = 1019.0
-margin_top = 80.0
+margin_top = 297.0
 margin_right = 1254.0
-margin_bottom = 118.0
+margin_bottom = 335.0
 text = "Playlists"
 clip_text = true
 align = 1
@@ -83,9 +83,9 @@ align = 1
 
 [node name="PLabel" type="Label" parent="NFYSCREEN"]
 margin_left = 1060.0
-margin_top = 136.0
+margin_top = 355.0
 margin_right = 1205.0
-margin_bottom = 202.0
+margin_bottom = 421.0
 custom_colors/font_color = Color( 1, 0.494118, 0, 1 )
 text = "Current in Rotation;
 1 out of 1"
@@ -115,6 +115,20 @@ margin_top = 576.0
 margin_right = 704.0
 margin_bottom = 611.0
 text = "Play"
+
+[node name="Close" type="Button" parent="NFYSCREEN"]
+margin_left = 1247.0
+margin_top = 4.0
+margin_right = 1277.0
+margin_bottom = 33.0
+text = "X"
+
+[node name="Mini" type="Button" parent="NFYSCREEN"]
+margin_left = 1212.0
+margin_top = 4.0
+margin_right = 1242.0
+margin_bottom = 33.0
+text = "-"
 
 [node name="NfyStream" type="AudioStreamPlayer" parent="."]
 
@@ -147,4 +161,6 @@ margin_bottom = 711.0
 [connection signal="pressed" from="NFYSCREEN/EnableConsole" to="." method="_on_EnableConsole_pressed"]
 [connection signal="toggled" from="NFYSCREEN/UP" to="." method="_on_UP_toggled"]
 [connection signal="pressed" from="NFYSCREEN/Play" to="." method="_on_Button_pressed"]
+[connection signal="pressed" from="NFYSCREEN/Close" to="." method="_on_Close_pressed"]
+[connection signal="pressed" from="NFYSCREEN/Mini" to="." method="_on_Mini_pressed"]
 [connection signal="pressed" from="PFUK" to="." method="_on_PFUK_pressed"]
