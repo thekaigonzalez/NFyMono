@@ -1,9 +1,8 @@
-[gd_resource type="Theme" load_steps=19 format=2]
+[gd_resource type="Theme" load_steps=18 format=2]
 
 [ext_resource path="res://Themes/NFyDarker/CircularStd-Medium.otf" type="DynamicFontData" id=1]
 [ext_resource path="res://FiraCode-Regular.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://Themes/NFyDarker/ButtonForNFDC.tres" type="StyleBox" id=3]
-[ext_resource path="res://Segoe UI.ttf" type="DynamicFontData" id=4]
 [ext_resource path="res://open-sans-bold_[allfont.net].ttf" type="DynamicFontData" id=5]
 
 [sub_resource type="DynamicFont" id=1]
@@ -16,7 +15,7 @@ bg_color = Color( 0.0862745, 0.0156863, 0.0156863, 1 )
 
 [sub_resource type="DynamicFont" id=4]
 size = 14
-font_data = ExtResource( 4 )
+font_data = ExtResource( 2 )
 
 [sub_resource type="StyleBoxFlat" id=2]
 bg_color = Color( 0.294118, 0.294118, 0.294118, 1 )
@@ -62,9 +61,9 @@ anti_aliasing_size = 0.717
 [resource]
 Button/colors/font_color = Color( 1, 1, 1, 1 )
 Button/colors/font_color_disabled = Color( 1, 1, 1, 1 )
-Button/colors/font_color_focus = Color( 0.94, 0.94, 0.94, 1 )
-Button/colors/font_color_hover = Color( 0.94, 0.94, 0.94, 1 )
-Button/colors/font_color_pressed = Color( 1, 1, 1, 1 )
+Button/colors/font_color_focus = Color( 0.941176, 0.941176, 0.941176, 1 )
+Button/colors/font_color_hover = Color( 0.933333, 0.34902, 0, 1 )
+Button/colors/font_color_pressed = Color( 0.552941, 0.313726, 0, 1 )
 Button/constants/hseparation = 2
 Button/fonts/font = SubResource( 1 )
 Button/styles/disabled = ExtResource( 3 )
