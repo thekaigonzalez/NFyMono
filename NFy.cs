@@ -191,7 +191,7 @@ public class NFy : Control
 			}
 		}
 	}
-
+	/* print to console and the bumblebee console */
 	public void print(string text) {
 		Console.WriteLine(text);
 		PrintToConsole(text);
