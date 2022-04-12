@@ -173,7 +173,7 @@ public class NFy : Control
 			foreach (string item in listDir("songs")) {
 				if (!item.EndsWith(".import") && CheckEach(item, GetSpec())) { // possibly fix non-audio files showing up
 					string item_parsed = ParseSongEntry(item);
-					Console.WriteLine(item_parsed);
+					print(item_parsed);
 					getNFySongList().AddItem(item_parsed);
 				}
 			}
@@ -185,7 +185,7 @@ public class NFy : Control
 			foreach (string item in listDir("playlists")) {
 				if (item.EndsWith(".json")) { 
 					string item_parsed = ParseSongEntry(item);
-					Console.WriteLine(item_parsed);
+					print(item_parsed);
 					GetNode<OptionButton>("NFYSCREEN/Playlists").AddItem(item_parsed);
 				}
 			}
@@ -221,7 +221,7 @@ public class NFy : Control
 			/* if version sign is found, use version */
 			if (System.IO.File.Exists(".vsign")) {
 				
-				Console.WriteLine("Loading VSign");
+				print("Loading VSign");
 				print("Loading Version sign - Mono 7");
 				string ver = System.IO.File.ReadAllText(".vsign");
 
@@ -249,7 +249,6 @@ public class NFy : Control
 		HTTPRequest httpRequest = GetNode<HTTPRequest>("MonoHTTPV");
 		httpRequest.Request("https://api.github.com/repos/thekaigonzalez/NFyMono/releases/latest"); // request latest release
 
-		Console.WriteLine();
 		print("Checking for specials");
 		if (SpecialsEnabled()) GetNode<Button>("NFYSCREEN/EnableConsole").Visible = true;
 		print("Loading setup daemon");
@@ -275,7 +274,7 @@ public class NFy : Control
 
 				OpenCorrect(m.getCurrentSong());
 			} else {
-				Console.WriteLine("No play found."); // error message
+				print("error: No play found."); // error message
 			}
 		} else {
 			PLAYING_ARRAY = false;
@@ -312,7 +311,11 @@ public class NFy : Control
 	}
 
 	public void _on_EnableConsole_pressed() {
-		GetNode<TextEdit>("CON").Visible = true;
+		if (GetNode<TextEdit>("CON").Visible)
+			GetNode<TextEdit>("CON").Visible = false;
+		else
+			GetNode<TextEdit>("CON").Visible = true;
+
 	}
 
 	public void _on_Button_pressed() {
@@ -353,11 +356,11 @@ public class NFy : Control
 	public void LoopHandler() {
 	
 		if (getNFyStream().GetPlaybackPosition() >= SongLength && GetNode<CheckButton>("NFYSCREEN/Loop").Pressed && m.Dull()) {
-			Console.WriteLine("play");
+			print("play");
 			OpenCorrect(GetCurrentSongIfAny()); // replay (resets every variable)
 		}
 		else if (getNFyStream().GetPlaybackPosition() >= SongLength && !m.nextExists() && !m.Dull() && !GetNode<CheckButton>("NFYSCREEN/LoopPL").Pressed) {
-			Console.WriteLine("END OF PLAYLIST STOPPING!");
+			print("END OF PLAYLIST STOPPING!");
 			getNFyBar().Value = 0;
 			m = new NFyRotation();
 
@@ -365,12 +368,12 @@ public class NFy : Control
 			PLAYING_ARRAY = false;
 		}
 		else if (getNFyStream().GetPlaybackPosition() >= SongLength && m.nextExists() && !m.Dull()) { // if it's done
-			Console.WriteLine("Init next");
+			print("Init next");
 			m.moveIndex();
 			OpenCorrect(m.getCurrentSong()); // replay (resets every variable)
 		} 
 		else if (getNFyStream().GetPlaybackPosition() >= SongLength && !m.nextExists() && !m.Dull() && GetNode<CheckButton>("NFYSCREEN/LoopPL").Pressed) {
-			Console.WriteLine("END OF PLAYLIST RELOOP!!");
+			print("END OF PLAYLIST RELOOP!!");
 			getNFyBar().Value = 0;
 			m.resetIndex();
 			OpenCorrect(m.getCurrentSong());
@@ -399,7 +402,7 @@ public class NFy : Control
 		}
 		getNFyStream().VolumeDb = ((float)GetNode<VSlider>("NFYSCREEN/Volume").Value);
 		if (m.currentIndex() > m.getSize()) {
-			Console.WriteLine("!!!!! ABOVE");
+			print("!!!!! ABOVE");
 			PLAYING_ARRAY = false;
 			m = new NFyRotation();
 			OpenCorrect(GetCurrentSongIfAny());
