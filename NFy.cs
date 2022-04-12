@@ -254,7 +254,7 @@ public class NFy : Control
 	public void _on_UP_toggled(bool t) {
 
 		if (t) {
-			if (System.IO.File.Exists("playlists/" + getPlaylistName())) {
+			if (System.IO.File.Exists("playlists/" + getPlaylistName() + ".json")) {
 				string[] pl = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, string[]>>(System.IO.File.ReadAllText(CTEXT("playlists/" + getPlaylistName() + ".json")))["songs"];
 				
 				m = new NFyRotation(pl);
