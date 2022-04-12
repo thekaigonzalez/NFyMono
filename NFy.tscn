@@ -1,24 +1,17 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://NFy.cs" type="Script" id=1]
-[ext_resource path="res://Themes/NFyDarker/NFyDarjer.tres" type="Theme" id=2]
 [ext_resource path="res://Themes/NFyCorded/NFyCord.tres" type="Theme" id=3]
-[ext_resource path="res://NFyNews.cs" type="Script" id=4]
 [ext_resource path="res://NfyMonoLogoUK.png" type="Texture" id=5]
 [ext_resource path="res://Themes/ClassicNFy/CircularStd-Medium.otf" type="DynamicFontData" id=6]
 [ext_resource path="res://Segoe UI.ttf" type="DynamicFontData" id=7]
 
+[sub_resource type="StyleBoxFlat" id=4]
+bg_color = Color( 0.0666667, 0.0666667, 0.0666667, 1 )
+
 [sub_resource type="DynamicFont" id=3]
 size = 14
 font_data = ExtResource( 7 )
-
-[sub_resource type="StyleBoxFlat" id=1]
-bg_color = Color( 0.243137, 0.188235, 0.188235, 1 )
-corner_radius_top_left = 20
-corner_radius_top_right = 20
-corner_radius_bottom_right = 20
-corner_radius_bottom_left = 20
-shadow_size = 6
 
 [sub_resource type="DynamicFont" id=2]
 size = 40
@@ -33,13 +26,7 @@ script = ExtResource( 1 )
 margin_right = 1280.0
 margin_bottom = 720.0
 theme = ExtResource( 3 )
-
-[node name="Stop" type="Button" parent="NFYSCREEN"]
-margin_left = 1285.0
-margin_top = 500.0
-margin_right = 1347.0
-margin_bottom = 524.0
-text = "S"
+custom_styles/panel = SubResource( 4 )
 
 [node name="LIZENZ" type="Label" parent="NFYSCREEN"]
 visible = false
@@ -57,9 +44,9 @@ margin_bottom = 637.0
 percent_visible = false
 
 [node name="CurrentSongNF" type="OptionButton" parent="NFYSCREEN"]
-margin_left = 1011.0
+margin_left = 1019.0
 margin_top = 23.0
-margin_right = 1246.0
+margin_right = 1254.0
 margin_bottom = 75.0
 custom_fonts/font = SubResource( 3 )
 text = "Songs list"
@@ -74,17 +61,10 @@ margin_right = 80.0
 margin_bottom = 624.0
 text = "console"
 
-[node name="ChangeTheme" type="Button" parent="NFYSCREEN"]
-margin_left = 13.0
-margin_top = 674.0
-margin_right = 148.0
-margin_bottom = 711.0
-text = "Toggle Theme"
-
 [node name="Loop" type="CheckButton" parent="NFYSCREEN"]
 margin_left = 13.0
-margin_top = 476.0
-margin_right = 173.0
+margin_top = 489.0
+margin_right = 130.0
 margin_bottom = 524.0
 text = "Loop?"
 align = 1
@@ -98,9 +78,9 @@ text = "Loop Playlist?"
 align = 1
 
 [node name="Playlists" type="OptionButton" parent="NFYSCREEN"]
-margin_left = 1011.0
+margin_left = 1019.0
 margin_top = 80.0
-margin_right = 1246.0
+margin_right = 1254.0
 margin_bottom = 118.0
 text = "Playlists"
 clip_text = true
@@ -108,65 +88,27 @@ align = 1
 
 [node name="UP" type="CheckButton" parent="NFYSCREEN"]
 margin_left = 13.0
-margin_top = 423.0
-margin_right = 216.0
-margin_bottom = 466.0
+margin_top = 446.0
+margin_right = 173.0
+margin_bottom = 479.0
 text = "Use Playlist?"
 align = 1
 
 [node name="PLabel" type="Label" parent="NFYSCREEN"]
-margin_left = 1064.0
+margin_left = 1060.0
 margin_top = 136.0
-margin_right = 1209.0
+margin_right = 1205.0
 margin_bottom = 202.0
 text = "Current in Rotation;
 1 out of 1"
 align = 1
 autowrap = true
 
-[node name="NewsPanel" type="Panel" parent="NFYSCREEN"]
-margin_left = 1016.0
-margin_top = 271.0
-margin_right = 1254.0
-margin_bottom = 695.0
-theme = ExtResource( 2 )
-custom_styles/panel = SubResource( 1 )
-script = ExtResource( 4 )
-
-[node name="NFy Mono News" type="Label" parent="NFYSCREEN/NewsPanel"]
-margin_top = 26.0
-margin_right = 311.0
-margin_bottom = 89.0
-text = "NFy Mono News"
-align = 1
-
-[node name="author" type="Label" parent="NFYSCREEN/NewsPanel"]
-margin_left = 12.0
-margin_top = 68.0
-margin_right = 112.0
-margin_bottom = 88.0
-text = "No news yet.."
-
-[node name="news" type="TextEdit" parent="NFYSCREEN/NewsPanel"]
-margin_left = 8.0
-margin_top = 88.0
-margin_right = 233.0
-margin_bottom = 414.0
-theme = ExtResource( 2 )
-text = "News will show up here.."
-readonly = true
-draw_tabs = true
-fold_gutter = true
-smooth_scrolling = true
-wrap_enabled = true
-
-[node name="HTTPRequest" type="HTTPRequest" parent="NFYSCREEN/NewsPanel"]
-
 [node name="CS" type="Label" parent="NFYSCREEN"]
-margin_left = 25.0
-margin_top = 35.0
-margin_right = 956.0
-margin_bottom = 345.0
+margin_left = 18.0
+margin_top = 25.0
+margin_right = 949.0
+margin_bottom = 335.0
 custom_fonts/font = SubResource( 2 )
 text = "Current Song"
 autowrap = true
@@ -180,10 +122,10 @@ min_value = -100.0
 max_value = 0.0
 
 [node name="Play" type="Button" parent="NFYSCREEN"]
-margin_left = 608.0
-margin_top = 666.0
-margin_right = 709.0
-margin_bottom = 701.0
+margin_left = 603.0
+margin_top = 576.0
+margin_right = 704.0
+margin_bottom = 611.0
 text = "Play"
 
 [node name="NfyStream" type="AudioStreamPlayer" parent="."]
@@ -211,10 +153,8 @@ margin_bottom = 711.0
 
 [node name="MonoHTTPV" type="HTTPRequest" parent="."]
 
-[connection signal="pressed" from="NFYSCREEN/Stop" to="." method="_onStopRequested"]
 [connection signal="item_selected" from="NFYSCREEN/CurrentSongNF" to="." method="_song_change"]
 [connection signal="pressed" from="NFYSCREEN/EnableConsole" to="." method="_on_EnableConsole_pressed"]
-[connection signal="pressed" from="NFYSCREEN/ChangeTheme" to="." method="_on_ChangeTheme_pressed"]
 [connection signal="toggled" from="NFYSCREEN/UP" to="." method="_on_UP_toggled"]
 [connection signal="pressed" from="NFYSCREEN/Play" to="." method="_on_Button_pressed"]
 [connection signal="pressed" from="PFUK" to="." method="_on_PFUK_pressed"]
