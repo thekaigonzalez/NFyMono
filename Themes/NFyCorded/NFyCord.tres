@@ -2,7 +2,7 @@
 
 [ext_resource path="res://Themes/NFyDarker/CircularStd-Medium.otf" type="DynamicFontData" id=1]
 [ext_resource path="res://FiraCode-Regular.ttf" type="DynamicFontData" id=2]
-[ext_resource path="res://Themes/NFyDarker/ButtonForNFDC.tres" type="StyleBox" id=3]
+[ext_resource path="res://Themes/NFyCorded/ButtonForNFDC.tres" type="StyleBox" id=3]
 [ext_resource path="res://open-sans-bold_[allfont.net].ttf" type="DynamicFontData" id=5]
 
 [sub_resource type="DynamicFont" id=1]
