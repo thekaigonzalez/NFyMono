@@ -401,10 +401,13 @@ public class NFy : Control
 		if (GetCurrentSongIfAny() == "MACINTOSH PLUS 420") {
 			getNFyScreen().Theme = GD.Load<Theme>("res://Win95.tres");
 			getNFyScreen().AddStyleboxOverride("panel", GD.Load<StyleBoxFlat>("res://Win95s.tres"));
+			IsInNFyAES = true;
 		} else {
 			getNFyScreen().Theme = GD.Load<Theme>("res://Themes/NFyCorded/NFyCord.tres");
 
 			getNFyScreen().AddStyleboxOverride("panel", GD.Load<StyleBoxFlat>("res://Themes/NFyCorded/PanelTheme.tres"));
+			IsInNFyAES = false;
+
 
 		}
 		if (getNFyStream().Playing) {
