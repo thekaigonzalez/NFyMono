@@ -1,4 +1,4 @@
-static func change_activity(state, song, aes=false):
+static func change_activity(state, song, aes=false, nfysad=false):
 	var acti = Discord.Activity.new()
 	acti.set_type(Discord.ActivityType.Listening)
 	acti.set_state(state)
@@ -9,7 +9,10 @@ static func change_activity(state, song, aes=false):
 	if aes:
 		assets.set_small_image("win95")
 		assets.set_small_text("Experiencing the aesthetic . . .")
-
+	elif (nfysad):
+		
+		assets.set_small_image("nfysmn")
+		assets.set_small_text("Some nights i wish you'd use NFy Mono!")
 
 	assets.set_large_image("nfymono")
 	assets.set_large_text("Listening with NFy MONO")

@@ -12,6 +12,7 @@ public class NFy : Control
 	public bool ed = false;
 
 	public bool IsInNFyAES = false;
+	public bool InNFySD = false;
 
 	public bool Following = false;
 	public Vector2 DraggingStartPosition = new Vector2();
@@ -27,7 +28,7 @@ public class NFy : Control
 	/// Discord GDScript API
 	public void ChangeActivity(string state, string desc) {
 		Script gdclass = ResourceLoader.Load("res://Extensions/discordapi.gd") as Script;
-		gdclass.Call("change_activity", state, desc, IsInNFyAES);
+		gdclass.Call("change_activity", state, desc, IsInNFyAES, InNFySD);
 		
 	}
 
@@ -397,8 +398,9 @@ public class NFy : Control
 
 	public override void _Process(float delta)
 	{
+		// Console.WriteLine(GetCurrentSongIfAny());
 
-		if (GetCurrentSongIfAny() == "MACINTOSH PLUS 420") {
+		if (GetCurrentSongIfAny().Trim() == "MACINTOSH PLUS 420") {
 			getNFyScreen().Theme = GD.Load<Theme>("res://Win95.tres");
 			getNFyScreen().AddStyleboxOverride("panel", GD.Load<StyleBoxFlat>("res://Win95s.tres"));
 			IsInNFyAES = true;
@@ -407,9 +409,16 @@ public class NFy : Control
 
 			getNFyScreen().AddStyleboxOverride("panel", GD.Load<StyleBoxFlat>("res://Themes/NFyCorded/PanelTheme.tres"));
 			IsInNFyAES = false;
-
-
 		}
+		
+		if (GetCurrentSongIfAny().Trim() == "Some Nights") {
+			InNFySD = true;	
+
+			GetNode<Label>("NFYSCREEN/CS").Text = "Some Nights - With NFy Mono :)";
+		} else {
+			InNFySD = false;
+		}
+
 		if (getNFyStream().Playing) {
 			sp = getNFyStream().GetPlaybackPosition();
 		}
