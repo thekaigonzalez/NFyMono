@@ -14,6 +14,8 @@ public class NFy : Control
 	public bool IsInNFyAES = false;
 	public bool InNFySD = false;
 
+	public int sel = 0;
+
 	public bool Following = false;
 	public Vector2 DraggingStartPosition = new Vector2();
 
@@ -58,8 +60,8 @@ public class NFy : Control
 		return getNFyScreen().GetNode<ProgressBar>("NFyBar");
 	}
 	
-	public OptionButton getNFySongList() {
-		return getNFyScreen().GetNode<OptionButton>("CurrentSongNF");
+	public ItemList getNFySongList() {
+		return getNFyScreen().GetNode<ItemList>("NSL");
 	}
 
 	public bool SpecialsEnabled() {
@@ -74,9 +76,9 @@ public class NFy : Control
 	}
 
 	public string GetCurrentSongIfAny() {
-		OptionButton sf = getNFySongList();
+		var sf = getNFySongList();
 		string song = "";
-		song = sf.GetItemText(sf.GetSelectedId());
+		song = sf.GetItemText(sel);
 		return song;
 	}
 
@@ -251,6 +253,7 @@ public class NFy : Control
 	/// [------------------ THE INITIAL FUNCTION ------------------]
 	public override void _Ready()
 	{
+
 		// Setup HTTP
 		GetNode("MonoHTTPV").Connect("request_completed", this, "OnVersionRequestCompleted");
 		HTTPRequest httpRequest = GetNode<HTTPRequest>("MonoHTTPV");
@@ -289,7 +292,14 @@ public class NFy : Control
 			OpenCorrect(GetCurrentSongIfAny());
 		}
 	}
-
+	
+	public void _on_ItemList_item_selected(int indx) {
+		
+		sel = indx;
+		if (!PLAYING_ARRAY) {
+			OpenCorrect(GetCurrentSongIfAny());
+		}
+	}
 	public void _on_PFUK_pressed() {
 		OS.ShellOpen("https://www.stchadshandforth.org.uk/pdf/Prayers%20for%20Ukraine.pdf");
 	}
@@ -464,7 +474,7 @@ public class NFy : Control
 
 		if (getNFyStream().Playing && !PLAYING_ARRAY) {
 			getNFyBar().Value = getNFyStream().GetPlaybackPosition();
-			ChangeActivity(GetTimeSignature(), GetCurrentSongIfAny ());
+			ChangeActivity("", "Listening to " + GetCurrentSongIfAny ());
 		} else {
 			if (!getNFyStream().Playing) {
 				if (!m.Dull()) 
@@ -473,7 +483,7 @@ public class NFy : Control
 					ChangeActivity("Paused", "On song " + GetCurrentSongIfAny());
 
 			} else {
-				ChangeActivity("In Rotation - " + m.getCurrentSong(), GetTimeSignature());
+				ChangeActivity("", "Listening to " + m.getCurrentSong() + " (Rotation)");
 				getNFyBar().Value = getNFyStream().GetPlaybackPosition();
 			}
 		}

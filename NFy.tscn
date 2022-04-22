@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://NFy.cs" type="Script" id=1]
 [ext_resource path="res://NfyConIo.cs" type="Script" id=2]
 [ext_resource path="res://Themes/NFyCorded/NFyCord.tres" type="Theme" id=3]
+[ext_resource path="res://Segoe UI.ttf" type="DynamicFontData" id=4]
 [ext_resource path="res://NfyMonoLogoUK.png" type="Texture" id=5]
 [ext_resource path="res://Themes/ClassicNFy/CircularStd-Medium.otf" type="DynamicFontData" id=6]
 
@@ -12,6 +13,30 @@ bg_color = Color( 0.0666667, 0.0666667, 0.0666667, 1 )
 [sub_resource type="DynamicFont" id=2]
 size = 40
 font_data = ExtResource( 6 )
+
+[sub_resource type="DynamicFont" id=5]
+font_data = ExtResource( 4 )
+
+[sub_resource type="StyleBoxFlat" id=6]
+bg_color = Color( 0.0980392, 0.0980392, 0.0980392, 1 )
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxFlat" id=8]
+bg_color = Color( 0.054902, 0.054902, 0.054902, 1 )
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxFlat" id=7]
+bg_color = Color( 0.0980392, 0.0980392, 0.0980392, 1 )
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
 
 [node name="NFy" type="Control"]
 anchor_right = 1.0
@@ -30,15 +55,6 @@ margin_top = 632.0
 margin_right = 893.0
 margin_bottom = 637.0
 percent_visible = false
-
-[node name="CurrentSongNF" type="OptionButton" parent="NFYSCREEN"]
-margin_left = 1019.0
-margin_top = 237.0
-margin_right = 1254.0
-margin_bottom = 289.0
-text = "Songs list"
-clip_text = true
-align = 1
 
 [node name="EnableConsole" type="Button" parent="NFYSCREEN"]
 visible = false
@@ -65,10 +81,10 @@ text = "Loop Playlist?"
 align = 1
 
 [node name="Playlists" type="OptionButton" parent="NFYSCREEN"]
-margin_left = 1019.0
-margin_top = 297.0
-margin_right = 1254.0
-margin_bottom = 335.0
+margin_left = 529.0
+margin_top = 68.0
+margin_right = 764.0
+margin_bottom = 106.0
 text = "Playlists"
 clip_text = true
 align = 1
@@ -93,6 +109,7 @@ align = 1
 autowrap = true
 
 [node name="CS" type="Label" parent="NFYSCREEN"]
+visible = false
 margin_left = 18.0
 margin_top = 25.0
 margin_right = 949.0
@@ -115,6 +132,16 @@ margin_top = 576.0
 margin_right = 704.0
 margin_bottom = 611.0
 text = "Play"
+
+[node name="NSL" type="ItemList" parent="NFYSCREEN"]
+margin_left = 367.0
+margin_top = 142.0
+margin_right = 940.0
+margin_bottom = 539.0
+custom_fonts/font = SubResource( 5 )
+custom_styles/bg_focus = SubResource( 6 )
+custom_styles/selected = SubResource( 8 )
+custom_styles/bg = SubResource( 7 )
 
 [node name="NfyStream" type="AudioStreamPlayer" parent="."]
 
@@ -143,8 +170,8 @@ margin_bottom = 711.0
 
 [node name="MonoHTTPV" type="HTTPRequest" parent="."]
 
-[connection signal="item_selected" from="NFYSCREEN/CurrentSongNF" to="." method="_song_change"]
 [connection signal="pressed" from="NFYSCREEN/EnableConsole" to="." method="_on_EnableConsole_pressed"]
 [connection signal="toggled" from="NFYSCREEN/UP" to="." method="_on_UP_toggled"]
 [connection signal="pressed" from="NFYSCREEN/Play" to="." method="_on_Button_pressed"]
+[connection signal="item_selected" from="NFYSCREEN/NSL" to="." method="_on_ItemList_item_selected"]
 [connection signal="pressed" from="PFUK" to="." method="_on_PFUK_pressed"]
