@@ -18,6 +18,10 @@ public class NFyRotation {
         current_index = 0;
     }
 
+    public void setIndex(int id) {
+        current_index = id;
+    }
+
     public string getCurrentSong() {
         if (array_value.ElementAtOrDefault(current_index) != null) {
             return array_value[current_index];

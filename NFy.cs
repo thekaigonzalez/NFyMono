@@ -152,7 +152,8 @@ public class NFy : Control
 		return spec;
 	}
 	public void OpenCorrect(string name) {
-		
+		if (PLAYING_ARRAY)
+		if (name != "")
 		OpenSong(CTEXT(wCheck("songs/" + name, GetSpec())));
 	}
 
@@ -186,6 +187,12 @@ public class NFy : Control
 					getNFySongList().AddItem(item_parsed);
 				}
 			}
+		}
+	}
+
+	public void LoadEach(string[] each) {
+		foreach (string item in each) {
+			getNFySongList().AddItem(item);
 		}
 	}
 	public void PlaylistPreload() {
@@ -283,12 +290,19 @@ public class NFy : Control
 				PLAYING_ARRAY = true;
 
 				OpenCorrect(m.getCurrentSong());
+
+				getNFySongList().Clear();
+
+				LoadEach(pl);
+
+				getNFySongList().Select(0);
 			} else {
 				print("error: No play found."); // error message
 			}
 		} else {
 			PLAYING_ARRAY = false;
 			m = new NFyRotation();
+			SongPreload();
 			OpenCorrect(GetCurrentSongIfAny());
 		}
 	}
@@ -296,8 +310,13 @@ public class NFy : Control
 	public void _on_ItemList_item_selected(int indx) {
 		
 		sel = indx;
+
 		if (!PLAYING_ARRAY) {
 			OpenCorrect(GetCurrentSongIfAny());
+		} else {
+			OpenCorrect(GetCurrentSongIfAny());
+			m.setIndex(sel);
+			print("Switching");
 		}
 	}
 	public void _on_PFUK_pressed() {
@@ -373,7 +392,7 @@ public class NFy : Control
 	}
 	// Contains code for a custom loop feature
 	public void LoopHandler() {
-	
+		
 		if (getNFyStream().GetPlaybackPosition() >= SongLength && GetNode<CheckButton>("NFYSCREEN/Loop").Pressed && m.Dull()) {
 			print("play");
 			OpenCorrect(GetCurrentSongIfAny()); // replay (resets every variable)
@@ -396,6 +415,7 @@ public class NFy : Control
 			getNFyBar().Value = 0;
 			m.resetIndex();
 			OpenCorrect(m.getCurrentSong());
+			
 		}
 		
 		
@@ -471,7 +491,7 @@ public class NFy : Control
 		LoopHandler();
 
 		getNFyBar().MaxValue = SongLength;
-
+		
 		if (getNFyStream().Playing && !PLAYING_ARRAY) {
 			getNFyBar().Value = getNFyStream().GetPlaybackPosition();
 			ChangeActivity("", "Listening to " + GetCurrentSongIfAny ());
