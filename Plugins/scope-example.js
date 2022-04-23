@@ -1,5 +1,5 @@
 function onNMonoEngineStart(_e) {
-    NJLog("Hello from {}!", "JavaScript")
+    NJLog("Hello from {}!", ["JavaScript"])
 }
 
 // function onNMonoTick() - loud function
