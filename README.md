@@ -1,12 +1,23 @@
-# NFy Mono
+# NJMono
 
 ![Mono NFy](./nfymonoofficial.png)
 
-# The NFyMono/NJmono7 Project
+> *NJMono - standardizing NFy*
 
-The NFyMono project provides the LOWEST-LEVEL abstraction to listen to your music as clear as possible.
+NFy Mono (*njmono.exe*) is the swiss-army knife for NFy features, providing a great (and **free**) music experience.
 
-Written in C#! 
+Features:
+
+- Plugins
+- Support for almost every audio format
+- Playlists
+- Version Management
+- Launcher (other project)
+- Auto Setup
+- Volume Slider
+- Easy-to-use API
+- Faster than NFy; with a higher binary size.
+- Playlist Looping
 
 ## Differences
 
