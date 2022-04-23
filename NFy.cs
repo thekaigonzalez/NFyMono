@@ -338,26 +338,28 @@ public class NFy : Control
             .SetValue("NJPlaySongByName", (Action<string>)OpenCorrect)
             .SetValue("SetupNJMonoDirs", (Action)SetupAPI.SetupNFy)
             .SetValue("NJCreateDir", (Action<string>)JAPI.JCreateDir);
-
-        foreach (string f in listDir("plugins"))
+        if (System.IO.Directory.Exists("plugins"))
         {
-            myeng.Execute(System.IO.File.ReadAllText(f));
-
-            var initName = "onNMonoEngineStart";
-            var tickName = "onNMonoTick";
-
-            if (!callTick)
+            foreach (string f in listDir("plugins"))
             {
-                if (myeng.GetValue(initName) != Jint.Native.JsValue.Undefined)
+                myeng.Execute(System.IO.File.ReadAllText(f));
+
+                var initName = "onNMonoEngineStart";
+                var tickName = "onNMonoTick";
+
+                if (!callTick)
                 {
-                    myeng.Invoke(initName, getOptsEq());
+                    if (myeng.GetValue(initName) != Jint.Native.JsValue.Undefined)
+                    {
+                        myeng.Invoke(initName, getOptsEq());
+                    }
                 }
-            }
-            else
-            {
-                if (myeng.GetValue(tickName) != Jint.Native.JsValue.Undefined)
+                else
                 {
-                    myeng.Invoke(tickName, PLAYING_ARRAY);
+                    if (myeng.GetValue(tickName) != Jint.Native.JsValue.Undefined)
+                    {
+                        myeng.Invoke(tickName, PLAYING_ARRAY);
+                    }
                 }
             }
         }
