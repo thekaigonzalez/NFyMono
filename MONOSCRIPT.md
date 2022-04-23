@@ -96,9 +96,3 @@ function onNMonoPSongChanged(index, songName) {
     NJPrint("Song: " + songName);
 }
 ```
-
-
-## onNMonoPlaylistEnded(newIndex)
-
-Called when a playlist ends - this function is called with the new index (Which is usually 0.)
-
