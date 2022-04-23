@@ -392,6 +392,8 @@ public class NFy : Control
             .SetValue("NJPlaySongByName", (Action<string>)OpenCorrect)
             .SetValue("SetupNJMonoDirs", (Action)SetupAPI.SetupNFy)
             .SetValue("NJCreateDir", (Action<string>)JAPI.JCreateDir)
+            .SetValue("NJWriteFile", (Action<string, string>)JAPI.JWriteFile)
+
             .SetValue("NJClearOutput", (Action)Console.Clear)
             .SetValue("NJPauseStream", (Action)getNFyStream().Stop)
             .SetValue("NJVSignUrl", (Action<bool, string>)setVSignURL)

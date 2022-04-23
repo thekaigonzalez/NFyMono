@@ -1,0 +1,1 @@
+NJWriteFile("test.txt", "this content");
