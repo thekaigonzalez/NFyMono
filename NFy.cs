@@ -626,7 +626,7 @@ public class NFy : Control
     // Contains code for a custom loop feature
     public void LoopHandler()
     {
-
+        
         if (getNFyStream().GetPlaybackPosition() >= SongLength && GetNode<CheckButton>("NFYSCREEN/Loop").Pressed && m.Dull())
         {
             print("play");
@@ -702,10 +702,10 @@ public class NFy : Control
             InNFySD = false;
         }
 
-        if (getNFyStream().Playing)
-        {
-            sp = getNFyStream().GetPlaybackPosition();
-        }
+        // if (getNFyStream().Playing)
+        // {
+        //     sp = getNFyStream().GetPlaybackPosition();
+        // }
         sp = getNFyStream().GetPlaybackPosition();
 
         if (!getNFyStream().Playing)
@@ -715,10 +715,10 @@ public class NFy : Control
         else
         {
             GetNode<Button>("NFYSCREEN/Play").Text = "Stop";
-
-
         }
+
         getNFyStream().VolumeDb = ((float)GetNode<VSlider>("NFYSCREEN/Volume").Value);
+        
         if (m.currentIndex() > m.getSize())
         {
             print("!!!!! ABOVE");
@@ -757,9 +757,11 @@ public class NFy : Control
 
         getNFyBar().MaxValue = SongLength;
 
+        getNFyBar().Value = getNFyStream().GetPlaybackPosition();
+
         if (getNFyStream().Playing && !PLAYING_ARRAY)
         {
-            getNFyBar().Value = getNFyStream().GetPlaybackPosition();
+            
             ChangeActivity("", "Listening to " + GetCurrentSongIfAny());
         }
         else
