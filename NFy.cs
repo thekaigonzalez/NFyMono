@@ -332,12 +332,22 @@ public class NFy : Control
     public void loadPlugins(bool callTick = false)
     {
 
+		void setVol(float s) {
+			getNFyStream().VolumeDb = s;
+			GetNode<VSlider>("NFYSCREEN/Volume").Value = s;
+		}
+
         var myeng = new Jint.Engine()
 
             .SetValue("NJPrint", (Action<string>)print)
             .SetValue("NJPlaySongByName", (Action<string>)OpenCorrect)
             .SetValue("SetupNJMonoDirs", (Action)SetupAPI.SetupNFy)
-            .SetValue("NJCreateDir", (Action<string>)JAPI.JCreateDir);
+            .SetValue("NJCreateDir", (Action<string>)JAPI.JCreateDir)
+            .SetValue("NJClearOutput", (Action)Console.Clear)
+            .SetValue("NJPauseStream", (Action)getNFyStream().Stop)
+            .SetValue("NJSetVol", (Action<float>)setVol);
+
+
         if (System.IO.Directory.Exists("plugins"))
         {
             foreach (string f in listDir("plugins"))
