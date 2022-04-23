@@ -42,7 +42,7 @@ Clears the console output.
 
 # MONOScript Events
 
-## onNMonoEngineStart
+## onNMonoEngineStart(variables: dictionary)
 
 Called on initial load: the ready function.
 
@@ -61,7 +61,7 @@ function onNMonoEngineStart(env) {
 ```
 
 
-## onNMonoTick
+## onNMonoTick(IN_A_PLAYLIST)
 
 Called every frame, called during the _Process function, which could
 possibly lead to performance issues, if too many plugins are installed.
@@ -95,4 +95,10 @@ function onNMonoPSongChanged(index, songName) {
 
     NJPrint("Song: " + songName);
 }
+```
+
+
+## onNMonoPlaylistEnded(newIndex)
+
+Called when a playlist ends - this function is called with the new index (Which is usually 0.)
 
