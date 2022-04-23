@@ -40,6 +40,20 @@ Pauses the current stream: such as when you're playing a song, this function wil
 
 Clears the console output.
 
+## NJVSignUrl(vsign_enabled = true, url_name: string)
+
+Either:
+
+- Disables VSign entirely (Can only be disabled during NJMonoEngineStart)
+
+Or
+
+- Changes the VSign url.
+
+`url_name` needs to be similar to the API of GitHub Releases. Example: `https://api.github.com/repos/thekaigonzalez/NFyMono/releases/latest`
+
+
+
 # MONOScript Events
 
 ## onNMonoEngineStart(variables: dictionary)
