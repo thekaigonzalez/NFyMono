@@ -17,7 +17,7 @@ Written in C#!
 | MP3                | No           | Yes                  | Yes               | No       | Yes         | Yes                                  |
 | Playlists          | Yes          | Yes (since Mono 3)   | No (program-wide) | No       | No          | No                                   |
 | Standardization    | 85%          | 100%                 | 96%               | 5%       | 40%         | 6%                                   |
-| Framework/Library  | Godot Engine | BumbleBee Engine     | Electron.js       | C++      | Rust        | Electron/D (D Language X JavaScript) |
+| Framework/Library  | Godot Engine | BumbleBee Engine X JS| Electron.js       | C++      | Rust        | Electron/D (D Language X JavaScript) |
 | Version Management | No           | Yes (Since Mono 7)   | No                | No       | No          | No                                   |
 | Song Looping       | Yes          | Yes                  | Yes               | No       | No          | No                                   |
 | Playlist Looping   | Yes (Buggy)  | Yes                  | No                | No       | No          | No                                   |
