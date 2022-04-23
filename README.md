@@ -18,6 +18,8 @@ Features:
 - Easy-to-use API
 - Faster than NFy; with a higher binary size.
 - Playlist Looping
+- Song Looping
+- 100% up to date with the NFy standard
 
 ## Differences
 
