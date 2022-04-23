@@ -26,6 +26,8 @@ public class NFy : Control
     public bool Following = false;
     public Vector2 DraggingStartPosition = new Vector2();
 
+    public Jint.Engine myeng;
+
     public bool PLAYING_ARRAY = false;
 
     NFyRotation m;
@@ -218,6 +220,10 @@ public class NFy : Control
         return OS.GetExecutablePath().GetBaseDir() + "/" + basel;
     }
 
+    public string GetCurrentDir() {
+        return OS.GetExecutablePath().GetBaseDir() + "/";
+    }
+
     public bool DirExists(string d)
     {
         if (System.IO.Directory.Exists(CTEXT(d))) { return true; }
@@ -384,19 +390,41 @@ public class NFy : Control
             }
         }
 
-        var myeng = new Jint.Engine()
+        void Include(string fn) {
+            myeng.Execute(System.IO.File.ReadAllText(fn));
+        }
+        
+        myeng = new Jint.Engine()
 
+            // Basic functions (The base API)
             .SetValue("NJPrint", (Action<string>)print)
             .SetValue("NJLog", (Action<string, string[]>)NJLog)
-
             .SetValue("NJPlaySongByName", (Action<string>)OpenCorrect)
+
+            // LOW LEVEL FUNCTIONS - 
+            // Only use these if you know what you're doing!
+            // NOTE: _NJplay (OpenSong) needs the absolute path to a song! You can get this using the 
+            // NJ_PATH_DIR + "songs/" + name
+            .SetValue("_NJplay", (Action<string>)OpenSong)
+
+            // Variables
+            .SetValue("NJ_PATH_DIR", GetCurrentDir())
+
+            // Class abstraction
             .SetValue("SetupNJMonoDirs", (Action)SetupAPI.SetupNFy)
+
+            // The JavaScript-Intended helper API
             .SetValue("NJCreateDir", (Action<string>)JAPI.JCreateDir)
             .SetValue("NJWriteFile", (Action<string, string>)JAPI.JWriteFile)
 
+            // Etc functions - Clearing Output, Pausing, and more.
             .SetValue("NJClearOutput", (Action)Console.Clear)
             .SetValue("NJPauseStream", (Action)getNFyStream().Stop)
+            
+            // These disable/enable , or edit certian features.
             .SetValue("NJVSignUrl", (Action<bool, string>)setVSignURL)
+            .SetValue("Include", (Action<string>)Include)
+
             .SetValue("NJSetVol", (Action<float>)setVol);
 
 
