@@ -373,6 +373,11 @@ public class NFy : Control
 
     }
 
+    string ToStringBool(bool s) {
+        if (s == true) return "true";
+        else return "false";
+    }
+
     public void loadPlugins(bool callTick = false, bool getMethod = false, string methodName = "", params object[] cf)
     {
 
@@ -426,6 +431,7 @@ public class NFy : Control
 
             // ENGINE CUSTOMS
             .SetValue("Include", (Action<string>)Include)
+
 
             .SetValue("NJSetVol", (Action<float>)setVol);
 
