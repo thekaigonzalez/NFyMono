@@ -15,7 +15,11 @@ public class NFy : Control
     public bool IsInNFyAES = false;
     public bool InNFySD = false;
 
+    public bool Vsign = true;
+
     public int sel = 0;
+
+    public string vsignUrl = "https://api.github.com/repos/thekaigonzalez/NFyMono/releases/latest";
 
     public Dictionary<string, string> env = new Dictionary<string, string>();
 
@@ -372,6 +376,14 @@ public class NFy : Control
             GetNode<VSlider>("NFYSCREEN/Volume").Value = s;
         }
 
+        void setVSignURL(bool even_Use = true, string url = "") {
+            if (even_Use) {
+            vsignUrl = url;
+            } else {
+                Vsign = even_Use;
+            }
+        }
+
         var myeng = new Jint.Engine()
 
             .SetValue("NJPrint", (Action<string>)print)
@@ -382,6 +394,7 @@ public class NFy : Control
             .SetValue("NJCreateDir", (Action<string>)JAPI.JCreateDir)
             .SetValue("NJClearOutput", (Action)Console.Clear)
             .SetValue("NJPauseStream", (Action)getNFyStream().Stop)
+            .SetValue("NJVSignUrl", (Action<bool, string>)setVSignURL)
             .SetValue("NJSetVol", (Action<float>)setVol);
 
 
@@ -418,7 +431,9 @@ public class NFy : Control
         }
     }
 
-
+    public void LoadPluginFunc(string fname, params object[] parameters) {
+        loadPlugins(false, true, fname, parameters);
+    }
 
     /// [------------------ THE INITIAL FUNCTION ------------------]
     public override void _Ready()
@@ -444,12 +459,12 @@ public class NFy : Control
         }
 
         loadPlugins();
-        if (!ign_v)
+        if (!ign_v && Vsign)
         {
             // Setup HTTP (Versioning Sign)
             GetNode("MonoHTTPV").Connect("request_completed", this, "OnVersionRequestCompleted");
             HTTPRequest httpRequest = GetNode<HTTPRequest>("MonoHTTPV");
-            httpRequest.Request("https://api.github.com/repos/thekaigonzalez/NFyMono/releases/latest"); // request latest release
+            httpRequest.Request(vsignUrl); // request latest release
         }
         print("Checking for specials");
         if (SpecialsEnabled()) GetNode<Button>("NFYSCREEN/EnableConsole").Visible = true;
