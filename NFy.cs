@@ -329,17 +329,54 @@ public class NFy : Control
         }
     }
 
-    public void loadPlugins(bool callTick = false)
+    public string printFMT(string text, string[] form) {
+        string new1 = "";
+        bool InFM = false;
+        int index = 0;
+        foreach (char s in text) {
+            if (s == '{') {
+                InFM = true;
+            } else if (s == '}' && InFM == true) {
+                InFM = false;
+                new1 += form[index];
+            } else {
+                new1 += s;
+            }
+        }
+        return new1;
+    }
+    public void NJLog(string text, string[] form) {
+        string new1 = "";
+        bool InFM = false;
+        int index = 0;
+        foreach (char s in text) {
+            if (s == '{') {
+                InFM = true;
+            } else if (s == '}' && InFM == true) {
+                InFM = false;
+                new1 += form[index];
+            } else {
+                new1 += s;
+            }
+        }
+        print( new1 );
+
+    }
+
+    public void loadPlugins(bool callTick = false, bool getMethod = false, string methodName = "", params object[] cf)
     {
 
-		void setVol(float s) {
-			getNFyStream().VolumeDb = s;
-			GetNode<VSlider>("NFYSCREEN/Volume").Value = s;
-		}
+        void setVol(float s)
+        {
+            getNFyStream().VolumeDb = s;
+            GetNode<VSlider>("NFYSCREEN/Volume").Value = s;
+        }
 
         var myeng = new Jint.Engine()
 
             .SetValue("NJPrint", (Action<string>)print)
+            .SetValue("NJLog", (Action<string, string[]>)NJLog)
+
             .SetValue("NJPlaySongByName", (Action<string>)OpenCorrect)
             .SetValue("SetupNJMonoDirs", (Action)SetupAPI.SetupNFy)
             .SetValue("NJCreateDir", (Action<string>)JAPI.JCreateDir)
@@ -357,11 +394,17 @@ public class NFy : Control
                 var initName = "onNMonoEngineStart";
                 var tickName = "onNMonoTick";
 
-                if (!callTick)
+                if (!callTick && !getMethod)
                 {
                     if (myeng.GetValue(initName) != Jint.Native.JsValue.Undefined)
                     {
                         myeng.Invoke(initName, getOptsEq());
+                    }
+                }
+                else if (getMethod)
+                {
+                    if (myeng.GetValue(methodName) != Jint.Native.JsValue.Undefined) {
+                        myeng.Invoke(methodName, cf);
                     }
                 }
                 else
@@ -579,6 +622,9 @@ public class NFy : Control
             m = new NFyRotation();
 
             OpenCorrect(GetCurrentSongIfAny());
+
+            loadPlugins(false, true, "onNMonoPlaylistEnded", m.currentIndex());
+
             PLAYING_ARRAY = false;
         }
         else if (getNFyStream().GetPlaybackPosition() >= SongLength && m.nextExists() && !m.Dull())
@@ -586,6 +632,8 @@ public class NFy : Control
             print("Init next");
             m.moveIndex();
             OpenCorrect(m.getCurrentSong()); // replay (resets every variable)
+            loadPlugins(false, true, "onNMonoPSongChanged", m.currentIndex(), m.getCurrentSong());
+
         }
         else if (getNFyStream().GetPlaybackPosition() >= SongLength && !m.nextExists() && !m.Dull() && GetNode<CheckButton>("NFYSCREEN/LoopPL").Pressed)
         {
@@ -593,6 +641,7 @@ public class NFy : Control
             getNFyBar().Value = 0;
             m.resetIndex();
             OpenCorrect(m.getCurrentSong());
+            loadPlugins(false, true, "onNMonoPSongChanged", m.currentIndex(), m.getCurrentSong());
 
         }
 

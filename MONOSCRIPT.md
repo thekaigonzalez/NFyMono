@@ -16,6 +16,30 @@ Function to setup the directories (calling `SetupAPI.SetupNFy()`)
 
 Calls the main song function (with songname)
 
+## NJLog(str: string, fmt: array[])
+
+Similar to [NJPrint](#njprinttext), provides a function for printing the text in a **formatted** method:
+
+```js
+
+NJLog("Hello {}!", [ "world" ]);
+
+```
+
+## NJSetVol(volume: Float)
+
+Sets the volume for the main stream.
+
+( THIS FUNCTION ALSO SETS THE BAR'S VALUE TO THE "volume" VALUE!!! )
+
+## NJPauseStream() 
+
+Pauses the current stream: such as when you're playing a song, this function will pause it.
+
+## NJClearOutput()
+
+Clears the console output.
+
 # MONOScript Events
 
 ## onNMonoEngineStart
@@ -54,3 +78,21 @@ function onNMonoTick(inPlaylist) {
     }
 }
 ```
+
+## onNMonoPlaylistEnded(p_ind)
+
+Called once the playlist that's running ends.
+
+This function provies the current index (which is usally 0.)
+
+## onNMonoPSongChanged(_index, current_song)
+
+Called every time the playlist's song changes.
+
+```js
+function onNMonoPSongChanged(index, songName) {
+    /// Print the new song
+
+    NJPrint("Song: " + songName);
+}
+
