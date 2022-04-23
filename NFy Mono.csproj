@@ -4,6 +4,7 @@
     <RootNamespace>NFyMono</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="Jint" Version="2.11.58" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
 </Project>

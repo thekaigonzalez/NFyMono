@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using Jint;
 public class NFy : Control
 {
     // Declare member variables here. Examples:
@@ -172,6 +173,8 @@ public class NFy : Control
             audSound.Stream = d;
         }
 
+
+
         audSound.Play();
     }
     public string CurrentSongPath()
@@ -326,6 +329,42 @@ public class NFy : Control
         }
     }
 
+    public void loadPlugins(bool callTick = false)
+    {
+
+        var myeng = new Jint.Engine()
+
+            .SetValue("NJPrint", (Action<string>)print)
+            .SetValue("NJPlaySongByName", (Action<string>)OpenCorrect)
+            .SetValue("SetupNJMonoDirs", (Action)SetupAPI.SetupNFy)
+            .SetValue("NJCreateDir", (Action<string>)JAPI.JCreateDir);
+
+        foreach (string f in listDir("plugins"))
+        {
+            myeng.Execute(System.IO.File.ReadAllText(f));
+
+            var initName = "onNMonoEngineStart";
+            var tickName = "onNMonoTick";
+
+            if (!callTick)
+            {
+                if (myeng.GetValue(initName) != Jint.Native.JsValue.Undefined)
+                {
+                    myeng.Invoke(initName, getOptsEq());
+                }
+            }
+            else
+            {
+                if (myeng.GetValue(tickName) != Jint.Native.JsValue.Undefined)
+                {
+                    myeng.Invoke(tickName, PLAYING_ARRAY);
+                }
+            }
+        }
+    }
+
+
+
     /// [------------------ THE INITIAL FUNCTION ------------------]
     public override void _Ready()
     {
@@ -341,7 +380,7 @@ public class NFy : Control
 
         if (flag.ContainsKey("startWithSong"))
         {
-            Console.WriteLine("Playing song headless -> NMono Binary");
+            Console.WriteLine("Playing song on init -> NMono Binary");
             if (vars.ContainsKey("songName"))
             {
                 Console.WriteLine("Loading song " + vars["songName"]);
@@ -349,6 +388,7 @@ public class NFy : Control
             }
         }
 
+        loadPlugins();
         if (!ign_v)
         {
             // Setup HTTP (Versioning Sign)
@@ -555,6 +595,8 @@ public class NFy : Control
 
     public override void _Process(float delta)
     {
+
+        loadPlugins(true); // call the tick frame functions for any plugins
         // Console.WriteLine(GetCurrentSongIfAny());
 
         if (GetCurrentSongIfAny().Trim() == "MACINTOSH PLUS 420")
