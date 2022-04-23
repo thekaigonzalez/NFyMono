@@ -393,7 +393,7 @@ public class NFy : Control
         void Include(string fn) {
             myeng.Execute(System.IO.File.ReadAllText(fn));
         }
-        
+
         myeng = new Jint.Engine()
 
             // Basic functions (The base API)
