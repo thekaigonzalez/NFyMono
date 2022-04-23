@@ -1,0 +1,9 @@
+{
+	"authors": [
+		"Kai D. Gonzalez"
+	],
+	"copyright": "Copyright © 2022, Kai D. Gonzalez",
+	"description": "A plugin generator for NFy Mono.",
+	"license": "MIT",
+	"name": "pg"
+}
