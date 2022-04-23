@@ -52,7 +52,38 @@ Or
 
 `url_name` needs to be similar to the API of GitHub Releases. Example: `https://api.github.com/repos/thekaigonzalez/NFyMono/releases/latest`
 
+## Include(fname: Path..ExecutableScope)
 
+Loads the file found at `fname` (going from the root dir, so it loads from the EXE's POV, instead of the file's POV. So if you wanted to import another plugin, you'd need to use `plugins/IMPORT_ME.js` instead of `./IMPORT_ME.js`.)
+
+This loads all the code inside of the file, instead of the module. Similar to `require` in node.
+
+```js
+Include("plugLibs/myLibrary.js")
+
+print_hello_from_lib()
+```
+
+You can also minify code using this method:
+
+```js
+// lib/StartDef.js (Not executed)
+
+function onNMonoEngineStart(env) {
+    NJPrint("hello!")
+}
+
+```
+
+```js
+// plugins/useStartDef.js
+
+Include("lib/StartDef.js")
+```
+
+Output:
+
+`hello!`
 
 # MONOScript Events
 
