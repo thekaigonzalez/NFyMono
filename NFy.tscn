@@ -81,10 +81,10 @@ text = "Loop Playlist?"
 align = 1
 
 [node name="Playlists" type="OptionButton" parent="NFYSCREEN"]
-margin_left = 529.0
-margin_top = 68.0
-margin_right = 764.0
-margin_bottom = 106.0
+margin_left = 1016.0
+margin_top = 446.0
+margin_right = 1251.0
+margin_bottom = 484.0
 text = "Playlists"
 clip_text = true
 align = 1
