@@ -29,3 +29,7 @@ This has been built from the ground up with Stability in mind, such as:
 ## API Difference
 
 View API differences [here.](./api.md)
+
+## PluginScript
+
+View the plugin language [here.](./plugin/)
