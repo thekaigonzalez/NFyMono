@@ -1,3 +1,9 @@
+/*! \mainpage NFy Mono
+ *
+ * \section intro_sec NFy Mono Source code
+ *
+ * This is the NFy Mono source code browser. This contains the functions for the Nfy base class, etc ..
+ */
 using Godot;
 using System;
 using System.Collections.Generic;
