@@ -15,6 +15,8 @@ public class NFy : Control
     public bool IsInNFyAES = false;
     public bool InNFySD = false;
 
+    public bool Theme_Overriden = false;
+
     public bool Vsign = true;
 
     public int sel = 0;
@@ -220,7 +222,8 @@ public class NFy : Control
         return OS.GetExecutablePath().GetBaseDir() + "/" + basel;
     }
 
-    public string GetCurrentDir() {
+    public string GetCurrentDir()
+    {
         return OS.GetExecutablePath().GetBaseDir() + "/";
     }
 
@@ -339,41 +342,56 @@ public class NFy : Control
         }
     }
 
-    public string printFMT(string text, string[] form) {
+    public string printFMT(string text, string[] form)
+    {
         string new1 = "";
         bool InFM = false;
         int index = 0;
-        foreach (char s in text) {
-            if (s == '{') {
+        foreach (char s in text)
+        {
+            if (s == '{')
+            {
                 InFM = true;
-            } else if (s == '}' && InFM == true) {
+            }
+            else if (s == '}' && InFM == true)
+            {
                 InFM = false;
                 new1 += form[index];
-            } else {
+            }
+            else
+            {
                 new1 += s;
             }
         }
         return new1;
     }
-    public void NJLog(string text, string[] form) {
+    public void NJLog(string text, string[] form)
+    {
         string new1 = "";
         bool InFM = false;
         int index = 0;
-        foreach (char s in text) {
-            if (s == '{') {
+        foreach (char s in text)
+        {
+            if (s == '{')
+            {
                 InFM = true;
-            } else if (s == '}' && InFM == true) {
+            }
+            else if (s == '}' && InFM == true)
+            {
                 InFM = false;
                 new1 += form[index];
-            } else {
+            }
+            else
+            {
                 new1 += s;
             }
         }
-        print( new1 );
+        print(new1);
 
     }
 
-    string ToStringBool(bool s) {
+    string ToStringBool(bool s)
+    {
         if (s == true) return "true";
         else return "false";
     }
@@ -387,24 +405,46 @@ public class NFy : Control
             GetNode<VSlider>("NFYSCREEN/Volume").Value = s;
         }
 
-        void setVSignURL(bool even_Use = true, string url = "") {
-            if (even_Use) {
-            vsignUrl = url;
-            } else {
+        void setVSignURL(bool even_Use = true, string url = "")
+        {
+            if (even_Use)
+            {
+                vsignUrl = url;
+            }
+            else
+            {
                 Vsign = even_Use;
             }
         }
 
-        void Include(string fn) {
+        void Include(string fn)
+        {
             myeng.Execute(System.IO.File.ReadAllText(fn));
         }
+        // sets the BG Color, turns on OVERRIDEN if 
+        void SetBackground(string clr)
+        {
+            print(clr);
 
+            print("Setting background color to HTML color " + clr);
+
+            var bg =  new StyleBoxFlat();
+            bg.BgColor = new Color(clr);
+            getNFyScreen().AddStyleboxOverride("panel", bg);
+
+            Update();
+
+            Theme_Overriden = true;
+        }
+
+        
         myeng = new Jint.Engine()
 
             // Basic functions (The base API)
             .SetValue("NJPrint", (Action<string>)print)
             .SetValue("NJLog", (Action<string, string[]>)NJLog)
             .SetValue("NJPlaySongByName", (Action<string>)OpenCorrect)
+            .SetValue("NJBackgroundColor", (Action<string>)SetBackground)
 
             // LOW LEVEL FUNCTIONS - 
             // Only use these if you know what you're doing!
@@ -425,7 +465,7 @@ public class NFy : Control
             // Etc functions - Clearing Output, Pausing, and more.
             .SetValue("NJClearOutput", (Action)Console.Clear)
             .SetValue("NJPauseStream", (Action)getNFyStream().Stop)
-            
+
             // These disable/enable , or edit certian features.
             .SetValue("NJVSignUrl", (Action<bool, string>)setVSignURL)
 
@@ -454,7 +494,8 @@ public class NFy : Control
                 }
                 else if (getMethod)
                 {
-                    if (myeng.GetValue(methodName) != Jint.Native.JsValue.Undefined) {
+                    if (myeng.GetValue(methodName) != Jint.Native.JsValue.Undefined)
+                    {
                         myeng.Invoke(methodName, cf);
                     }
                 }
@@ -469,7 +510,8 @@ public class NFy : Control
         }
     }
 
-    public void LoadPluginFunc(string fname, params object[] parameters) {
+    public void LoadPluginFunc(string fname, params object[] parameters)
+    {
         loadPlugins(false, true, fname, parameters);
     }
 
@@ -662,7 +704,7 @@ public class NFy : Control
     // Contains code for a custom loop feature
     public void LoopHandler()
     {
-        
+
         if (getNFyStream().GetPlaybackPosition() >= SongLength && GetNode<CheckButton>("NFYSCREEN/Loop").Pressed && m.Dull())
         {
             print("play");
@@ -721,10 +763,16 @@ public class NFy : Control
         }
         else
         {
-            getNFyScreen().Theme = GD.Load<Theme>("res://Themes/NFyCorded/NFyCord.tres");
+            if (!Theme_Overriden) {
+                getNFyScreen().Theme = GD.Load<Theme>("res://Themes/NFyCorded/NFyCord.tres");
 
-            getNFyScreen().AddStyleboxOverride("panel", GD.Load<StyleBoxFlat>("res://Themes/NFyCorded/PanelTheme.tres"));
+                getNFyScreen().AddStyleboxOverride("panel", GD.Load<StyleBoxFlat>("res://Themes/NFyCorded/PanelTheme.tres"));
+            }
+
+
+
             IsInNFyAES = false;
+
         }
 
         if (GetCurrentSongIfAny().Trim() == "Some Nights")
@@ -754,7 +802,7 @@ public class NFy : Control
         }
 
         getNFyStream().VolumeDb = ((float)GetNode<VSlider>("NFYSCREEN/Volume").Value);
-        
+
         if (m.currentIndex() > m.getSize())
         {
             print("!!!!! ABOVE");
@@ -797,7 +845,7 @@ public class NFy : Control
 
         if (getNFyStream().Playing && !PLAYING_ARRAY)
         {
-            
+
             ChangeActivity("", "Listening to " + GetCurrentSongIfAny());
         }
         else
