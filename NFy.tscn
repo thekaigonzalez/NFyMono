@@ -143,6 +143,10 @@ custom_styles/bg_focus = SubResource( 6 )
 custom_styles/selected = SubResource( 8 )
 custom_styles/bg = SubResource( 7 )
 
+[node name="VER" type="Label" parent="NFYSCREEN"]
+margin_right = 40.0
+margin_bottom = 18.0
+
 [node name="NfyStream" type="AudioStreamPlayer" parent="."]
 
 [node name="CON" type="TextEdit" parent="."]

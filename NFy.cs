@@ -17,6 +17,8 @@ public class NFy : Control
 
     public bool Theme_Overriden = false;
 
+    public string integral_latest = "";
+
     public bool Vsign = true;
 
     public int sel = 0;
@@ -113,6 +115,15 @@ public class NFy : Control
     public bool SpecialsEnabled()
     {
         if (getOptsFlags().ContainsKey("specials"))
+        {
+            return true; // probably not
+        }
+        else return false;
+    }
+
+    public bool AutoSet()
+    {
+        if (getOptsFlags().ContainsKey("Unofficial"))
         {
             return true; // probably not
         }
@@ -301,8 +312,12 @@ public class NFy : Control
 
 	This gets the latest release and compares it to the current version sign.
 
-	For developers: Versions in this are formatted version.NUMBER, and should be used as such,
-	to change the format, update the ver1 & ver2 variables found at lines 222 and 223.
+    For developers: 
+    
+        Versions in this are formatted version.NUMBER, and should be used as such,
+        With recent updates, versions can now be `UNOFFICIAL` (all lowercase though),
+        Which VSign ignores, as seen at line 341, if you need version checking, but 
+        use a different format, update the ver1 & ver2 variables found at lines 222 and 223.
 	*/
     public void OnVersionRequestCompleted(int result, int response_code, string[] headers, byte[] body)
     {
@@ -313,7 +328,8 @@ public class NFy : Control
             var js = (Godot.Collections.Dictionary)js1;
 
             string v = js["tag_name"] as string; // get the latest tag name from JSON
-
+            integral_latest = v;
+            print(integral_latest + " is lat");
             /* if version sign is found, use version */
             if (System.IO.File.Exists(".vsign"))
             {
@@ -321,8 +337,8 @@ public class NFy : Control
                 print("Loading VSign");
                 print("Loading Version sign - Mono 7");
                 string ver = System.IO.File.ReadAllText(".vsign");
-
-                if (ver != v)
+            
+                if (ver != v && ver != "unofficial")
                 {
                     string ver1 = ver.Substring(ver.IndexOf(".") + 1); // (version.)NUMBER
                     string ver2 = v.Substring(v.IndexOf(".") + 1); // (version.)NUMBER
@@ -602,6 +618,14 @@ public class NFy : Control
         loadPlugins(false, true, fname, parameters);
     }
 
+    public string getVersionNumber() {
+
+        string fs = System.IO.File.ReadAllText(".vsign")
+            .Trim();
+        if (fs == "latest") return "Latest";
+        return fs.Substring(fs.LastIndexOf(".")+1);
+    }
+
     /// [------------------ THE INITIAL FUNCTION ------------------]
     public override void _Ready()
     {
@@ -626,6 +650,20 @@ public class NFy : Control
         }
 
         loadPlugins();
+        
+        print("Checking for specials");
+        if (SpecialsEnabled()) GetNode<Button>("NFYSCREEN/EnableConsole").Visible = true;
+        
+        if (SpecialsEnabled()) {
+            print("Version string is true");
+            GetNode<Label>("NFYSCREEN/VER").Text = "NFy Mono version " + getVersionNumber() + " DEBUG mode";
+        } 
+
+        if (AutoSet()) {
+            print("Setting unofficial");
+            System.IO.File.WriteAllText(".vsign", "unofficial");
+        }
+
         if (!ign_v && Vsign)
         {
             // Setup HTTP (Versioning Sign)
@@ -633,8 +671,6 @@ public class NFy : Control
             HTTPRequest httpRequest = GetNode<HTTPRequest>("MonoHTTPV");
             httpRequest.Request(vsignUrl); // request latest release
         }
-        print("Checking for specials");
-        if (SpecialsEnabled()) GetNode<Button>("NFYSCREEN/EnableConsole").Visible = true;
         print("Loading setup daemon");
         SetupAPI.SetupNFy();
         print("Preloading songs into list");
