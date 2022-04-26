@@ -13,7 +13,7 @@ NFy Mono is also beginner friendly, and less error-prone.
 
 If you're new, check [this article out.](./getting-started/index.md)
 
-For Developers: [Click Here!](./reference/)
+For Developers: [Click Here!](https://thenfyproject.tk/nfymono)
 
 ## Implementation difference
 
