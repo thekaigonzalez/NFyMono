@@ -398,13 +398,20 @@ public class NFy : Control
 
     public void loadPlugins(bool callTick = false, bool getMethod = false, string methodName = "", params object[] cf)
     {
-
+        /// <summary>
+        /// Set the volume.
+        /// </summary>
+        /// <param name="s"></param>
         void setVol(float s)
         {
             getNFyStream().VolumeDb = s;
             GetNode<VSlider>("NFYSCREEN/Volume").Value = s;
         }
-
+        /// <summary>
+        /// Set VSign URL (Or disable vsign)
+        /// </summary>
+        /// <param name="even_Use"></param>
+        /// <param name="url"></param>
         void setVSignURL(bool even_Use = true, string url = "")
         {
             if (even_Use)
@@ -416,12 +423,15 @@ public class NFy : Control
                 Vsign = even_Use;
             }
         }
-
+        /// <summary>
+        /// Runs another file from the engine.
+        /// </summary>
+        /// <param name="fn"></param>
         void Include(string fn)
         {
             myeng.Execute(System.IO.File.ReadAllText(fn));
         }
-        // sets the BG Color, turns on OVERRIDEN if 
+        /// sets the BG Color, turns on OVERRIDEN if 
         void SetBackground(string clr)
         {
             print(clr);
@@ -436,7 +446,92 @@ public class NFy : Control
 
             Theme_Overriden = true;
         }
+        /// <summary>
+        /// Sets the font color.
+        /// </summary>
+        /// <param name="clr"></param>
+        void setFontColor(string clr) {
+            print(clr);
 
+            Theme_Overriden = true;
+
+            print("Setting font color to HTML color " + clr);
+
+            getNFyScreen().AddColorOverride("font_color", new Color(clr));
+            
+            GetNode<Label>("NFYSCREEN/CS").AddColorOverride("font_color", new Color(clr));
+            
+            Update();
+        }
+        /// <summary>
+        /// Updates the buttons.
+        /// </summary>
+        /// <param name="color"></param>
+        /// <param name="outline"></param>
+        /// <param name="hovercolor"></param>
+        /// <param name="margins"></param>
+        /// <param name="marginsOutline"></param>
+        void UpdateButtons(string color, string outline, string hovercolor, int margins, int marginsOutline) {
+            print(color + ", " + outline + ".");
+
+            print("Setting button color to " + color + ", margins to " + margins.ToString() + ", and the border width to " + marginsOutline.ToString());
+            
+            var bg =  new StyleBoxFlat();
+            
+            bg.BgColor = new Color(color);
+
+            bg.BorderColor = new Color(outline);
+
+            bg.SetBorderWidthAll(margins);
+
+            bg.SetCornerRadiusAll(marginsOutline);
+
+            var bg_hover =  new StyleBoxFlat();
+            
+            bg.BgColor = new Color(color);
+
+            bg.BorderColor = new Color(outline);
+
+            bg.SetBorderWidthAll(margins);
+
+            bg.SetCornerRadiusAll(marginsOutline);
+
+            /* Button changing code */
+            
+            GetNode<Button>("NFYSCREEN/Play").AddStyleboxOverride("normal", bg);
+            GetNode<Button>("NFYSCREEN/Play").AddStyleboxOverride("pressed", bg);
+            GetNode<Button>("NFYSCREEN/Play").AddStyleboxOverride("disabled", bg);
+            GetNode<Button>("NFYSCREEN/Play").AddStyleboxOverride("focus", bg);
+            GetNode<Button>("NFYSCREEN/Play").AddStyleboxOverride("hover", bg);
+
+
+            GetNode<Button>("NFYSCREEN/Loop").AddStyleboxOverride("normal", bg);
+            GetNode<Button>("NFYSCREEN/Loop").AddStyleboxOverride("pressed", bg);
+            GetNode<Button>("NFYSCREEN/Loop").AddStyleboxOverride("disabled", bg);
+            GetNode<Button>("NFYSCREEN/Loop").AddStyleboxOverride("focus", bg);
+            GetNode<Button>("NFYSCREEN/Loop").AddStyleboxOverride("hover", bg);
+
+            GetNode<Button>("NFYSCREEN/Playlists").AddStyleboxOverride("normal", bg);
+            GetNode<Button>("NFYSCREEN/Playlists").AddStyleboxOverride("pressed", bg);
+            GetNode<Button>("NFYSCREEN/Playlists").AddStyleboxOverride("disabled", bg);
+            GetNode<Button>("NFYSCREEN/Playlists").AddStyleboxOverride("focus", bg);
+            GetNode<Button>("NFYSCREEN/Playlists").AddStyleboxOverride("hover", bg);
+
+            GetNode<Button>("NFYSCREEN/UP").AddStyleboxOverride("normal", bg);
+            GetNode<Button>("NFYSCREEN/UP").AddStyleboxOverride("pressed", bg);
+            GetNode<Button>("NFYSCREEN/UP").AddStyleboxOverride("disabled", bg);
+            GetNode<Button>("NFYSCREEN/UP").AddStyleboxOverride("focus", bg);
+            GetNode<Button>("NFYSCREEN/UP").AddStyleboxOverride("hover", bg);
+
+            GetNode<Button>("NFYSCREEN/LoopPL").AddStyleboxOverride("normal", bg);
+            GetNode<Button>("NFYSCREEN/LoopPL").AddStyleboxOverride("pressed", bg);
+            GetNode<Button>("NFYSCREEN/LoopPL").AddStyleboxOverride("disabled", bg);
+            GetNode<Button>("NFYSCREEN/LoopPL").AddStyleboxOverride("focus", bg);
+            GetNode<Button>("NFYSCREEN/LoopPL").AddStyleboxOverride("hover", bg);
+
+            /* End button changing Code */
+
+        }
         
         myeng = new Jint.Engine()
 
@@ -445,6 +540,8 @@ public class NFy : Control
             .SetValue("NJLog", (Action<string, string[]>)NJLog)
             .SetValue("NJPlaySongByName", (Action<string>)OpenCorrect)
             .SetValue("NJBackgroundColor", (Action<string>)SetBackground)
+            .SetValue("NJFontColor", (Action<string>)setFontColor)
+            .SetValue("NJButtonUpdate", (Action<string, string, string, int, int>)UpdateButtons)
 
             // LOW LEVEL FUNCTIONS - 
             // Only use these if you know what you're doing!
