@@ -421,7 +421,10 @@ public class NFy : Control
             }
         }
     }
-    /* print to console and the bumblebee console */
+    /// <summary>
+    /// The function `print` takes a string as an argument and prints it to the console(s)
+    /// </summary>
+    /// <param name="text">The text to print to the console.</param>
     public void print(string text)
     {
         Console.WriteLine(text);
