@@ -48,6 +48,12 @@ public class NFy : Control
 
     }
 
+    /// <summary>
+    /// It returns a dictionary of all the command line arguments that start with "--"
+    /// </summary>
+    /// <returns>
+    /// A dictionary of strings and booleans.
+    /// </returns>
     public Dictionary<string, bool> getOptsFlags()
     {
         Dictionary<string, bool> f = new Dictionary<string, bool>();
@@ -60,6 +66,13 @@ public class NFy : Control
         return f;
     }
 
+    /// <summary>
+    /// It takes the command line arguments and returns a dictionary of the arguments that contain an
+    /// equal sign (K=V)
+    /// </summary>
+    /// <returns>
+    /// A dictionary of strings.
+    /// </returns>
     public Dictionary<string, string> getOptsEq()
     {
         Dictionary<string, string> f = new Dictionary<string, string>();
@@ -107,11 +120,23 @@ public class NFy : Control
         return getNFyScreen().GetNode<ProgressBar>("NFyBar");
     }
 
+    /// <summary>
+    /// This function returns the SongList node that is a child of the NFyScreen node.
+    /// </summary>
+    /// <returns>
+    /// The SongList node that is a child of the NFyScreen node.
+    /// </returns>
     public ItemList getNFySongList()
     {
         return getNFyScreen().GetNode<ItemList>("NSL");
     }
 
+    /// <summary>
+    /// > If the opts dictionary contains the key "specials", return true. Otherwise, return false
+    /// </summary>
+    /// <returns>
+    /// A boolean value.
+    /// </returns>
     public bool SpecialsEnabled()
     {
         if (getOptsFlags().ContainsKey("specials"))
@@ -121,6 +146,12 @@ public class NFy : Control
         else return false;
     }
 
+    /// <summary>
+    /// > If the opts dictionary contains the key "Unofficial", return true. Otherwise, return false
+    /// </summary>
+    /// <returns>
+    /// A boolean value.
+    /// </returns>
     public bool AutoSet()
     {
         if (getOptsFlags().ContainsKey("Unofficial"))
@@ -129,11 +160,22 @@ public class NFy : Control
         }
         else return false;
     }
+    /// <summary>
+    /// It takes a string as an argument, and adds it to the end of the text in the TextEdit node called
+    /// "CON"
+    /// </summary>
+    /// <param name="text">The text to print to the console.</param>
     public void PrintToConsole(string text)
     {
         GetNode<TextEdit>("CON").Text += text + "\n";
     }
 
+    /// <summary>
+    /// It gets the current song from the listbox and returns it as a string
+    /// </summary>
+    /// <returns>
+    /// The name of the song that is currently selected.
+    /// </returns>
     public string GetCurrentSongIfAny()
     {
         var sf = getNFySongList();
@@ -142,7 +184,15 @@ public class NFy : Control
         return song;
     }
 
-    /// @desc Check the spec
+    /// <summary>
+    /// It checks if a file or directory exists, and if it does, it returns the full path to the file or
+    /// directory (with the extension)
+    /// </summary>
+    /// <param name="s">The string to check</param>
+    /// <param name="sp">The array of strings to check for (as extensions).</param>
+    /// <returns>
+    /// The first file or directory that matches the extension in the array.
+    /// </returns>
     public string wCheck(string s, string[] sp)
     {
         foreach (string str in sp)
@@ -155,6 +205,10 @@ public class NFy : Control
 
 
 
+    /// <summary>
+    /// It opens a file, reads it into a byte array, and then plays it
+    /// </summary>
+    /// <param name="path">The path to the song you want to play.</param>
     public void OpenSong(string path)
     {
 
@@ -196,6 +250,13 @@ public class NFy : Control
 
         audSound.Play();
     }
+    /// <summary>
+    /// It returns the path of the current song, if any.
+    /// </summary>
+    /// <returns>
+    /// The path to the current song.
+    /// </returns>
+    [Obsolete("This song is no longer in use")]
     public string CurrentSongPath()
     {
         return CTEXT(wCheck("songs/" + GetCurrentSongIfAny(), GetSpec()));
@@ -216,11 +277,22 @@ public class NFy : Control
             ed = false;
         }
     }
+    /// <summary>
+    /// This function returns an array of strings that contains the file extensions that the executable can
+    /// handle.
+    /// </summary>
+    /// <returns>
+    /// The string array spec
+    /// </returns>
     public string[] GetSpec()
     {
         string[] spec = { "wav", "ogg", "mp3" };
         return spec;
     }
+    /// <summary>
+    /// It opens a song (correctly, with proper checks.)
+    /// </summary>
+    /// <param name="name">The name of the song to open.</param>
     public void OpenCorrect(string name)
     {
         if (name != "")
@@ -228,33 +300,73 @@ public class NFy : Control
     }
 
     /// Returns the absolute path
+    /// <summary>
+    /// It returns the path to the executable file, then gets the base directory of that path, then adds
+    /// the base directory to the path of the file you want to open
+    /// </summary>
+    /// <param name="basel">The base path of the file.</param>
+    /// <returns>
+    /// The path to the executable file.
+    /// </returns>
     public string CTEXT(string basel)
     {
         return OS.GetExecutablePath().GetBaseDir() + "/" + basel;
     }
 
+   /// <summary>
+   /// It returns the current directory of the executable
+   /// </summary>
+   /// <returns>
+   /// The current directory of the executable.
+   /// </returns>
     public string GetCurrentDir()
     {
         return OS.GetExecutablePath().GetBaseDir() + "/";
     }
 
+    /// <summary>
+    /// > Returns true if the directory exists, false if it doesn't
+    /// </summary>
+    /// <param name="d">The directory to check.</param>
+    /// <returns>
+    /// A boolean value.
+    /// </returns>
     public bool DirExists(string d)
     {
         if (System.IO.Directory.Exists(CTEXT(d))) { return true; }
         else { return false; }
     }
 
+    /// <summary>
+    /// ListDir returns a list of files in a directory.
+    /// </summary>
+    /// <param name="dname">The directory to list.</param>
+    /// <returns>
+    /// A list of files in the directory
+    /// </returns>
     public string[] listDir(string dname)
     {
         return System.IO.Directory.GetFiles(dname);
     }
 
+    /// <summary>
+    /// It takes a string, replaces all backslashes with forward slashes, and returns the filename
+    /// without the extension
+    /// </summary>
+    /// <param name="B">The song entry to parse</param>
+    /// <returns>
+    /// The name of the song without the extension.
+    /// </returns>
     public string ParseSongEntry(string B)
     {
         B = B.Replace("\\", "/"); // Convert to cross platform format
         return System.IO.Path.GetFileNameWithoutExtension(B);
     }
 
+    /// <summary>
+    /// It checks if the directory "songs" exists, and if it does, it checks each file in the directory
+    /// to see if it's a valid audio file, and if it is, it adds it to the list of songs
+    /// </summary>
     public void SongPreload()
     {
 
@@ -272,6 +384,10 @@ public class NFy : Control
         }
     }
 
+    /// <summary>
+    /// It takes a string array, and adds each item in the array to the list
+    /// </summary>
+    /// <param name="each">The array of strings that you want to add to the list.</param>
     public void LoadEach(string[] each)
     {
         foreach (string item in each)
@@ -279,6 +395,11 @@ public class NFy : Control
             getNFySongList().AddItem(item);
         }
     }
+    /// <summary>
+    /// It checks if the "playlists" directory exists, if it does, it loops through all the files in the
+    /// directory, and if the file ends with ".json", it adds the file name to the "Playlists" option
+    /// button
+    /// </summary>
     public void PlaylistPreload()
     {
 
@@ -358,6 +479,7 @@ public class NFy : Control
         }
     }
 
+    [Obsolete("this function has been replaced by NJLog.")]
     public string printFMT(string text, string[] form)
     {
         string new1 = "";
@@ -381,6 +503,13 @@ public class NFy : Control
         }
         return new1;
     }
+    /// <summary>
+    /// It takes a string and an array of strings, and replaces all instances of {} with the first
+    /// element of the array, {} #2 with the second element, and so on
+    /// </summary>
+    /// <param name="text">The text you want to print.</param>
+    /// <param name="form">The array of strings that will be used to replace the placeholders in the
+    /// text.</param>
     public void NJLog(string text, string[] form)
     {
         string new1 = "";
@@ -405,7 +534,14 @@ public class NFy : Control
         print(new1);
 
     }
-
+    [Obsolete("This function is no longer in use.")]
+    /// <summary>
+    /// It returns the string "true" if the input is true, and the string "false" if the input is false
+    /// </summary>
+    /// <param name="s">The string to convert to a bool.</param>
+    /// <returns>
+    /// A string
+    /// </returns>
     string ToStringBool(bool s)
     {
         if (s == true) return "true";
@@ -414,10 +550,11 @@ public class NFy : Control
 
     public void loadPlugins(bool callTick = false, bool getMethod = false, string methodName = "", params object[] cf)
     {
+        
         /// <summary>
-        /// Set the volume.
+        /// It sets the volume of the stream to the value of the slider
         /// </summary>
-        /// <param name="s"></param>
+        /// <param name="s">The volume level in decibels.</param>
         void setVol(float s)
         {
             getNFyStream().VolumeDb = s;
@@ -447,7 +584,11 @@ public class NFy : Control
         {
             myeng.Execute(System.IO.File.ReadAllText(fn));
         }
-        /// sets the BG Color, turns on OVERRIDEN if 
+        
+        /// <summary>
+        /// It sets the background color of the screen to the color specified in the string.
+        /// </summary>
+        /// <param name="clr">The HTML color code to set the background to.</param>
         void SetBackground(string clr)
         {
             print(clr);
@@ -618,11 +759,18 @@ public class NFy : Control
         loadPlugins(false, true, fname, parameters);
     }
 
+    /// <summary>
+    /// It reads the contents of the .vsign file, and if it's "unofficial", it returns "unofficial", otherwise
+    /// it returns the last part of the version number
+    /// </summary>
+    /// <returns>
+    /// The version number of the file.
+    /// </returns>
     public string getVersionNumber() {
 
         string fs = System.IO.File.ReadAllText(".vsign")
             .Trim();
-        if (fs == "latest") return "Latest";
+        if (fs == "unofficial") return "unofficial";
         return fs.Substring(fs.LastIndexOf(".")+1);
     }
 
