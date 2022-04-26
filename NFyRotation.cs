@@ -22,6 +22,12 @@ public class NFyRotation {
         current_index = id;
     }
 
+    /// <summary>
+    /// If the current index is not null, return the value at the current index. Otherwise, return "N"
+    /// </summary>
+    /// <returns>
+    /// The current song.
+    /// </returns>
     public string getCurrentSong() {
         if (array_value.ElementAtOrDefault(current_index) != null) {
             return array_value[current_index];
@@ -30,6 +36,12 @@ public class NFyRotation {
         }
     }
 
+    /// <summary>
+    /// It returns the next value in the array and increments the current index
+    /// </summary>
+    /// <returns>
+    /// The next value in the array.
+    /// </returns>
     public string peekNext() {
         return array_value[current_index++];
     }
