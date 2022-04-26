@@ -471,22 +471,12 @@ public class NFy : Control
         /// <param name="hovercolor"></param>
         /// <param name="margins"></param>
         /// <param name="marginsOutline"></param>
-        void UpdateButtons(string color, string outline, string hovercolor, int margins, int marginsOutline) {
+        void UpdateButtons(string color, string outline, int margins, int marginsOutline) {
             print(color + ", " + outline + ".");
 
             print("Setting button color to " + color + ", margins to " + margins.ToString() + ", and the border width to " + marginsOutline.ToString());
             
             var bg =  new StyleBoxFlat();
-            
-            bg.BgColor = new Color(color);
-
-            bg.BorderColor = new Color(outline);
-
-            bg.SetBorderWidthAll(margins);
-
-            bg.SetCornerRadiusAll(marginsOutline);
-
-            var bg_hover =  new StyleBoxFlat();
             
             bg.BgColor = new Color(color);
 
@@ -541,7 +531,7 @@ public class NFy : Control
             .SetValue("NJPlaySongByName", (Action<string>)OpenCorrect)
             .SetValue("NJBackgroundColor", (Action<string>)SetBackground)
             .SetValue("NJFontColor", (Action<string>)setFontColor)
-            .SetValue("NJButtonUpdate", (Action<string, string, string, int, int>)UpdateButtons)
+            .SetValue("NJButtonUpdate", (Action<string, string, int, int>)UpdateButtons)
 
             // LOW LEVEL FUNCTIONS - 
             // Only use these if you know what you're doing!
