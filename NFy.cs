@@ -318,12 +318,12 @@ public class NFy : Control
         return OS.GetExecutablePath().GetBaseDir() + "/" + basel;
     }
 
-   /// <summary>
-   /// It returns the current directory of the executable
-   /// </summary>
-   /// <returns>
-   /// The current directory of the executable.
-   /// </returns>
+    /// <summary>
+    /// It returns the current directory of the executable
+    /// </summary>
+    /// <returns>
+    /// The current directory of the executable.
+    /// </returns>
     public string GetCurrentDir()
     {
         return OS.GetExecutablePath().GetBaseDir() + "/";
@@ -466,7 +466,7 @@ public class NFy : Control
                 print("Loading VSign");
                 print("Loading Version sign - Mono 7");
                 string ver = System.IO.File.ReadAllText(".vsign");
-            
+
                 if (ver != v && ver != "unofficial")
                 {
                     string ver1 = ver.Substring(ver.IndexOf(".") + 1); // (version.)NUMBER
@@ -558,7 +558,7 @@ public class NFy : Control
 
     public void loadPlugins(bool callTick = false, bool getMethod = false, string methodName = "", params object[] cf)
     {
-        
+
         /// <summary>
         /// It sets the volume of the stream to the value of the slider
         /// </summary>
@@ -592,7 +592,7 @@ public class NFy : Control
         {
             myeng.Execute(System.IO.File.ReadAllText(fn));
         }
-        
+
         /// <summary>
         /// It sets the background color of the screen to the color specified in the string.
         /// </summary>
@@ -603,7 +603,7 @@ public class NFy : Control
 
             print("Setting background color to HTML color " + clr);
 
-            var bg =  new StyleBoxFlat();
+            var bg = new StyleBoxFlat();
             bg.BgColor = new Color(clr);
             getNFyScreen().AddStyleboxOverride("panel", bg);
 
@@ -615,7 +615,8 @@ public class NFy : Control
         /// Sets the font color.
         /// </summary>
         /// <param name="clr"></param>
-        void setFontColor(string clr) {
+        void setFontColor(string clr)
+        {
             print(clr);
 
             Theme_Overriden = true;
@@ -623,9 +624,9 @@ public class NFy : Control
             print("Setting font color to HTML color " + clr);
 
             getNFyScreen().AddColorOverride("font_color", new Color(clr));
-            
+
             GetNode<Label>("NFYSCREEN/CS").AddColorOverride("font_color", new Color(clr));
-            
+
             Update();
         }
         /// <summary>
@@ -636,13 +637,14 @@ public class NFy : Control
         /// <param name="hovercolor"></param>
         /// <param name="margins"></param>
         /// <param name="marginsOutline"></param>
-        void UpdateButtons(string color, string outline, int margins, int marginsOutline) {
+        void UpdateButtons(string color, string outline, int margins, int marginsOutline)
+        {
             print(color + ", " + outline + ".");
 
             print("Setting button color to " + color + ", margins to " + margins.ToString() + ", and the border width to " + marginsOutline.ToString());
-            
-            var bg =  new StyleBoxFlat();
-            
+
+            var bg = new StyleBoxFlat();
+
             bg.BgColor = new Color(color);
 
             bg.BorderColor = new Color(outline);
@@ -652,7 +654,7 @@ public class NFy : Control
             bg.SetCornerRadiusAll(marginsOutline);
 
             /* Button changing code */
-            
+
             GetNode<Button>("NFYSCREEN/Play").AddStyleboxOverride("normal", bg);
             GetNode<Button>("NFYSCREEN/Play").AddStyleboxOverride("pressed", bg);
             GetNode<Button>("NFYSCREEN/Play").AddStyleboxOverride("disabled", bg);
@@ -687,7 +689,7 @@ public class NFy : Control
             /* End button changing Code */
 
         }
-        
+
         myeng = new Jint.Engine()
 
             // Basic functions (The base API)
@@ -774,12 +776,13 @@ public class NFy : Control
     /// <returns>
     /// The version number of the file.
     /// </returns>
-    public string getVersionNumber() {
+    public string getVersionNumber()
+    {
 
         string fs = System.IO.File.ReadAllText(".vsign")
             .Trim();
         if (fs == "unofficial") return "unofficial";
-        return fs.Substring(fs.LastIndexOf(".")+1);
+        return fs.Substring(fs.LastIndexOf(".") + 1);
     }
 
     /// [------------------ THE INITIAL FUNCTION ------------------]
@@ -806,16 +809,18 @@ public class NFy : Control
         }
 
         loadPlugins();
-        
+
         print("Checking for specials");
         if (SpecialsEnabled()) GetNode<Button>("NFYSCREEN/EnableConsole").Visible = true;
-        
-        if (SpecialsEnabled()) {
+
+        if (SpecialsEnabled())
+        {
             print("Version string is true");
             GetNode<Label>("NFYSCREEN/VER").Text = "NFy Mono version " + getVersionNumber() + " DEBUG mode";
-        } 
+        }
 
-        if (AutoSet()) {
+        if (AutoSet())
+        {
             print("Setting unofficial");
             System.IO.File.WriteAllText(".vsign", "unofficial");
         }
@@ -1042,7 +1047,8 @@ public class NFy : Control
         }
         else
         {
-            if (!Theme_Overriden) {
+            if (!Theme_Overriden)
+            {
                 getNFyScreen().Theme = GD.Load<Theme>("res://Themes/NFyCorded/NFyCord.tres");
 
                 getNFyScreen().AddStyleboxOverride("panel", GD.Load<StyleBoxFlat>("res://Themes/NFyCorded/PanelTheme.tres"));
