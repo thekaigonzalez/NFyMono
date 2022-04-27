@@ -282,6 +282,7 @@ public class NFy : Control
             ed = false;
         }
     }
+
     /// <summary>
     /// This function returns an array of strings that contains the file extensions that the executable can
     /// handle.
@@ -294,6 +295,7 @@ public class NFy : Control
         string[] spec = { "wav", "ogg", "mp3" };
         return spec;
     }
+    
     /// <summary>
     /// It opens a song (correctly, with proper checks.)
     /// </summary>
