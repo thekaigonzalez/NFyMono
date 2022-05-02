@@ -376,7 +376,6 @@ public class NFy : Control
     /// </summary>
     public void SongPreload()
     {
-
         if (DirExists("songs"))
         { // Song preload
             foreach (string item in listDir("songs"))
@@ -544,6 +543,7 @@ public class NFy : Control
         print(new1);
 
     }
+    
     [Obsolete("This function is no longer in use.")]
     /// <summary>
     /// It returns the string "true" if the input is true, and the string "false" if the input is false
@@ -766,6 +766,12 @@ public class NFy : Control
         }
     }
 
+    /// <summary>
+    /// 
+    /// The first parameter is the name of the function you want to call. The second parameter is an
+    /// array of parameters you want to pass to the function
+    /// </summary>
+    /// <param name="fname">The name of the function to call.</param>
     public void LoadPluginFunc(string fname, params object[] parameters)
     {
         loadPlugins(false, true, fname, parameters);
