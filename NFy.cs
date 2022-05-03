@@ -295,7 +295,7 @@ public class NFy : Control
         string[] spec = { "wav", "ogg", "mp3" };
         return spec;
     }
-    
+
     /// <summary>
     /// It opens a song (correctly, with proper checks.)
     /// </summary>
@@ -434,7 +434,9 @@ public class NFy : Control
 
     public string getPlaylistName()
     {
-        return GetNode<OptionButton>("NFYSCREEN/Playlists").GetItemText(GetNode<OptionButton>("NFYSCREEN/Playlists").GetSelectedId());
+        return GetNode<OptionButton>("NFYSCREEN/Playlists").GetItemText(
+            GetNode<OptionButton>("NFYSCREEN/Playlists").GetSelectedId()
+        );
     }
     /**
 	
@@ -543,7 +545,7 @@ public class NFy : Control
         print(new1);
 
     }
-    
+
     [Obsolete("This function is no longer in use.")]
     /// <summary>
     /// It returns the string "true" if the input is true, and the string "false" if the input is false
@@ -1043,7 +1045,18 @@ public class NFy : Control
 
     public override void _Process(float delta)
     {
+        if (Input.IsKeyPressed((int)KeyList.Control) && Input.IsKeyPressed((int)KeyList.R))
+        {
+            var pl = listDir(CTEXT("songs/"));
 
+            m = new NFyRotation(pl);
+
+            getNFySongList().Clear();
+
+            LoadEach(pl);
+
+            getNFySongList().Select(0);
+        }
         loadPlugins(true); // call the tick frame functions for any plugins
         // Console.WriteLine(GetCurrentSongIfAny());
 
