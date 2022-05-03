@@ -19,3 +19,20 @@ Console.WriteLine("Hello!") // WRONG
 print("Hello!") // CORRECT!
 
 ```
+
+Getting the directory of NFy Mono & trying to access it's files are two different things. And should be
+treated as such. Using CTEXT("") is deprecated behaviour.
+
+```cs
+
+GetCurrentDir() // C:\users\bla\appdata\roaming\nmono\
+
+// Would return the same thing, but for readability,
+// you use GetCurrentDir() for the current dir
+// (For experimentation), and use CTEXT(path) for getting
+// Files.
+CTEXT("") // WRONG!
+
+CTEXT("songs/hello"); // Example
+
+```
