@@ -860,19 +860,37 @@ public class NFy : Control
         {
             if (System.IO.File.Exists("playlists/" + getPlaylistName() + ".json"))
             {
-                string[] pl = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, string[]>>(System.IO.File.ReadAllText(CTEXT("playlists/" + getPlaylistName() + ".json")))["songs"];
+                var pl2 = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, string[]>>(System.IO.File.ReadAllText(CTEXT("playlists/" + getPlaylistName() + ".json")));
 
-                m = new NFyRotation(pl);
 
-                PLAYING_ARRAY = true;
+                string[] pl = { };
+                bool FailSafe = false;
 
-                OpenCorrect(m.getCurrentSong());
+                if (pl2.ContainsKey("songs"))
+                {
+                    pl = pl2["songs"];
+                    FailSafe = true;
+                }
+                else if (pl2.ContainsKey("playlist_songs"))
+                {
+                    pl = pl2["playlist_songs"];
+                    FailSafe = true;
+                }
 
-                getNFySongList().Clear();
+                if (FailSafe)
+                {
+                    m = new NFyRotation(pl);
 
-                LoadEach(pl);
+                    PLAYING_ARRAY = true;
 
-                getNFySongList().Select(0);
+                    OpenCorrect(m.getCurrentSong());
+
+                    getNFySongList().Clear();
+
+                    LoadEach(pl);
+
+                    getNFySongList().Select(0);
+                }
             }
             else
             {
