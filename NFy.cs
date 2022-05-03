@@ -853,6 +853,23 @@ public class NFy : Control
         m = new NFyRotation();
     }
 
+    public string[] Randomize(string[] input)
+    {
+        List<string> inputList = new List<string>(input);
+        string[] output = new string[input.Length];
+        Random randomizer = new Random();
+        int i = 0;
+
+        while (inputList.Count > 0)
+        {
+            int index = randomizer.Next(inputList.Count);
+            output[i++] = inputList[index];
+            inputList.RemoveAt(index);
+        }
+
+        return (output);
+    }
+
     public void _on_UP_toggled(bool t)
     {
 
@@ -877,8 +894,27 @@ public class NFy : Control
                     FailSafe = true;
                 }
 
+                bool shuf = false;
+                /* TODO: Add more settings */
+                if (pl2.ContainsKey("settings"))
+                {
+                    foreach (string set in pl2["settings"])
+                    {
+                        if (set == "playlists:shuffle")
+                        {
+                            shuf = true;
+                        }
+                    }
+                }
+
                 if (FailSafe)
                 {
+                    // If shuffling setting enabled
+                    if (shuf)
+                    {
+                        // randomize the string array
+                        pl = Randomize(pl);
+                    }
                     m = new NFyRotation(pl);
 
                     PLAYING_ARRAY = true;
