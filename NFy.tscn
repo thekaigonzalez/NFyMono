@@ -1,13 +1,14 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://NFy.cs" type="Script" id=1]
 [ext_resource path="res://NfyConIo.cs" type="Script" id=2]
 [ext_resource path="res://Themes/NFyCorded/NFyCord.tres" type="Theme" id=3]
 [ext_resource path="res://Segoe UI.ttf" type="DynamicFontData" id=4]
 [ext_resource path="res://NfyMonoLogoUK.png" type="Texture" id=5]
-[ext_resource path="res://Themes/ClassicNFy/CircularStd-Medium.otf" type="DynamicFontData" id=6]
+[ext_resource path="res://NunitoSans-Regular.ttf" type="DynamicFontData" id=6]
 [ext_resource path="res://ga.jpg" type="Texture" id=7]
 [ext_resource path="res://blur.tres" type="Shader" id=8]
+[ext_resource path="res://SourceSansPro-Regular.ttf" type="DynamicFontData" id=9]
 
 [sub_resource type="StyleBoxFlat" id=4]
 bg_color = Color( 0.192157, 0.192157, 0.192157, 1 )
@@ -29,6 +30,10 @@ bg_color = Color( 1, 1, 1, 0 )
 
 [sub_resource type="StyleBoxFlat" id=10]
 bg_color = Color( 0.6, 0.6, 0.6, 0 )
+
+[sub_resource type="DynamicFont" id=12]
+size = 23
+font_data = ExtResource( 9 )
 
 [node name="NFy" type="Control"]
 anchor_right = 1.0
@@ -52,10 +57,14 @@ position = Vector2( 639, 355 )
 texture = ExtResource( 7 )
 
 [node name="NFyBar" type="ProgressBar" parent="NFYSCREEN"]
-margin_left = 311.0
-margin_top = 687.0
-margin_right = 1009.0
-margin_bottom = 692.0
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -349.0
+margin_top = -49.0
+margin_right = 349.0
+margin_bottom = -44.0
 percent_visible = false
 
 [node name="EnableConsole" type="Button" parent="NFYSCREEN"]
@@ -110,10 +119,14 @@ align = 1
 autowrap = true
 
 [node name="CS" type="Label" parent="NFYSCREEN"]
-margin_left = 311.0
-margin_top = 654.0
-margin_right = 1009.0
-margin_bottom = 724.0
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -349.0
+margin_top = -78.0
+margin_right = 349.0
+margin_bottom = -58.0
 custom_fonts/font = SubResource( 2 )
 text = "Current Song"
 align = 1
@@ -127,40 +140,58 @@ margin_bottom = 414.0
 min_value = -100.0
 max_value = 0.0
 
-[node name="Play" type="Button" parent="NFYSCREEN"]
-margin_left = 603.0
-margin_top = 576.0
-margin_right = 704.0
-margin_bottom = 611.0
-text = "Play"
+[node name="OpenSongs" type="Button" parent="NFYSCREEN"]
+margin_left = 13.0
+margin_top = 586.0
+margin_right = 194.0
+margin_bottom = 621.0
+rect_scale = Vector2( 1, 0.992091 )
+text = "Open Songs Directory"
 
 [node name="NSL" type="ItemList" parent="NFYSCREEN"]
-margin_left = 363.0
-margin_top = 102.0
-margin_right = 936.0
-margin_bottom = 539.0
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -286.5
+margin_top = -274.0
+margin_right = 286.5
+margin_bottom = 163.0
 custom_colors/guide_color = Color( 1, 1, 1, 0 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_fonts/font = SubResource( 5 )
 custom_styles/selected = SubResource( 11 )
 custom_styles/bg = SubResource( 10 )
 
+[node name="Play" type="Button" parent="NFYSCREEN"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -78.5
+margin_top = -146.0
+margin_right = 78.5
+margin_bottom = -100.0
+rect_scale = Vector2( 0.993, 0.876 )
+custom_fonts/font = SubResource( 12 )
+text = "Play_Button"
+
 [node name="VER" type="Label" parent="NFYSCREEN"]
 margin_right = 40.0
 margin_bottom = 18.0
 
 [node name="Time1" type="Label" parent="NFYSCREEN"]
-margin_left = 274.0
-margin_top = 674.0
-margin_right = 314.0
-margin_bottom = 694.0
+margin_left = 248.0
+margin_top = 662.0
+margin_right = 288.0
+margin_bottom = 682.0
 text = "0:00"
 
 [node name="Time2" type="Label" parent="NFYSCREEN"]
-margin_left = 1016.0
-margin_top = 674.0
-margin_right = 1056.0
-margin_bottom = 694.0
+margin_left = 999.0
+margin_top = 662.0
+margin_right = 1039.0
+margin_bottom = 682.0
 text = "0:00"
 
 [node name="NfyStream" type="AudioStreamPlayer" parent="."]
@@ -192,6 +223,7 @@ margin_bottom = 711.0
 
 [connection signal="pressed" from="NFYSCREEN/EnableConsole" to="." method="_on_EnableConsole_pressed"]
 [connection signal="toggled" from="NFYSCREEN/UP" to="." method="_on_UP_toggled"]
-[connection signal="pressed" from="NFYSCREEN/Play" to="." method="_on_Button_pressed"]
+[connection signal="pressed" from="NFYSCREEN/OpenSongs" to="." method="_on_open_songs"]
 [connection signal="item_selected" from="NFYSCREEN/NSL" to="." method="_on_ItemList_item_selected"]
+[connection signal="pressed" from="NFYSCREEN/Play" to="." method="_on_Button_pressed"]
 [connection signal="pressed" from="PFUK" to="." method="_on_PFUK_pressed"]

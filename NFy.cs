@@ -18,6 +18,8 @@ public class NFy : Control
     public bool ed = false;
 
     public bool IsInNFyAES = false;
+
+    public string SONG_DIR = "songs/";
     public bool InNFySD = false;
 
     public bool Theme_Overriden = false;
@@ -264,7 +266,7 @@ public class NFy : Control
     [Obsolete("This song is no longer in use")]
     public string CurrentSongPath()
     {
-        return CTEXT(wCheck("songs/" + GetCurrentSongIfAny(), GetSpec()));
+        return CTEXT(wCheck(SONG_DIR + GetCurrentSongIfAny(), GetSpec()));
     }
 
 
@@ -303,7 +305,7 @@ public class NFy : Control
     public void OpenCorrect(string name)
     {
         if (name != "")
-            OpenSong(CTEXT(wCheck("songs/" + name, GetSpec())));
+            OpenSong(CTEXT(wCheck(SONG_DIR + name, GetSpec())));
     }
 
     /// Returns the absolute path
@@ -707,7 +709,7 @@ public class NFy : Control
             // LOW LEVEL FUNCTIONS - 
             // Only use these if you know what you're doing!
             // NOTE: _NJplay (OpenSong) needs the absolute path to a song! You can get this using the 
-            // NJ_PATH_DIR + "songs/" + name
+            // NJ_PATH_DIR + SONG_DIR + name
             .SetValue("_NJplay", (Action<string>)OpenSong)
 
             // Variables
@@ -996,6 +998,10 @@ public class NFy : Control
         }
     }
 
+    public void _on_open_songs() {
+        OS.ShellOpen(CTEXT(SONG_DIR));
+    }
+
     public void _on_EnableConsole_pressed()
     {
         if (GetNode<TextEdit>("CON").Visible)
@@ -1105,7 +1111,7 @@ public class NFy : Control
 
         if (Input.IsKeyPressed((int)KeyList.Control) && Input.IsKeyPressed((int)KeyList.R))
         {
-            var pl = listDir(CTEXT("songs/"));
+            var pl = listDir(CTEXT(SONG_DIR));
 
             m = new NFyRotation(pl);
 
