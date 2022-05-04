@@ -1099,6 +1099,10 @@ public class NFy : Control
 
     public override void _Process(float delta)
     {
+        //GetTimeFormat(getNFyStream().GetPlaybackPosition()) + " - " + GetTimeFormat(SongLength);
+        GetNode<Label>("NFYSCREEN/Time1").Text = GetTimeFormat(getNFyStream().GetPlaybackPosition());
+        GetNode<Label>("NFYSCREEN/Time2").Text = GetTimeFormat(SongLength);
+
         if (Input.IsKeyPressed((int)KeyList.Control) && Input.IsKeyPressed((int)KeyList.R))
         {
             var pl = listDir(CTEXT("songs/"));
