@@ -999,7 +999,10 @@ public class NFy : Control
     }
 
     public void _on_open_songs() {
+        if (System.IO.Directory.Exists(CTEXT(SONG_DIR)))
         OS.ShellOpen(CTEXT(SONG_DIR));
+        else
+        print("Error: Directory not found");
     }
 
     public void _on_EnableConsole_pressed()
