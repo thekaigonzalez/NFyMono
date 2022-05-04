@@ -568,7 +568,7 @@ public class NFy : Control
 
     }
 
-    [Obsolete("This function is no longer in use.")]
+    [Obsolete("This function is no longer in use and will be deprecated in NJ 12.")]
     /// <summary>
     /// It returns the string "true" if the input is true, and the string "false" if the input is false
     /// </summary>
