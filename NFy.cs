@@ -1122,6 +1122,7 @@ public class NFy : Control
 
     }
 
+    [Obsolete("GetTimeSignature will be deprecated (and possibly commented out) in NJ 12, please refrain from using this function.")]
     public string GetTimeSignature()
     {
         return GetTimeFormat(getNFyStream().GetPlaybackPosition()) + " - " + GetTimeFormat(SongLength);
