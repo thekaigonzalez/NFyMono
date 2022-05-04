@@ -512,7 +512,7 @@ public class NFy : Control
         }
     }
 
-    [Obsolete("this function has been replaced by NJLog.")]
+    [Obsolete("this function has been replaced by NJLog and will be deprecated in NJ 12.")]
     public string printFMT(string text, string[] form)
     {
         string new1 = "";
