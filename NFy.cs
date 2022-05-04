@@ -304,6 +304,26 @@ public class NFy : Control
     /// <param name="name">The name of the song to open.</param>
     public void OpenCorrect(string name)
     {
+        if (System.IO.File.Exists(CTEXT("images/" + GetCurrentSongIfAny() + ".jpg")))
+        {
+            var img = new Image();
+
+            img.LoadJpgFromBuffer(System.IO.File.ReadAllBytes(CTEXT("images/" + GetCurrentSongIfAny() + ".jpg")));
+
+            var imgt = new ImageTexture();
+            imgt.CreateFromImage(img);
+
+            GetNode<TextureRect>("NFYSCREEN/Ga").Texture = imgt;
+        } else {
+            var img = new Image();
+
+            img.LoadJpgFromBuffer(System.IO.File.ReadAllBytes(CTEXT("images/default.jpg")));
+
+            var imgt = new ImageTexture();
+            imgt.CreateFromImage(img);
+
+            GetNode<TextureRect>("NFYSCREEN/Ga").Texture = imgt;
+        }
         if (name != "")
             OpenSong(CTEXT(wCheck(SONG_DIR + name, GetSpec())));
     }
@@ -998,11 +1018,12 @@ public class NFy : Control
         }
     }
 
-    public void _on_open_songs() {
+    public void _on_open_songs()
+    {
         if (System.IO.Directory.Exists(CTEXT(SONG_DIR)))
-        OS.ShellOpen(CTEXT(SONG_DIR));
+            OS.ShellOpen(CTEXT(SONG_DIR));
         else
-        print("Error: Directory not found");
+            print("Error: Directory not found");
     }
 
     public void _on_EnableConsole_pressed()
@@ -1046,6 +1067,7 @@ public class NFy : Control
 
     public void _song_change(int index)
     {
+        
         OpenCorrect(GetCurrentSongIfAny()); // you should just override this right?
     }
 
@@ -1108,6 +1130,18 @@ public class NFy : Control
 
     public override void _Process(float delta)
     {
+        /*
+        var path = get_cwd_file("playlists/" + PFile + ".png")
+			var ogg_file = File.new()
+			ogg_file.open(path, File.READ)
+			var bytes = ogg_file.get_buffer(ogg_file.get_len())
+			var stream = Image.new()
+			stream.load_png_from_buffer(bytes)
+			var itex = ImageTexture.new()
+			itex.create_from_image(stream)
+        */
+
+        
         //GetTimeFormat(getNFyStream().GetPlaybackPosition()) + " - " + GetTimeFormat(SongLength);
         GetNode<Label>("NFYSCREEN/Time1").Text = GetTimeFormat(getNFyStream().GetPlaybackPosition());
         GetNode<Label>("NFYSCREEN/Time2").Text = GetTimeFormat(SongLength);
