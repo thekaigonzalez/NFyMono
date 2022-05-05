@@ -1255,18 +1255,19 @@ public class NFy : Control
             OpenCorrect(GetCurrentSongIfAny());
         }
 
-        // if (!m.Dull() && PLAYING_ARRAY)
-        // {
-        //     GetNode<Label>("NFYSCREEN/PLabel").Visible = true;
-        //     GetNode<Label>("NFYSCREEN/PLabel").Text = "Currently in rotation;\n" + (m.currentIndex() + 1).ToString() + " of " + m.getSize();
-        //     GetNode<Label>("NFYSCREEN/CS").Visible = true;
-        //     GetNode<Label>("NFYSCREEN/CS").Text = "Rotation - " + m.getCurrentSong();
-        // }
-        // else
-        // {
-        //     GetNode<Label>("NFYSCREEN/PLabel").Visible = false;
-        //     // GetNode<Label>("NFYSCREEN/CS").Visible = false;
-        // }
+        if (!m.Dull() && PLAYING_ARRAY)
+        {
+            GetNode<Label>("NFYSCREEN/PLabel").Visible = true;
+            GetNode<Label>("NFYSCREEN/PLabel").Text = "Currently in rotation;\n" + (m.currentIndex() + 1).ToString() + " of " + m.getSize();
+            
+            GetNode<Label>("NFYSCREEN/CS").Visible = true;
+            GetNode<Label>("NFYSCREEN/CS").Text = GetCurrentSongIfAny();
+        }
+        else
+        {
+            GetNode<Label>("NFYSCREEN/PLabel").Visible = false;
+            // GetNode<Label>("NFYSCREEN/CS").Visible = false;
+        }
 
         if (GetCurrentSongIfAny() != "" && m.Dull())
         {
