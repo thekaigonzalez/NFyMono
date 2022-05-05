@@ -314,7 +314,9 @@ public class NFy : Control
             imgt.CreateFromImage(img);
 
             GetNode<TextureRect>("NFYSCREEN/Ga").Texture = imgt;
-        } else {
+        }
+        else
+        {
             var img = new Image();
 
             img.LoadJpgFromBuffer(System.IO.File.ReadAllBytes(CTEXT("images/default.jpg")));
@@ -423,6 +425,22 @@ public class NFy : Control
             getNFySongList().AddItem(item);
         }
     }
+
+    /// <summary>
+    /// It takes a string array, loops through each item in the array, and adds the item to the list
+    /// </summary>
+    /// <param name="each">The array of strings to be parsed.</param>
+    public void LoadAndStripEach(string[] each)
+    {
+        foreach (string item in each)
+        {
+            if (!item.EndsWith(".import") && CheckEach(item, GetSpec()))
+            {
+                getNFySongList().AddItem(ParseSongEntry(item));
+            }
+        }
+    }
+
     /// <summary>
     /// It checks if the "playlists" directory exists, if it does, it loops through all the files in the
     /// directory, and if the file ends with ".json", it adds the file name to the "Playlists" option
@@ -618,7 +636,7 @@ public class NFy : Control
         {
             myeng.Execute(System.IO.File.ReadAllText(fn));
         }
-        
+
 
         /// <summary>
         /// It sets the background color of the screen to the color specified in the string.
@@ -717,10 +735,14 @@ public class NFy : Control
 
         }
 
-        string FileExists(string p) {
-            if (System.IO.File.Exists(p) == true) {
+        string FileExists(string p)
+        {
+            if (System.IO.File.Exists(p) == true)
+            {
                 return "yes";
-            } else {
+            }
+            else
+            {
                 return "no";
             }
         }
@@ -754,7 +776,7 @@ public class NFy : Control
             // Etc functions - Clearing Output, Pausing, and more.
             .SetValue("NJClearOutput", (Action)Console.Clear)
             .SetValue("NJPauseStream", (Action)getNFyStream().Stop)
-            .SetValue("NJReadFile", new Func<Jint.Native.JsValue, string>( (path) => System.IO.File.ReadAllText(path.AsString())))
+            .SetValue("NJReadFile", new Func<Jint.Native.JsValue, string>((path) => System.IO.File.ReadAllText(path.AsString())))
             .SetValue("NJExists", new Func<Jint.Native.JsValue, string>((p) => FileExists(p.AsString())))
 
 
@@ -767,7 +789,7 @@ public class NFy : Control
 
             .SetValue("NJSetVol", (Action<float>)setVol);
 
-        
+
         if (System.IO.Directory.Exists("plugins"))
         {
             foreach (string f in listDir("plugins"))
@@ -1079,7 +1101,7 @@ public class NFy : Control
 
     public void _song_change(int index)
     {
-        
+
         OpenCorrect(GetCurrentSongIfAny()); // you should just override this right?
     }
 
@@ -1154,7 +1176,7 @@ public class NFy : Control
 			itex.create_from_image(stream)
         */
 
-        
+
         //GetTimeFormat(getNFyStream().GetPlaybackPosition()) + " - " + GetTimeFormat(SongLength);
         GetNode<Label>("NFYSCREEN/Time1").Text = GetTimeFormat(getNFyStream().GetPlaybackPosition());
         GetNode<Label>("NFYSCREEN/Time2").Text = GetTimeFormat(SongLength);
@@ -1167,9 +1189,11 @@ public class NFy : Control
 
             getNFySongList().Clear();
 
-            LoadEach(pl);
+            LoadAndStripEach(pl);
 
             getNFySongList().Select(0);
+
+            OpenCorrect(GetCurrentSongIfAny()); // Fixes CTRL+R
         }
         loadPlugins(true); // call the tick frame functions for any plugins
         // Console.WriteLine(GetCurrentSongIfAny());
