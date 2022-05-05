@@ -618,6 +618,7 @@ public class NFy : Control
         {
             myeng.Execute(System.IO.File.ReadAllText(fn));
         }
+        
 
         /// <summary>
         /// It sets the background color of the screen to the color specified in the string.
@@ -716,6 +717,14 @@ public class NFy : Control
 
         }
 
+        string FileExists(string p) {
+            if (System.IO.File.Exists(p) == true) {
+                return "yes";
+            } else {
+                return "no";
+            }
+        }
+
         myeng = new Jint.Engine()
 
             // Basic functions (The base API)
@@ -745,6 +754,9 @@ public class NFy : Control
             // Etc functions - Clearing Output, Pausing, and more.
             .SetValue("NJClearOutput", (Action)Console.Clear)
             .SetValue("NJPauseStream", (Action)getNFyStream().Stop)
+            .SetValue("NJReadFile", new Func<Jint.Native.JsValue, string>( (path) => System.IO.File.ReadAllText(path.AsString())))
+            .SetValue("NJExists", new Func<Jint.Native.JsValue, string>((p) => FileExists(p.AsString())))
+
 
             // These disable/enable , or edit certian features.
             .SetValue("NJVSignUrl", (Action<bool, string>)setVSignURL)
@@ -755,7 +767,7 @@ public class NFy : Control
 
             .SetValue("NJSetVol", (Action<float>)setVol);
 
-
+        
         if (System.IO.Directory.Exists("plugins"))
         {
             foreach (string f in listDir("plugins"))
