@@ -1247,7 +1247,7 @@ public class NFy : Control
 
         getNFyStream().VolumeDb = ((float)GetNode<VSlider>("NFYSCREEN/Volume").Value);
 
-        if (m.currentIndex() > m.getSize())
+        if (m.currentIndex() > m.getSize() && !m.Dull())
         {
             print("!!!!! ABOVE");
             PLAYING_ARRAY = false;
