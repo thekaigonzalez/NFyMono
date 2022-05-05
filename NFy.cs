@@ -1265,7 +1265,7 @@ public class NFy : Control
         else
         {
             GetNode<Label>("NFYSCREEN/PLabel").Visible = false;
-            GetNode<Label>("NFYSCREEN/CS").Visible = false;
+            // GetNode<Label>("NFYSCREEN/CS").Visible = false;
         }
 
         if (GetCurrentSongIfAny() != "" && m.Dull())
@@ -1275,10 +1275,9 @@ public class NFy : Control
         }
         else
         {
-            if (m.Dull())
-            {
-                GetNode<Label>("NFYSCREEN/CS").Visible = false;
-            }
+            
+            if (m.Dull()) GetNode<Label>("NFYSCREEN/CS").Text = "No Song Selected...";
+
         }
 
         LoopHandler();
