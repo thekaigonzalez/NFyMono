@@ -1247,7 +1247,7 @@ public class NFy : Control
 
         getNFyStream().VolumeDb = ((float)GetNode<VSlider>("NFYSCREEN/Volume").Value);
 
-        if (m.currentIndex() > m.getSize() && PLAYING_ARRAY)
+        if (m.currentIndex() > m.getSize())
         {
             print("!!!!! ABOVE");
             PLAYING_ARRAY = false;
@@ -1255,7 +1255,7 @@ public class NFy : Control
             OpenCorrect(GetCurrentSongIfAny());
         }
 
-        if (!m.Dull())
+        if (!m.Dull() && PLAYING_ARRAY)
         {
             GetNode<Label>("NFYSCREEN/PLabel").Visible = true;
             GetNode<Label>("NFYSCREEN/PLabel").Text = "Currently in rotation;\n" + (m.currentIndex() + 1).ToString() + " of " + m.getSize();
