@@ -59,7 +59,7 @@ public class NJLoad : Control
         if (Input.IsKeyPressed((int)KeyList.Control) && Input.IsKeyPressed((int)KeyList.S))
         {
             GetNode<AnimationPlayer>("Fade/AnimationPlayer").Play("FadeIn");
-            
+
             GetTree().ChangeScene("res://NFy.tscn");
         }
         if (started && !GetNode<AnimationPlayer>("Load/MainLabel/PopUpAnim").IsPlaying())
