@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://NFy.cs" type="Script" id=1]
 [ext_resource path="res://NfyConIo.cs" type="Script" id=2]
@@ -34,6 +34,40 @@ bg_color = Color( 0.6, 0.6, 0.6, 0 )
 [sub_resource type="DynamicFont" id=12]
 size = 23
 font_data = ExtResource( 9 )
+
+[sub_resource type="StyleBoxFlat" id=13]
+bg_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="Animation" id=14]
+resource_name = "Fade"
+length = 1.781
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:custom_styles/panel:bg_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1.3 ),
+"transitions": PoolRealArray( -2, 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 1 ), Color( 0, 0, 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=15]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:custom_styles/panel:bg_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 1 ) ]
+}
 
 [node name="NFy" type="Control"]
 anchor_right = 1.0
@@ -229,6 +263,15 @@ margin_right = 1269.0
 margin_bottom = 711.0
 
 [node name="MonoHTTPV" type="HTTPRequest" parent="."]
+
+[node name="Opc" type="Panel" parent="."]
+margin_right = 1280.0
+margin_bottom = 718.0
+custom_styles/panel = SubResource( 13 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Opc"]
+anims/Fade = SubResource( 14 )
+anims/RESET = SubResource( 15 )
 
 [connection signal="pressed" from="NFYSCREEN/EnableConsole" to="." method="_on_EnableConsole_pressed"]
 [connection signal="toggled" from="NFYSCREEN/UP" to="." method="_on_UP_toggled"]

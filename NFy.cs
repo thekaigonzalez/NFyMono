@@ -15,6 +15,8 @@ public class NFy : Control
     public float sp = 0;
     public float SongLength = 0;
 
+    public bool ANIM_ONCE = false;
+
     public bool ed = false;
 
     public bool IsInNFyAES = false;
@@ -858,6 +860,8 @@ public class NFy : Control
         var flag = getOptsFlags();
         var vars = getOptsEq();
 
+        GetNode<AnimationPlayer>("Opc/AnimationPlayer").Play("Fade");
+
         // (GetNode<Sprite>("NFYSCREEN/BLUR").Material as ShaderMaterial).SetShaderParam("blurSize", 0);
 
         if (flag.ContainsKey("noVSign"))
@@ -1115,6 +1119,19 @@ public class NFy : Control
             getNFyStream().Stop();
         }
     }
+
+    public void AnimHandler()
+    {
+        if (ANIM_ONCE == false)
+        {
+            if (GetNode<AnimationPlayer>("Opc/AnimationPlayer").IsPlaying() == false && ANIM_ONCE == false)
+            {
+                GetNode<Panel>("Opc").QueueFree();
+                ANIM_ONCE = true;
+            }
+        }
+    }
+
     // Contains code for a custom loop feature
     public void LoopHandler()
     {
@@ -1176,7 +1193,7 @@ public class NFy : Control
 			var itex = ImageTexture.new()
 			itex.create_from_image(stream)
         */
-
+        AnimHandler();
 
         //GetTimeFormat(getNFyStream().GetPlaybackPosition()) + " - " + GetTimeFormat(SongLength);
         GetNode<Label>("NFYSCREEN/Time1").Text = GetTimeFormat(getNFyStream().GetPlaybackPosition());
