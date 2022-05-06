@@ -898,6 +898,7 @@ Why respect the knights? When my potions can do anything that you can?
         var vars = getOptsEq();
 
         GetNode<Panel>("Opc/").Visible = true;
+
         GetNode<AnimationPlayer>("Opc/AnimationPlayer").Play("Fade");
 
         // (GetNode<Sprite>("NFYSCREEN/BLUR").Material as ShaderMaterial).SetShaderParam("blurSize", 0);

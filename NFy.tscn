@@ -265,6 +265,7 @@ margin_bottom = 711.0
 [node name="MonoHTTPV" type="HTTPRequest" parent="."]
 
 [node name="Opc" type="Panel" parent="."]
+visible = false
 margin_right = 1280.0
 margin_bottom = 718.0
 custom_styles/panel = SubResource( 13 )
