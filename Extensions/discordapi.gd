@@ -15,7 +15,7 @@ static func change_activity(state, song, aes=false, nfysad=false):
 		assets.set_small_text("Some nights i wish you'd use NFy Mono!")
 
 	assets.set_large_image("nfymono")
-	assets.set_large_text("Listening with NFy MONO")
+	assets.set_large_text("Listening with NJMono Galaxy")
 	Discord.activity_manager.update_activity(acti)
 
 static func parse_timer(time):
