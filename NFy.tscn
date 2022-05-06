@@ -16,7 +16,7 @@ bg_color = Color( 0.192157, 0.192157, 0.192157, 1 )
 [sub_resource type="ShaderMaterial" id=9]
 render_priority = 8
 shader = ExtResource( 8 )
-shader_param/blurSize = 50
+shader_param/blurSize = 30
 
 [sub_resource type="DynamicFont" id=2]
 size = 18
