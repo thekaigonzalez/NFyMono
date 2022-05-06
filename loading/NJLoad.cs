@@ -32,9 +32,12 @@ public class NJLoad : Control
         await Task.Delay(1000);
         print("Checking for playlists...");
         await Task.Delay(2000);
-        if (System.IO.Directory.Exists("playlists")) {
+        if (System.IO.Directory.Exists("playlists"))
+        {
             print("`playlists' found!");
-        } else {
+        }
+        else
+        {
             print("error: playlists not found, creating...");
             await Task.Delay(1000);
 
@@ -43,6 +46,9 @@ public class NJLoad : Control
         print("Loading NFy...");
 
         await Task.Delay(new Random().Next(1, 1000));
+        GetNode<AnimationPlayer>("Fade/AnimationPlayer").Play("FadeIn");
+        await Task.Delay(2000);
+
 
         GetTree().ChangeScene("res://NFy.tscn");
 
@@ -52,6 +58,8 @@ public class NJLoad : Control
     {
         if (Input.IsKeyPressed((int)KeyList.Control) && Input.IsKeyPressed((int)KeyList.S))
         {
+            GetNode<AnimationPlayer>("Fade/AnimationPlayer").Play("FadeIn");
+            
             GetTree().ChangeScene("res://NFy.tscn");
         }
         if (started && !GetNode<AnimationPlayer>("Load/MainLabel/PopUpAnim").IsPlaying())

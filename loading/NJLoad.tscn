@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://open-sans-bold_[allfont.net].ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://Themes/NFyCorded/PanelTheme.tres" type="StyleBox" id=2]
@@ -171,6 +171,40 @@ tracks/1/keys = {
 [sub_resource type="DynamicFont" id=12]
 font_data = ExtResource( 6 )
 
+[sub_resource type="StyleBoxFlat" id=13]
+bg_color = Color( 0, 0, 0, 0 )
+
+[sub_resource type="Animation" id=14]
+resource_name = "FadeIn"
+length = 2.028
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:custom_styles/panel:bg_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1.8 ),
+"transitions": PoolRealArray( -2, 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 0 ), Color( 0, 0, 0, 1 ) ]
+}
+
+[sub_resource type="Animation" id=15]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:custom_styles/panel:bg_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 0 ) ]
+}
+
 [node name="LScreen" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -241,3 +275,12 @@ custom_fonts/font = SubResource( 12 )
 text = "NFy.js - Roe
 NFy - Kai D. Gonzalez
 NFy Andro - Kai D. Gonzalez"
+
+[node name="Fade" type="Panel" parent="."]
+margin_right = 1280.0
+margin_bottom = 720.0
+custom_styles/panel = SubResource( 13 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Fade"]
+anims/FadeIn = SubResource( 14 )
+anims/RESET = SubResource( 15 )
