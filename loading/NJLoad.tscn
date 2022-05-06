@@ -254,9 +254,9 @@ anims/ConsoleUpAnim = SubResource( 7 )
 anims/RESET = SubResource( 8 )
 
 [node name="Contrib" type="Label" parent="."]
-margin_left = -300.0
+margin_left = -209.0
 margin_top = 407.0
-margin_right = -47.0
+margin_right = 44.0
 margin_bottom = 468.0
 custom_fonts/font = SubResource( 9 )
 text = "While you're here, 
