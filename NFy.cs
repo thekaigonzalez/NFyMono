@@ -319,14 +319,51 @@ public class NFy : Control
         }
         else
         {
-            var img = new Image();
+            if (name == "Potion Seller")
+            {
+                /*
+                Hello potion seller, I’m going into battle and I want your strongest potions
+My potions are too strong for you, traveller
+Potion seller, I tell you I’m going into battle and I want only your strongest potions
+You can’t handle my potions, they are too strong for you
+Potion seller, listen to me, I want only your strongest potions
+My potions would kill you traveller, you cannot handle my potions
+Potion seller, enough of these games, I’m going to battle and I need your strongest potions
+My strongest potions would kill you traveller, you can’t handle my strongest potions.You better go to a seller that sells weaker potions
+Potion seller, I’m telling you right now, I’m going into battle and I need only your strongest potions
+You don’t know what you asked traveller, my strongest potions would kill a dragon, let alone a man. You need a seller that sells weaker potions, because my potions are too strong
+Potion seller, I’m telling you I need your strongest potions, I’m going into a battle, I’m going to battle, and I need your strongest potions
+You can’t handle my strongest potions. No one can, my strongest potions are fit for a beast, let alone a man
+Potion seller what do I have to tell you to get your potions? Why won’t you trust me with your strongest potions, potion seller? I need them if I’m to be successful in the battle
+I can’t give you my strongest positions, because my strongest potions are only for the strongest beings and you are of the weakest
+Well then, that’s it potion seller, I’ll go elsewhere, I’ll go elsewhere for my potions
+That’s what you better do
+I’ll go elsewhere for my potions and I’ll never come back
+Good, you are not welcome here. My potions are only for the strongest and you are clearly not of the strongest, you are clearly of the weakest
+You have had your say, potion seller, but I’ll have mine. You’re a rascal; you’re a rascal with no respect for the knights, no respect for anything except your potions
+Why respect the knights? When my potions can do anything that you can?
+*/
+                var imga = new Image();
 
-            img.LoadJpgFromBuffer(System.IO.File.ReadAllBytes(CTEXT("images/default.jpg")));
+                imga.Load("res://Potion Seller.jpg");
 
-            var imgt = new ImageTexture();
-            imgt.CreateFromImage(img);
+                var imgtt = new ImageTexture();
+                imgtt.CreateFromImage(imga);
 
-            GetNode<TextureRect>("NFYSCREEN/Ga").Texture = imgt;
+                GetNode<TextureRect>("NFYSCREEN/Ga").Texture = imgtt;
+
+            }
+            else
+            {
+                var img = new Image();
+
+                img.LoadJpgFromBuffer(System.IO.File.ReadAllBytes(CTEXT("images/default.jpg")));
+
+                var imgt = new ImageTexture();
+                imgt.CreateFromImage(img);
+
+                GetNode<TextureRect>("NFYSCREEN/Ga").Texture = imgt;
+            }
         }
         if (name != "")
             OpenSong(CTEXT(wCheck(SONG_DIR + name, GetSpec())));
@@ -860,6 +897,7 @@ public class NFy : Control
         var flag = getOptsFlags();
         var vars = getOptsEq();
 
+        GetNode<Panel>("Opc/").Visible = true;
         GetNode<AnimationPlayer>("Opc/AnimationPlayer").Play("Fade");
 
         // (GetNode<Sprite>("NFYSCREEN/BLUR").Material as ShaderMaterial).SetShaderParam("blurSize", 0);
