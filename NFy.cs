@@ -1119,7 +1119,6 @@ public class NFy : Control
             getNFyStream().Stop();
         }
     }
-
     public void AnimHandler()
     {
         if (ANIM_ONCE == false)
