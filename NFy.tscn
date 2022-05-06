@@ -177,13 +177,13 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-margin_left = -78.5
-margin_top = -146.0
-margin_right = 78.5
-margin_bottom = -100.0
+margin_left = -20.5001
+margin_top = -144.0
+margin_right = 20.4999
+margin_bottom = -98.0
 rect_scale = Vector2( 0.993, 0.876 )
 custom_fonts/font = SubResource( 12 )
-text = "Play_Button"
+text = ">"
 
 [node name="VER" type="Label" parent="NFYSCREEN"]
 margin_right = 40.0

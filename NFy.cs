@@ -858,6 +858,7 @@ public class NFy : Control
         var flag = getOptsFlags();
         var vars = getOptsEq();
 
+        // (GetNode<Sprite>("NFYSCREEN/BLUR").Material as ShaderMaterial).SetShaderParam("blurSize", 0);
 
         if (flag.ContainsKey("noVSign"))
         {
@@ -1238,11 +1239,11 @@ public class NFy : Control
 
         if (!getNFyStream().Playing)
         {
-            GetNode<Button>("NFYSCREEN/Play").Text = "Play";
+            GetNode<Button>("NFYSCREEN/Play").Text = ">";
         }
         else
         {
-            GetNode<Button>("NFYSCREEN/Play").Text = "Stop";
+            GetNode<Button>("NFYSCREEN/Play").Text = "||";
         }
 
         getNFyStream().VolumeDb = ((float)GetNode<VSlider>("NFYSCREEN/Volume").Value);
@@ -1259,7 +1260,7 @@ public class NFy : Control
         {
             GetNode<Label>("NFYSCREEN/PLabel").Visible = true;
             GetNode<Label>("NFYSCREEN/PLabel").Text = "Currently in rotation;\n" + (m.currentIndex() + 1).ToString() + " of " + m.getSize();
-            
+
             GetNode<Label>("NFYSCREEN/CS").Visible = true;
             GetNode<Label>("NFYSCREEN/CS").Text = GetCurrentSongIfAny();
         }
@@ -1276,7 +1277,7 @@ public class NFy : Control
         }
         else
         {
-            
+
             if (m.Dull()) GetNode<Label>("NFYSCREEN/CS").Text = "No Song Selected...";
             GetNode<Label>("NFYSCREEN/CS").Text = GetCurrentSongIfAny();
 
