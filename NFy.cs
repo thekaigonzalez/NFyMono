@@ -433,6 +433,32 @@ Why respect the knights? When my potions can do anything that you can?
         return System.IO.Path.GetFileNameWithoutExtension(B);
     }
 
+    public void TranslationPreload()
+    {
+        if (DirExists("lang"))
+        {
+            foreach (string item in listDir("lang"))
+            {
+                if (item.EndsWith(".json"))
+                {
+                    var js1 = JSON.Parse(System.IO.File.ReadAllText(item)).Result;
+                    var js = (Godot.Collections.Dictionary)js1;
+
+
+                    GetNode<OptionButton>("NFYSCREEN/Translations").AddItem(js["nj.name"] as string);
+
+                    // var tarns = js["translation"] as Godot.Collections.Dictionary;
+                    // GetNode<Button>("NFYSCREEN/LoopPL").Text = tarns["nj.loopPL"] as string;
+                    // GetNode<Button>("NFYSCREEN/Loop").Text = tarns["nj.loop"] as string;
+                    // GetNode<Button>("NFYSCREEN/UP").Text = tarns["nj.up"] as string;
+                    // GetNode<Button>("NFYSCREEN/OpenSongs").Text = tarns["nj.songDir"] as string;
+
+                }
+            }
+        }
+
+    }
+
     /// <summary>
     /// It checks if the directory "songs" exists, and if it does, it checks each file in the directory
     /// to see if it's a valid audio file, and if it is, it adds it to the list of songs
@@ -946,6 +972,7 @@ Why respect the knights? When my potions can do anything that you can?
         SetupAPI.SetupNFy();
         print("Preloading songs into list");
         SongPreload();
+        TranslationPreload();
         print("Setting up the Discord presence from GDScript API");
         ChangeActivity("No Song Loaded", "On NFy MONO");
 
@@ -969,6 +996,27 @@ Why respect the knights? When my potions can do anything that you can?
 
         return (output);
     }
+
+    public void _on_Translations_item_selected(int index)
+    {
+
+        foreach (string item in listDir(CTEXT("lang")))
+        {
+            var js1 = JSON.Parse(System.IO.File.ReadAllText(item)).Result;
+            var js = (Godot.Collections.Dictionary)js1;
+
+            if (js["nj.name"] as string == GetNode<OptionButton>("NFYSCREEN/Translations").GetItemText(index)) {
+
+                var tarns = js["translation"] as Godot.Collections.Dictionary;
+                GetNode<Button>("NFYSCREEN/LoopPL").Text = tarns["nj.loopPL"] as string;
+                GetNode<Button>("NFYSCREEN/Loop").Text = tarns["nj.loop"] as string;
+                GetNode<Button>("NFYSCREEN/UP").Text = tarns["nj.up"] as string;
+                GetNode<Button>("NFYSCREEN/OpenSongs").Text = tarns["nj.songDir"] as string;
+            }
+        }
+
+    }
+
 
     public void _on_UP_toggled(bool t)
     {

@@ -143,6 +143,15 @@ text = "Playlists"
 clip_text = true
 align = 1
 
+[node name="Translations" type="OptionButton" parent="NFYSCREEN"]
+margin_left = 1016.0
+margin_top = 523.0
+margin_right = 1251.0
+margin_bottom = 561.0
+text = "Translations"
+clip_text = true
+align = 1
+
 [node name="UP" type="CheckButton" parent="NFYSCREEN"]
 margin_left = 13.0
 margin_top = 446.0
@@ -275,6 +284,7 @@ anims/Fade = SubResource( 14 )
 anims/RESET = SubResource( 15 )
 
 [connection signal="pressed" from="NFYSCREEN/EnableConsole" to="." method="_on_EnableConsole_pressed"]
+[connection signal="item_selected" from="NFYSCREEN/Translations" to="." method="_on_Translations_item_selected"]
 [connection signal="toggled" from="NFYSCREEN/UP" to="." method="_on_UP_toggled"]
 [connection signal="pressed" from="NFYSCREEN/OpenSongs" to="." method="_on_open_songs"]
 [connection signal="item_selected" from="NFYSCREEN/NSL" to="." method="_on_ItemList_item_selected"]

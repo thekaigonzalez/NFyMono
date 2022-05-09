@@ -1,0 +1,11 @@
+{
+    "nj.name": "English",
+    "description": "NFy Mono's base translation.",
+
+    "translation": {
+        "nj.up": "Use Playlist?",
+        "nj.loop": "Loop?",
+        "nj.loopPL": "Loop Playlist?",
+        "nj.songDir": "Open Songs Directory"
+    }
+}
