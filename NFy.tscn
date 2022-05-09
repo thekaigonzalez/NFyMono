@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=27 format=2]
 
 [ext_resource path="res://NFy.cs" type="Script" id=1]
 [ext_resource path="res://NfyConIo.cs" type="Script" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://ga.jpg" type="Texture" id=7]
 [ext_resource path="res://blur.tres" type="Shader" id=8]
 [ext_resource path="res://SourceSansPro-Regular.ttf" type="DynamicFontData" id=9]
+[ext_resource path="res://open-sans-bold_[allfont.net].ttf" type="DynamicFontData" id=10]
 
 [sub_resource type="StyleBoxFlat" id=4]
 bg_color = Color( 0.192157, 0.192157, 0.192157, 1 )
@@ -68,6 +69,41 @@ bg_color = Color( 0.6, 0.6, 0.6, 0 )
 [sub_resource type="DynamicFont" id=12]
 size = 23
 font_data = ExtResource( 9 )
+
+[sub_resource type="DynamicFont" id=19]
+size = 22
+font_data = ExtResource( 10 )
+
+[sub_resource type="Animation" id=20]
+resource_name = "NPS"
+length = 4.376
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1.7, 2.6, 4.2 ),
+"transitions": PoolRealArray( -2, 1, -2, 1 ),
+"update": 0,
+"values": [ Vector2( -218, 10 ), Vector2( 17, 10 ), Vector2( 17, 10 ), Vector2( -225, 10 ) ]
+}
+
+[sub_resource type="Animation" id=21]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( -218, 10 ) ]
+}
 
 [sub_resource type="StyleBoxFlat" id=13]
 bg_color = Color( 0, 0, 0, 1 )
@@ -288,6 +324,20 @@ margin_top = 662.0
 margin_right = 1039.0
 margin_bottom = 682.0
 text = "0:00"
+
+[node name="NowPlaying" type="Label" parent="NFYSCREEN"]
+margin_left = -218.0
+margin_top = 10.0
+margin_right = -5.0
+margin_bottom = 75.0
+custom_fonts/font = SubResource( 19 )
+text = "Now playing
+SONG"
+autowrap = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="NFYSCREEN/NowPlaying"]
+anims/NPS = SubResource( 20 )
+anims/RESET = SubResource( 21 )
 
 [node name="NfyStream" type="AudioStreamPlayer" parent="."]
 

@@ -350,7 +350,16 @@ public class NFy : Control
         Task.Run(() => PlayChangeAnim(use_anim));
         previous_song = name;
         if (name != "")
+        {
             OpenSong(CTEXT(wCheck(SONG_DIR + name, GetSpec())));
+            GetNode<Label>("NFYSCREEN/NowPlaying").Text = "Now Playing:\n" + GetCurrentSongIfAny();
+            if (GetNode<AnimationPlayer>("NFYSCREEN/NowPlaying/AnimationPlayer").IsPlaying()) {
+                GetNode<AnimationPlayer>("NFYSCREEN/NowPlaying/AnimationPlayer").Stop();
+            }
+            GetNode<AnimationPlayer>("NFYSCREEN/NowPlaying/AnimationPlayer").Play("NPS");
+
+
+        }
     }
 
     /// Returns the absolute path
