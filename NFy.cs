@@ -433,6 +433,9 @@ Why respect the knights? When my potions can do anything that you can?
         return System.IO.Path.GetFileNameWithoutExtension(B);
     }
 
+    /// <summary>
+    /// It reads all the json files in the lang folder and adds them to the option button
+    /// </summary>
     public void TranslationPreload()
     {
         if (DirExists("lang"))
