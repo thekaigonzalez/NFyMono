@@ -223,6 +223,7 @@ public class NFy : Control
     public void OpenSong(string path)
     {
 
+        previous_song = ParseSongEntry(path);
         AudioStreamPlayer audSound = getNFyStream();
 
         File file = new File();
@@ -348,15 +349,20 @@ public class NFy : Control
     public void OpenCorrect(string name, bool use_anim = false)
     {
         Task.Run(() => PlayChangeAnim(use_anim));
-        previous_song = name;
+
         if (name != "")
         {
-            OpenSong(CTEXT(wCheck(SONG_DIR + name, GetSpec())));
             GetNode<Label>("NFYSCREEN/NowPlaying").Text = "Now Playing:\n" + GetCurrentSongIfAny();
-            if (GetNode<AnimationPlayer>("NFYSCREEN/NowPlaying/AnimationPlayer").IsPlaying()) {
+            if (GetNode<AnimationPlayer>("NFYSCREEN/NowPlaying/AnimationPlayer").IsPlaying())
+            {
                 GetNode<AnimationPlayer>("NFYSCREEN/NowPlaying/AnimationPlayer").Stop();
             }
-            GetNode<AnimationPlayer>("NFYSCREEN/NowPlaying/AnimationPlayer").Play("NPS");
+            if (GetCurrentSongIfAny() != previous_song)
+            {
+                GetNode<AnimationPlayer>("NFYSCREEN/NowPlaying/AnimationPlayer").Play("NPS");
+            }
+            OpenSong(CTEXT(wCheck(SONG_DIR + name, GetSpec())));
+
 
 
         }
