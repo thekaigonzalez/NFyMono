@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://NFy.cs" type="Script" id=1]
 [ext_resource path="res://NfyConIo.cs" type="Script" id=2]
@@ -12,6 +12,40 @@
 
 [sub_resource type="StyleBoxFlat" id=4]
 bg_color = Color( 0.192157, 0.192157, 0.192157, 1 )
+
+[sub_resource type="StyleBoxFlat" id=16]
+bg_color = Color( 0.105882, 0.105882, 0.105882, 0 )
+
+[sub_resource type="Animation" id=17]
+resource_name = "FadeOUt"
+length = 2.31
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:custom_styles/panel:bg_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1.1, 2.2 ),
+"transitions": PoolRealArray( -2, -2, 1 ),
+"update": 0,
+"values": [ Color( 0.105882, 0.105882, 0.105882, 0 ), Color( 0.105882, 0.105882, 0.105882, 1 ), Color( 0.105882, 0.105882, 0.105882, 0 ) ]
+}
+
+[sub_resource type="Animation" id=18]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:custom_styles/panel:bg_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 0.105882, 0.105882, 0.105882, 0 ) ]
+}
 
 [sub_resource type="ShaderMaterial" id=9]
 render_priority = 8
@@ -93,6 +127,15 @@ margin_bottom = 358.0
 texture = ExtResource( 7 )
 expand = true
 stretch_mode = 1
+
+[node name="Fade" type="Panel" parent="NFYSCREEN"]
+margin_right = 1280.0
+margin_bottom = 718.0
+custom_styles/panel = SubResource( 16 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="NFYSCREEN/Fade"]
+anims/FadeOUt = SubResource( 17 )
+anims/RESET = SubResource( 18 )
 
 [node name="BLUR" type="Sprite" parent="NFYSCREEN"]
 material = SubResource( 9 )

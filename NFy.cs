@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 /*! \mainpage NFy Mono
  *
  * \section intro_sec NFy Mono Source code
@@ -14,6 +15,7 @@ public class NFy : Control
     // private string b = "text";
     public float sp = 0;
     public float SongLength = 0;
+    public string previous_song = "";
 
     public bool ANIM_ONCE = false;
 
@@ -300,58 +302,29 @@ public class NFy : Control
         return spec;
     }
 
-    /// <summary>
-    /// It opens a song (correctly, with proper checks.)
-    /// </summary>
-    /// <param name="name">The name of the song to open.</param>
-    public void OpenCorrect(string name)
+    async void PlayChangeAnim(bool do_anim)
     {
-        if (System.IO.File.Exists(CTEXT("images/" + GetCurrentSongIfAny() + ".jpg")))
+
+        if (do_anim)
         {
-            var img = new Image();
 
-            img.LoadJpgFromBuffer(System.IO.File.ReadAllBytes(CTEXT("images/" + GetCurrentSongIfAny() + ".jpg")));
 
-            var imgt = new ImageTexture();
-            imgt.CreateFromImage(img);
 
-            GetNode<TextureRect>("NFYSCREEN/Ga").Texture = imgt;
-        }
-        else
-        {
-            if (name == "Potion Seller")
+            if (GetNode<AnimationPlayer>("NFYSCREEN/Fade/AnimationPlayer").IsPlaying()) GetNode<AnimationPlayer>("NFYSCREEN/Fade/AnimationPlayer").Stop();
+
+            GetNode<AnimationPlayer>("NFYSCREEN/Fade/AnimationPlayer").Play("FadeOUt");
+
+            await Task.Delay(1100);
+            if (System.IO.File.Exists(CTEXT("images/" + GetCurrentSongIfAny() + ".jpg")))
             {
-                /*
-                Hello potion seller, I’m going into battle and I want your strongest potions
-My potions are too strong for you, traveller
-Potion seller, I tell you I’m going into battle and I want only your strongest potions
-You can’t handle my potions, they are too strong for you
-Potion seller, listen to me, I want only your strongest potions
-My potions would kill you traveller, you cannot handle my potions
-Potion seller, enough of these games, I’m going to battle and I need your strongest potions
-My strongest potions would kill you traveller, you can’t handle my strongest potions.You better go to a seller that sells weaker potions
-Potion seller, I’m telling you right now, I’m going into battle and I need only your strongest potions
-You don’t know what you asked traveller, my strongest potions would kill a dragon, let alone a man. You need a seller that sells weaker potions, because my potions are too strong
-Potion seller, I’m telling you I need your strongest potions, I’m going into a battle, I’m going to battle, and I need your strongest potions
-You can’t handle my strongest potions. No one can, my strongest potions are fit for a beast, let alone a man
-Potion seller what do I have to tell you to get your potions? Why won’t you trust me with your strongest potions, potion seller? I need them if I’m to be successful in the battle
-I can’t give you my strongest positions, because my strongest potions are only for the strongest beings and you are of the weakest
-Well then, that’s it potion seller, I’ll go elsewhere, I’ll go elsewhere for my potions
-That’s what you better do
-I’ll go elsewhere for my potions and I’ll never come back
-Good, you are not welcome here. My potions are only for the strongest and you are clearly not of the strongest, you are clearly of the weakest
-You have had your say, potion seller, but I’ll have mine. You’re a rascal; you’re a rascal with no respect for the knights, no respect for anything except your potions
-Why respect the knights? When my potions can do anything that you can?
-*/
-                var imga = new Image();
+                var img = new Image();
 
-                imga.Load("res://Potion Seller.jpg");
+                img.LoadJpgFromBuffer(System.IO.File.ReadAllBytes(CTEXT("images/" + GetCurrentSongIfAny() + ".jpg")));
 
-                var imgtt = new ImageTexture();
-                imgtt.CreateFromImage(imga);
+                var imgt = new ImageTexture();
+                imgt.CreateFromImage(img);
 
-                GetNode<TextureRect>("NFYSCREEN/Ga").Texture = imgtt;
-
+                GetNode<TextureRect>("NFYSCREEN/Ga").Texture = imgt;
             }
             else
             {
@@ -365,6 +338,17 @@ Why respect the knights? When my potions can do anything that you can?
                 GetNode<TextureRect>("NFYSCREEN/Ga").Texture = imgt;
             }
         }
+
+    }
+
+    /// <summary>
+    /// It opens a song (correctly, with proper checks.)
+    /// </summary>
+    /// <param name="name">The name of the song to open.</param>
+    public void OpenCorrect(string name, bool use_anim = false)
+    {
+        Task.Run(() => PlayChangeAnim(use_anim));
+        previous_song = name;
         if (name != "")
             OpenSong(CTEXT(wCheck(SONG_DIR + name, GetSpec())));
     }
@@ -547,18 +531,18 @@ Why respect the knights? When my potions can do anything that you can?
         );
     }
     /**
-	
-	GET VERSION
 
-	This gets the latest release and compares it to the current version sign.
+GET VERSION
 
-    For developers: 
-    
+This gets the latest release and compares it to the current version sign.
+
+For developers: 
+
         Versions in this are formatted version.NUMBER, and should be used as such,
         With recent updates, versions can now be `UNOFFICIAL` (all lowercase though),
         Which VSign ignores, as seen at line 341, if you need version checking, but 
         use a different format, update the ver1 & ver2 variables found at lines 222 and 223.
-	*/
+*/
     public void OnVersionRequestCompleted(int result, int response_code, string[] headers, byte[] body)
     {
         string s = System.Text.Encoding.UTF8.GetString(body);
@@ -820,7 +804,7 @@ Why respect the knights? When my potions can do anything that you can?
             // Basic functions (The base API)
             .SetValue("NJPrint", (Action<string>)print)
             .SetValue("NJLog", (Action<string, string[]>)NJLog)
-            .SetValue("NJPlaySongByName", (Action<string>)OpenCorrect)
+            .SetValue("NJPlaySongByName", new Action<string>((l) => OpenCorrect(l)))
             .SetValue("NJBackgroundColor", (Action<string>)SetBackground)
             .SetValue("NJFontColor", (Action<string>)setFontColor)
             .SetValue("NJButtonUpdate", (Action<string, string, int, int>)UpdateButtons)
@@ -1008,7 +992,8 @@ Why respect the knights? When my potions can do anything that you can?
             var js1 = JSON.Parse(System.IO.File.ReadAllText(item)).Result;
             var js = (Godot.Collections.Dictionary)js1;
 
-            if (js["nj.name"] as string == GetNode<OptionButton>("NFYSCREEN/Translations").GetItemText(index)) {
+            if (js["nj.name"] as string == GetNode<OptionButton>("NFYSCREEN/Translations").GetItemText(index))
+            {
 
                 var tarns = js["translation"] as Godot.Collections.Dictionary;
                 GetNode<Button>("NFYSCREEN/LoopPL").Text = tarns["nj.loopPL"] as string;
@@ -1100,11 +1085,11 @@ Why respect the knights? When my potions can do anything that you can?
 
         if (!PLAYING_ARRAY)
         {
-            OpenCorrect(GetCurrentSongIfAny());
+            OpenCorrect(GetCurrentSongIfAny(), true);
         }
         else
         {
-            OpenCorrect(GetCurrentSongIfAny());
+            OpenCorrect(GetCurrentSongIfAny(), true);
             m.setIndex(sel);
             print("Switching");
         }
@@ -1119,11 +1104,11 @@ Why respect the knights? When my potions can do anything that you can?
     {
 
 
-        if (Input.IsKeyPressed(((int)KeyList.L)))
+        if (Input.IsKeyPressed(((int)KeyList.Right)))
         {
             getNFyStream().Seek(getNFyStream().GetPlaybackPosition() + 10);
         }
-        else if (Input.IsKeyPressed(((int)KeyList.J)))
+        else if (Input.IsKeyPressed(((int)KeyList.Left)))
         {
             float newpos = getNFyStream().GetPlaybackPosition() - 10;
             if (newpos <= 0)
@@ -1133,7 +1118,7 @@ Why respect the knights? When my potions can do anything that you can?
             getNFyStream().Seek(newpos);
         }
 
-        else if (Input.IsKeyPressed(((int)KeyList.K)))
+        else if (Input.IsKeyPressed(((int)KeyList.Enter)))
         {
             if (getNFyStream().Playing)
             {
@@ -1172,7 +1157,7 @@ Why respect the knights? When my potions can do anything that you can?
         {
             if (!getNFyStream().Playing)
             {
-                OpenCorrect(GetCurrentSongIfAny());
+                OpenCorrect(GetCurrentSongIfAny(), true);
                 getNFyBar().MaxValue = SongLength;
             }
             else
@@ -1274,13 +1259,13 @@ Why respect the knights? When my potions can do anything that you can?
     {
         /*
         var path = get_cwd_file("playlists/" + PFile + ".png")
-			var ogg_file = File.new()
-			ogg_file.open(path, File.READ)
-			var bytes = ogg_file.get_buffer(ogg_file.get_len())
-			var stream = Image.new()
-			stream.load_png_from_buffer(bytes)
-			var itex = ImageTexture.new()
-			itex.create_from_image(stream)
+            var ogg_file = File.new()
+            ogg_file.open(path, File.READ)
+            var bytes = ogg_file.get_buffer(ogg_file.get_len())
+            var stream = Image.new()
+            stream.load_png_from_buffer(bytes)
+            var itex = ImageTexture.new()
+            itex.create_from_image(stream)
         */
         AnimHandler();
 
@@ -1290,9 +1275,11 @@ Why respect the knights? When my potions can do anything that you can?
 
         if (Input.IsKeyPressed((int)KeyList.Control) && Input.IsKeyPressed((int)KeyList.R))
         {
+            /* this was originally supposed to be a song refresh, not a playlist refresh! */
+
             var pl = listDir(CTEXT(SONG_DIR));
 
-            m = new NFyRotation(pl);
+            // m = new NFyRotation(pl);
 
             getNFySongList().Clear();
 
@@ -1303,7 +1290,7 @@ Why respect the knights? When my potions can do anything that you can?
             OpenCorrect(GetCurrentSongIfAny()); // Fixes CTRL+R
         }
         loadPlugins(true); // call the tick frame functions for any plugins
-        // Console.WriteLine(GetCurrentSongIfAny());
+                           // Console.WriteLine(GetCurrentSongIfAny());
 
         if (GetCurrentSongIfAny().Trim() == "MACINTOSH PLUS 420")
         {
