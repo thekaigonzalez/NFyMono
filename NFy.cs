@@ -19,6 +19,8 @@ public class NFy : Control
 
     public bool ANIM_ONCE = false;
 
+    public bool SAFE_MODE = false;
+
     public bool ed = false;
 
     public bool IsInNFyAES = false;
@@ -348,18 +350,21 @@ public class NFy : Control
     /// <param name="name">The name of the song to open.</param>
     public void OpenCorrect(string name, bool use_anim = false)
     {
-        Task.Run(() => PlayChangeAnim(use_anim));
-
+        if (!SAFE_MODE)
+        {
+            Task.Run(() => PlayChangeAnim(use_anim));
+        }
         if (name != "")
         {
             GetNode<Label>("NFYSCREEN/NowPlaying").Text = "Now Playing:\n" + GetCurrentSongIfAny();
-            if (GetNode<AnimationPlayer>("NFYSCREEN/NowPlaying/AnimationPlayer").IsPlaying())
+            if (!GetNode<AnimationPlayer>("NFYSCREEN/NowPlaying/AnimationPlayer").IsPlaying())
             {
                 GetNode<AnimationPlayer>("NFYSCREEN/NowPlaying/AnimationPlayer").Stop();
-            }
-            if (GetCurrentSongIfAny() != previous_song)
-            {
-                GetNode<AnimationPlayer>("NFYSCREEN/NowPlaying/AnimationPlayer").Play("NPS");
+
+                if (GetCurrentSongIfAny() != previous_song)
+                {
+                    GetNode<AnimationPlayer>("NFYSCREEN/NowPlaying/AnimationPlayer").Play("NPS");
+                }
             }
             OpenSong(CTEXT(wCheck(SONG_DIR + name, GetSpec())));
 
@@ -934,6 +939,11 @@ For developers:
         if (flag.ContainsKey("noVSign"))
         {
             ign_v = true;
+        }
+
+        if (flag.ContainsKey("safe"))
+        {
+            SAFE_MODE = true;
         }
 
         if (flag.ContainsKey("startWithSong"))
